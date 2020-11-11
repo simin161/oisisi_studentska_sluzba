@@ -1,1 +1,1 @@
-# oisis_studentska_sluzba
+# oisisi_studentska_sluzba
