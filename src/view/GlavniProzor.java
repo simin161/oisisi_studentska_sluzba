@@ -55,6 +55,10 @@ public class GlavniProzor extends JFrame{
 		panelMain.add(Box.createHorizontalStrut(20), BorderLayout.EAST);
 		panelMain.add(lblToDo);
 		
+		/* --- Menu bar --- */
+		MenuBar menuBar = new MenuBar((int) (screenWidth*0.75), (int)(screenHeight*0.75), getContentPane());
+		this.setJMenuBar(menuBar);
+		
 		/* --- Status bar --- */
 		
 		StatusBar statusBar = new StatusBar();

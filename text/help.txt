@@ -1,0 +1,44 @@
+Glavni prozor sadrzi:  1. Menu bar
+                                    2. Status bar
+                                    3. Toolbar
+                                    4. *bice dodato naknadno*
+________________________________________________________________________________________________________________________________
+
+1. Meni bar se sastoji od tri podmenija: 1.1. File
+	                                     1.2. Edit
+	                                     1.3. Help
+
+1.1 File u sebi sadrzi opcije "New" i "Close". 
+**Klikom na opciju "New" dodaju se novi entiteti. (jos nije realizovano)
+Precica za "New" jeste CTRL+N, a mnemonik je "N".
+**Klikom na opciju "Close" izlazi se iz aplikacije. (jos nije realizovano)
+Precica za "Close" je CTRL+C, a mnemonik "C".
+
+1.2 Edit u sebi sadrzi opcije "Edit" i "Delete".
+**Klikom na opciju "Edit" menja se postojeci intet u sistemu (jos nije realizovano).
+Precica za "Edit" je CTRL+E, a mnemonik "E".
+**Klikom na opciju "Delete" brise se postojeci entitet iz sistemu (jos nije realizovano). 
+Precica za "Delete" je CTRL+D, a mnemonik "D".
+
+1.3 Help sadrzi opcije "Help" i "About".
+**Klikom na opciju "Help" pojavljuje se istoimeni prozor sa uputstvom za upotrebu aplikacije, kao i sa opisom.
+Precica za "Help" je CTRL+H, a mnemonik "H". (dopunjavace se)
+**Klikom na opciju "About" pojavljuje se istoimeni prozor u kojem se nalazi informacija o verziji aplikacije,
+i kratak opis iste. Takodje, nalazi se i sazeta biografija svakog od autora.
+Precice za "Abotu" je CTRL+A, a mnemonik "A". (dopunjavace se)
+
+________________________________________________________________________________________________________________________________
+
+2.Status bar, koji se nalazi pri dnu glavnog prozora, sadrzi naziv aplikacije, u levom uglu, kao i datum i vreme, u desnom uglu.
+
+________________________________________________________________________________________________________________________________
+
+3. Tool bar se nalazi ispod menija. Sadrzi opcije za dodavanje podataka u tabelu (prvo dugme), zatim
+dugme za izmenu podataka u tabli (drugo dugme), kao i opciju za brisanje podataka iz tabele (trece dugme).
+Tool bar takodje sadrzi i tekstualno polje u koje se moze uneti kriterijum pretrage i pritiskom na dugme pored, pretrazice se
+tabela koja je trenutno aktivna. Rezultat izvrsavanje pretrage jesu entiteti koji zadovoljavaju zadati kriterijum.
+(jos nisu implementirane funkcionalnosti)
+
+________________________________________________________________________________________________________________________________
+
+4. *bice dodato naknadno*
