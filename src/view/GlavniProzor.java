@@ -55,6 +55,13 @@ public class GlavniProzor extends JFrame{
 		panelMain.add(Box.createHorizontalStrut(20), BorderLayout.EAST);
 		panelMain.add(lblToDo);
 		
+		/* --- Status bar --- */
+		
+		StatusBar statusBar = new StatusBar();
+		statusBar.addText("Studentska služba");
+		statusBar.addTimeAndDate();
+		statusBar.attach(getContentPane());
+		
 		
 	}
 	
