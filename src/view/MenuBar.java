@@ -65,7 +65,7 @@ public class MenuBar extends JMenuBar {
 		menuItemHelp.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_H, InputEvent.CTRL_MASK));
 		menuItemHelp.setMnemonic('H');
 		menuHelp.add(menuItemHelp);
-		ActionHelpAbout.helpAboutAction(menuItemHelp, "Help", "text/help.txt",width, height, cont);
+		ActionHelpAbout.helpAboutAction(menuItemHelp, "Help", "text/help.txt", "images/help.png", width, height, cont);
 		
 		menuHelp.addSeparator();
 		
@@ -73,7 +73,7 @@ public class MenuBar extends JMenuBar {
 		menuItemAbout.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, InputEvent.CTRL_MASK));
 		menuItemAbout.setMnemonic('A');
 		menuHelp.add(menuItemAbout);
-		ActionHelpAbout.helpAboutAction(menuItemAbout, "About", "text/about.txt", width, height, cont);
+		ActionHelpAbout.helpAboutAction(menuItemAbout, "About", "text/about.txt", "images/about.png", width, height, cont);
 
 	}
 }
