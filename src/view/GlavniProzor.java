@@ -1,4 +1,4 @@
-package app;
+package view;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -34,9 +34,6 @@ public class GlavniProzor extends JFrame{
 		JPanel panelToolbar = new JPanel();
 		panelSsluzba.add(panelToolbar, BorderLayout.NORTH);
 		panelToolbar.setLayout(new BorderLayout(0,0));
-		
-		Toolbar toolbar = new Toolbar();
-		panelToolbar.add(toolbar);
 		
 		JPanel panelMain = new JPanel();
 		panelSsluzba.add(panelMain, BorderLayout.CENTER);
