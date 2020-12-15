@@ -24,12 +24,15 @@ public class MenuBar extends JMenuBar {
 	{
 		JMenu menuFile = new JMenu("File");
 		add(menuFile);
+		menuFile.setMnemonic('F');
 		
 		JMenu menuEdit = new JMenu("Edit");
 		add(menuEdit);
+		menuEdit.setMnemonic('E');
 		
 		JMenu menuHelp = new JMenu("Help");
 		add(menuHelp);
+		menuHelp.setMnemonic('H');
 		
 		//menu bar file
 		
