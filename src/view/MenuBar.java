@@ -11,6 +11,7 @@ import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
 
 import controller.ActionHelpAbout;
+import controller.ActionClose;
 
 public class MenuBar extends JMenuBar {
 
@@ -47,6 +48,7 @@ public class MenuBar extends JMenuBar {
 		menuItemClose.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.CTRL_MASK));
 		menuFile.add(menuItemClose);
 		menuItemClose.setMnemonic('C');
+		ActionClose.closeAction(menuItemClose);
 		
 		//menu bar edit
 		
