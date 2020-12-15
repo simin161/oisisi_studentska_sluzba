@@ -1,6 +1,8 @@
 package model;
 
 
+import java.util.ArrayList;
+
 import model.nabrojiviTipovi.Status;
 
 public class Student {
@@ -16,7 +18,7 @@ public class Student {
 	private int trenutnaGodina;
 	private Status status;
 	private double prosecnaOcena;
-	//fali lista ocena (polozenih predmeta)
+	private ArrayList<Ocena> polozeno;
 	//fali lista nepolozenih predmeta
 	
 	Student(){
