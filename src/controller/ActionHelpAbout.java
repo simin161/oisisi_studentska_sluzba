@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JMenuItem;
 
-import view.framesAndDialogs.FrameHA;
+import view.framesAndDialogs.DialogHA;
 
 public class ActionHelpAbout {
 
@@ -18,7 +18,7 @@ public class ActionHelpAbout {
 			@SuppressWarnings("unused")
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				FrameHA frameHA = new FrameHA(title, path, imagePath, width, height, cont);
+				DialogHA frameHA = new DialogHA(title, path, imagePath, width, height, cont);
 
 			}
 				
