@@ -10,7 +10,7 @@ import view.framesAndDialogs.DialogHA;
 
 public class ActionHelpAbout {
 
-	public static void helpAboutAction(JMenuItem hA, String title, String path, String imagePath, int width, int height, Container cont)
+	public static void helpAboutAction(JMenuItem hA, String title, String path, String imagePath, Container cont)
 	{
 		hA.addActionListener(new ActionListener()
 		{
@@ -18,7 +18,7 @@ public class ActionHelpAbout {
 			@SuppressWarnings("unused")
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				DialogHA frameHA = new DialogHA(title, path, imagePath, width, height, cont);
+				DialogHA frameHA = new DialogHA(title, path, imagePath, cont);
 
 			}
 				
