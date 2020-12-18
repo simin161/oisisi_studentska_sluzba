@@ -24,21 +24,20 @@ public class MenuBar extends JMenuBar {
 	private static final long serialVersionUID = -310993895391393553L;
 
 	@SuppressWarnings("deprecation")
-	public MenuBar(Container cont)
-	{
+	public MenuBar(int width, int height, Container cont) {
 		JMenu menuFile = new JMenu("File");
 		menuFile.setMnemonic('F');
 		add(menuFile);
-		
+
 		JMenu menuEdit = new JMenu("Edit");
 		menuEdit.setMnemonic('E');
 		add(menuEdit);
-		
+
 		JMenu menuHelp = new JMenu("Help");
 		menuHelp.setMnemonic('H');
 		add(menuHelp);
-		
-		//menu bar file
+
+		// menu bar file
 
 		JMenuItem menuItemNew = new JMenuItem("New", new ImageIcon("images/add3.png"));
 		menuItemNew.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_MASK));
@@ -46,7 +45,7 @@ public class MenuBar extends JMenuBar {
 		AbstractActionNew actionNew = new AbstractActionNew();
 		menuItemNew.addActionListener(actionNew);
 		menuFile.add(menuItemNew);
-		
+
 		menuFile.addSeparator();
 
 		JMenuItem menuItemClose = new JMenuItem("Close", new ImageIcon("images/close2.png"));
@@ -54,18 +53,18 @@ public class MenuBar extends JMenuBar {
 		menuItemClose.setMnemonic('C');
 		ActionClose.closeAction(menuItemClose);
 		menuFile.add(menuItemClose);
-		
-		//menu bar edit
-		
+
+		// menu bar edit
+
 		JMenuItem menuItemEdit = new JMenuItem("Edit", new ImageIcon("images/edit3.png"));
 		menuItemEdit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, InputEvent.CTRL_MASK));
 		menuItemEdit.setMnemonic('E');
 		AbstractActionEdit actionEdit = new AbstractActionEdit();
 		menuItemEdit.addActionListener(actionEdit);
 		menuEdit.add(menuItemEdit);
-		
+
 		menuEdit.addSeparator();
-		
+
 		JMenuItem menuItemDelete = new JMenuItem("Delete", new ImageIcon("images/delete3.png"));
 		menuItemDelete.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_D, InputEvent.CTRL_MASK));
 		menuItemDelete.setMnemonic('D');
@@ -73,20 +72,22 @@ public class MenuBar extends JMenuBar {
 		menuItemDelete.addActionListener(actionDelete);
 		menuEdit.add(menuItemDelete);
 
-		//menu bar help
-		
+		// menu bar help
+
 		JMenuItem menuItemHelp = new JMenuItem("Help", new ImageIcon("images/help2.png"));
 		menuItemHelp.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_H, InputEvent.CTRL_MASK));
 		menuItemHelp.setMnemonic('H');
-		ActionHelpAbout.helpAboutAction(menuItemHelp, "Help", "text/help.txt", "images/help.png", cont);
+		ActionHelpAbout.helpAboutAction(menuItemHelp, "Help", "text/help.txt", "images/help.png", (int) (width * 0.75),
+				(int) (height * 0.75), cont);
 		menuHelp.add(menuItemHelp);
 
 		menuHelp.addSeparator();
-		
+
 		JMenuItem menuItemAbout = new JMenuItem("About", new ImageIcon("images/about2.png"));
 		menuItemAbout.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, InputEvent.CTRL_MASK));
 		menuItemAbout.setMnemonic('A');
-		ActionHelpAbout.helpAboutAction(menuItemAbout, "About", "text/about.txt", "images/about.png", cont);
+		ActionHelpAbout.helpAboutAction(menuItemAbout, "About", "text/about.txt", "images/about.png",
+				(int) (width * 0.75), (int) (height * 0.75), cont);
 		menuHelp.add(menuItemAbout);
 
 	}

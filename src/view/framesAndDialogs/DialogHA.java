@@ -18,12 +18,12 @@ public class DialogHA extends JDialog{
 		 */
 	private static final long serialVersionUID = 3609624215836161096L;
 
-	public DialogHA(String title, String path, String imagePath, Container cont)
+	public DialogHA(String title, String path, String imagePath,int w, int h, Container cont)
 	{
 		JDialog dialog = new JDialog();
 		dialog.setVisible(true);
 		dialog.setTitle(title);
-		dialog.setSize((int) (cont.getWidth()*0.75),(int) (cont.getHeight()*0.75));
+		dialog.setSize(w,h);
 		dialog.setLocationRelativeTo(cont);
 		
 		//https://www.javatpoint.com/how-to-change-titlebar-icon-in-java-awt-swing?fbclid=IwAR02JPEn9b2_SUM4loISHuJAOYCE9wFZ49-eUfDIAbtLn-gBOleIHt5IWkU	
