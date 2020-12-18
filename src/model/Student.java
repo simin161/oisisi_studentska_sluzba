@@ -21,8 +21,118 @@ public class Student {
 	private ArrayList<Ocena> polozeno;
 	//fali lista nepolozenih predmeta
 	
-	Student(){
-		
+	public Student(String prezime, String ime, String datumRodjenja, String adresaStanovanja, String telefon,
+			String email, String brIndeksa, int godinaUpisa, int trenutnaGodina, Status status, double prosecnaOcena,
+			ArrayList<Ocena> polozeno) {
+		super();
+		this.prezime = prezime;
+		this.ime = ime;
+		this.datumRodjenja = datumRodjenja;
+		this.adresaStanovanja = adresaStanovanja;
+		this.telefon = telefon;
+		this.email = email;
+		this.brIndeksa = brIndeksa;
+		this.godinaUpisa = godinaUpisa;
+		this.trenutnaGodina = trenutnaGodina;
+		this.status = status;
+		this.prosecnaOcena = prosecnaOcena;
+		this.polozeno = polozeno;
 	}
 
+	public String getPrezime() {
+		return prezime;
+	}
+
+	public String getIme() {
+		return ime;
+	}
+
+	public String getDatumRodjenja() {
+		return datumRodjenja;
+	}
+
+	public String getAdresaStanovanja() {
+		return adresaStanovanja;
+	}
+
+	public String getTelefon() {
+		return telefon;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public String getBrIndeksa() {
+		return brIndeksa;
+	}
+
+	public int getGodinaUpisa() {
+		return godinaUpisa;
+	}
+
+	public int getTrenutnaGodina() {
+		return trenutnaGodina;
+	}
+
+	public Status getStatus() {
+		return status;
+	}
+
+	public double getProsecnaOcena() {
+		return prosecnaOcena;
+	}
+
+	public ArrayList<Ocena> getPolozeno() {
+		return polozeno;
+	}
+
+	public void setPrezime(String prezime) {
+		this.prezime = prezime;
+	}
+
+	public void setIme(String ime) {
+		this.ime = ime;
+	}
+
+	public void setDatumRodjenja(String datumRodjenja) {
+		this.datumRodjenja = datumRodjenja;
+	}
+
+	public void setAdresaStanovanja(String adresaStanovanja) {
+		this.adresaStanovanja = adresaStanovanja;
+	}
+
+	public void setTelefon(String telefon) {
+		this.telefon = telefon;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public void setBrIndeksa(String brIndeksa) {
+		this.brIndeksa = brIndeksa;
+	}
+
+	public void setGodinaUpisa(int godinaUpisa) {
+		this.godinaUpisa = godinaUpisa;
+	}
+
+	public void setTrenutnaGodina(int trenutnaGodina) {
+		this.trenutnaGodina = trenutnaGodina;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
+	}
+
+	public void setProsecnaOcena(double prosecnaOcena) {
+		this.prosecnaOcena = prosecnaOcena;
+	}
+
+	public void setPolozeno(ArrayList<Ocena> polozeno) {
+		this.polozeno = polozeno;
+	}
+	
 }
