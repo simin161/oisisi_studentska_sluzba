@@ -7,7 +7,6 @@ import java.awt.Toolkit;
 
 import javax.swing.Box;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class GlavniProzor extends JFrame{
@@ -22,7 +21,7 @@ public class GlavniProzor extends JFrame{
 		int screenWidth = (int) (screenSize.width * 0.75);
 		
 		setSize(screenWidth, screenHeight);
-		setTitle("Studentska sluûba");
+		setTitle("Studentska slu≈æba");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		setLocationRelativeTo(null);
@@ -43,9 +42,6 @@ public class GlavniProzor extends JFrame{
 		panelMain.setLayout(new BorderLayout(0,0));
 		
 		
-		JLabel lblToDo= new JLabel("TO DO: dodati prikaz entiteta");
-		
-		
 		Component rigidArea = Box.createRigidArea(new Dimension(30, 30));
 		Component rigidArea2 = Box.createRigidArea(new Dimension(10, 10));
 		
@@ -53,7 +49,10 @@ public class GlavniProzor extends JFrame{
 		panelMain.add(rigidArea2, BorderLayout.SOUTH);
 		panelMain.add(Box.createHorizontalStrut(20), BorderLayout.WEST);
 		panelMain.add(Box.createHorizontalStrut(20), BorderLayout.EAST);
-		panelMain.add(lblToDo);
+		
+		
+		
+		
 		
 		/* --- Menu bar --- */
 		MenuBar menuBar = new MenuBar(screenWidth, screenHeight, getContentPane());
@@ -62,7 +61,7 @@ public class GlavniProzor extends JFrame{
 		/* --- Status bar --- */
 		
 		StatusBar statusBar = new StatusBar();
-		statusBar.addText("Studentska sluûba");
+		statusBar.addText("Studentska slu≈æba");
 		statusBar.addTimeAndDate();
 		statusBar.attach(getContentPane());
 		
