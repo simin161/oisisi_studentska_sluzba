@@ -14,11 +14,11 @@ public class Profesor {
 	private String brLicneKarte;
 	private String titula;
 	private String zvanje;
-	//private List<Predmet> predmeti;
+	private List<Predmet> predmeti;
 	
 	public Profesor(String prezime, String ime, String datumRodjenja, String adresaStanovanja, String telefon,
-			String email, String adresaKancelarije, String brLicneKarte, String titula, String zvanje
-			/*List<Predmet> predmeti*/) {
+			String email, String adresaKancelarije, String brLicneKarte, String titula, String zvanje,
+			List<Predmet> predmeti) {
 		super();
 		this.prezime = prezime;
 		this.ime = ime;
@@ -30,7 +30,7 @@ public class Profesor {
 		this.brLicneKarte = brLicneKarte;
 		this.titula = titula;
 		this.zvanje = zvanje;
-		//this.predmeti = predmeti;
+		this.predmeti = predmeti;
 	}
 
 	public String getPrezime() {
@@ -113,14 +113,14 @@ public class Profesor {
 		this.zvanje = zvanje;
 	}
 
-	/*public List<Predmet> getPredmeti() {
+	public List<Predmet> getPredmeti() {
 		return predmeti;
 	}
 
 	public void setPredmeti(List<Predmet> predmeti) {
 		this.predmeti = predmeti;
 	}
-	*/
+	
 	
 	
 }
