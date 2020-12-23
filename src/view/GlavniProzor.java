@@ -1,13 +1,19 @@
 package view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 
 import javax.swing.Box;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
+import javax.swing.border.LineBorder;
+
+import view.tabbedPanes.PrikazProfesora;
 
 public class GlavniProzor extends JFrame{
 
@@ -50,9 +56,19 @@ public class GlavniProzor extends JFrame{
 		panelMain.add(Box.createHorizontalStrut(20), BorderLayout.WEST);
 		panelMain.add(Box.createHorizontalStrut(20), BorderLayout.EAST);
 		
+		/* --- Tabovi --- */
 		
+		JTabbedPane tabbedPane = new JTabbedPane();
+		tabbedPane.setBorder(new LineBorder(new Color(0,0,0)));
 		
+		JLabel lblStudent = new JLabel("TODO: dodati prikazane studente");
+		JLabel lblPredmet = new JLabel("TODO: dodati prikazane predmete");
 		
+		tabbedPane.add("Studenti", lblStudent);
+		tabbedPane.add("Profesori", PrikazProfesora.getInstance());
+		tabbedPane.add("Predmeti", lblPredmet);
+			
+		panelMain.add(tabbedPane, BorderLayout.CENTER);
 		
 		/* --- Menu bar --- */
 		MenuBar menuBar = new MenuBar(screenWidth, screenHeight, getContentPane());
