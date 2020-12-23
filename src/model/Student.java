@@ -78,6 +78,15 @@ public class Student {
 	public Status getStatus() {
 		return status;
 	}
+	
+	public String getStatusAsString() {
+		switch(status)
+		{
+		case B : return "Budžet";
+		case S : return "Samofinansiranje";
+		default : return "";
+		}
+	}
 
 	public double getProsecnaOcena() {
 		return prosecnaOcena;
