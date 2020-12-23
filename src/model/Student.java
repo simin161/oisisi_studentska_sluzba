@@ -1,12 +1,11 @@
 package model;
 
-
-import java.util.ArrayList;
+import java.util.List;
 
 import model.nabrojiviTipovi.Status;
 
 public class Student {
-	
+
 	private String prezime;
 	private String ime;
 	private String datumRodjenja;
@@ -18,12 +17,12 @@ public class Student {
 	private int trenutnaGodina;
 	private Status status;
 	private double prosecnaOcena;
-	private ArrayList<Ocena> polozeno;
-	//fali lista nepolozenih predmeta
-	
+	private List<Ocena> polozeno;
+	private List<Predmet> nepolozeno;
+
 	public Student(String prezime, String ime, String datumRodjenja, String adresaStanovanja, String telefon,
 			String email, String brIndeksa, int godinaUpisa, int trenutnaGodina, Status status, double prosecnaOcena,
-			ArrayList<Ocena> polozeno) {
+			List<Ocena> polozeno, List<Predmet> nepolozeno) {
 		super();
 		this.prezime = prezime;
 		this.ime = ime;
@@ -37,6 +36,7 @@ public class Student {
 		this.status = status;
 		this.prosecnaOcena = prosecnaOcena;
 		this.polozeno = polozeno;
+		this.nepolozeno = nepolozeno;
 	}
 
 	public String getPrezime() {
@@ -83,8 +83,12 @@ public class Student {
 		return prosecnaOcena;
 	}
 
-	public ArrayList<Ocena> getPolozeno() {
+	public List<Ocena> getPolozeno() {
 		return polozeno;
+	}
+	
+	public List<Predmet> getNepolozeno(){
+		return nepolozeno;
 	}
 
 	public void setPrezime(String prezime) {
@@ -131,8 +135,12 @@ public class Student {
 		this.prosecnaOcena = prosecnaOcena;
 	}
 
-	public void setPolozeno(ArrayList<Ocena> polozeno) {
+	public void setPolozeno(List<Ocena> polozeno) {
 		this.polozeno = polozeno;
 	}
 	
+	public void setNepolozeno(List<Predmet> nepolozeno) {
+		this.nepolozeno = nepolozeno;
+	}
+
 }
