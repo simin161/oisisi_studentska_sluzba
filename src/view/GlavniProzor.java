@@ -12,6 +12,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.border.LineBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import view.tabbedPanes.PrikazProfesora;
 
@@ -19,6 +21,10 @@ public class GlavniProzor extends JFrame{
 
 	private static final long serialVersionUID = -8763285092502046194L;
 
+	private int rbrTaba=0;
+	
+	private JFrame frame;
+	
 	public GlavniProzor()
 	{
 		Toolkit kit = Toolkit.getDefaultToolkit();
@@ -26,11 +32,14 @@ public class GlavniProzor extends JFrame{
 		int screenHeight = (int) (screenSize.height * 0.75);
 		int screenWidth = (int) (screenSize.width * 0.75);
 		
+		
 		setSize(screenWidth, screenHeight);
 		setTitle("Studentska služba");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		setLocationRelativeTo(null);
+		
+		frame = this;
 		
 		JPanel panelSsluzba = new JPanel();
 		getContentPane().add(panelSsluzba);
@@ -40,7 +49,7 @@ public class GlavniProzor extends JFrame{
 		panelSsluzba.add(panelToolbar, BorderLayout.NORTH);
 		panelToolbar.setLayout(new BorderLayout(0,0));
 		
-		Toolbar toolbar = new Toolbar();
+		Toolbar toolbar = new Toolbar(rbrTaba, this);
 		panelToolbar.add(toolbar);
 		
 		JPanel panelMain = new JPanel();
@@ -67,11 +76,24 @@ public class GlavniProzor extends JFrame{
 		tabbedPane.add("Studenti", lblStudent);
 		tabbedPane.add("Profesori", PrikazProfesora.getInstance());
 		tabbedPane.add("Predmeti", lblPredmet);
+
+		tabbedPane.addChangeListener(new ChangeListener() {
 			
+			public void stateChanged(ChangeEvent e) {
+				
+				rbrTaba = tabbedPane.getSelectedIndex();
+				toolbar.updateRbr(rbrTaba, frame);
+				
+			}
+			
+		});
+		
 		panelMain.add(tabbedPane, BorderLayout.CENTER);
 		
+		
+		
 		/* --- Menu bar --- */
-		MenuBar menuBar = new MenuBar(screenWidth, screenHeight, getContentPane());
+		MenuBar menuBar = new MenuBar(screenWidth, screenHeight, getContentPane(), rbrTaba);
 		this.setJMenuBar(menuBar);
 		
 		/* --- Status bar --- */
@@ -83,7 +105,5 @@ public class GlavniProzor extends JFrame{
 		
 		
 	}
-	
-	
 	
 }

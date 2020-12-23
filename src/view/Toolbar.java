@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
 
@@ -17,25 +18,34 @@ public class Toolbar extends JToolBar{
 
 	private static final long serialVersionUID = 4583925805420852995L;
 
-	public Toolbar()
-	{
+	private int rbrT=0;
+	private Container co;
+	private AbstractActionNew anew = new AbstractActionNew(rbrT, co);
+	private AbstractActionEdit aedit = new AbstractActionEdit();
+	private AbstractActionDelete adelete = new AbstractActionDelete();
+	
+	
+	public Toolbar(int rbr, Container c)
+	{	
 		super(SwingConstants.HORIZONTAL);
 		setRollover(true);
 		setFloatable(false);
 		
+		updateRbr(rbr, c);
+		
 		addSeparator();
 		
-		AbstractActionNew anew = new AbstractActionNew();
+		anew = new AbstractActionNew(rbrT, co);
 		add(anew);
 		
 		addSeparator();
 		
-		AbstractActionEdit aedit = new AbstractActionEdit();
+		aedit = new AbstractActionEdit();
 		add(aedit);	
 		
 		addSeparator();
 		
-		AbstractActionDelete adelete = new AbstractActionDelete();
+		adelete = new AbstractActionDelete();
 		add(adelete);
 		
 		add(Box.createHorizontalGlue());
@@ -52,6 +62,14 @@ public class Toolbar extends JToolBar{
 		
 		addSeparator();
 		addSeparator();
+	}
+	
+	public void updateRbr(int rbr, Container c) {
+		
+		this.rbrT = rbr;
+		this.anew.updateRbr(rbr);
+		this.co = c;
+		
 	}
 	
 }

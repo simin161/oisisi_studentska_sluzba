@@ -136,7 +136,7 @@ public class DialogAddStudent extends JDialog {
 		JButton buttonPotvrdi = new JButton("Potvrdi");
 		JButton buttonPonisti = new JButton("Poništi");
 		ButtonAction.cancelAction(buttonPonisti, this);
-		ButtonAction.potvrdiButton(buttonPotvrdi);
+		//ButtonAction.potvrdiButton(buttonPotvrdi);
 		panelButton.add(buttonPotvrdi);
 		panelButton.add(Box.createHorizontalStrut(35));
 		panelButton.add(buttonPonisti);

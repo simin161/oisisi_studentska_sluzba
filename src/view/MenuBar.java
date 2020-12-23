@@ -24,7 +24,7 @@ public class MenuBar extends JMenuBar {
 	private static final long serialVersionUID = -310993895391393553L;
 
 	@SuppressWarnings("deprecation")
-	public MenuBar(int width, int height, Container cont) {
+	public MenuBar(int width, int height, Container cont, int rbr) {
 		JMenu menuFile = new JMenu("File");
 		menuFile.setMnemonic('F');
 		add(menuFile);
@@ -42,8 +42,8 @@ public class MenuBar extends JMenuBar {
 		JMenuItem menuItemNew = new JMenuItem("New", new ImageIcon("images/add3.png"));
 		menuItemNew.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_MASK));
 		menuItemNew.setMnemonic('N');
-		AbstractActionNew actionNew = new AbstractActionNew();
-		menuItemNew.addActionListener(actionNew);
+		//AbstractActionNew actionNew = new AbstractActionNew(rbr);
+		//menuItemNew.addActionListener(actionNew);
 		menuFile.add(menuItemNew);
 
 		menuFile.addSeparator();

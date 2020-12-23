@@ -21,11 +21,13 @@ public class ButtonAction {
 		});
 	}
 
-	public static void potvrdiButton(JButton button) {
+	public static void potvrdiButton(JButton button, int dialog) {
 		button.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
+				
+				
 			}
 
 		});
