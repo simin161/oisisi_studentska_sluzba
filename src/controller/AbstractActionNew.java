@@ -10,6 +10,7 @@ import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
 import javax.swing.KeyStroke;
 
+import view.framesAndDialogs.DialogAddStudent;
 import view.framesAndDialogs.DialogDodavanjeProfesora;
 
 public class AbstractActionNew extends AbstractAction{
@@ -37,7 +38,7 @@ public class AbstractActionNew extends AbstractAction{
 		
 		if(this.rbrTaba==0)
 		{
-			//student
+			DialogAddStudent dialogAddS = new DialogAddStudent(c);
 		}
 		else if(this.rbrTaba==1)
 		{

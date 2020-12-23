@@ -65,6 +65,12 @@ public class GlavniProzor extends JFrame{
 		panelMain.add(Box.createHorizontalStrut(20), BorderLayout.WEST);
 		panelMain.add(Box.createHorizontalStrut(20), BorderLayout.EAST);
 		
+		
+		/* --- Menu bar --- */
+		MenuBar menuBar = new MenuBar(screenWidth, screenHeight, this);
+		this.setJMenuBar(menuBar);
+		
+		
 		/* --- Tabovi --- */
 		
 		JTabbedPane tabbedPane = new JTabbedPane();
@@ -83,18 +89,12 @@ public class GlavniProzor extends JFrame{
 				
 				rbrTaba = tabbedPane.getSelectedIndex();
 				toolbar.updateRbr(rbrTaba, frame);
-				
+				menuBar.updateRbr(rbrTaba, frame);
 			}
 			
 		});
 		
 		panelMain.add(tabbedPane, BorderLayout.CENTER);
-		
-		
-		
-		/* --- Menu bar --- */
-		MenuBar menuBar = new MenuBar(screenWidth, screenHeight, getContentPane(), rbrTaba);
-		this.setJMenuBar(menuBar);
 		
 		/* --- Status bar --- */
 		
