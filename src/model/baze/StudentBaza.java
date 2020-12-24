@@ -49,7 +49,7 @@ public class StudentBaza {
 		return students;
 	}
 
-	public void setProfesori(List<Student> students) {
+	public void setStudents(List<Student> students) {
 
 		this.students = students;
 
