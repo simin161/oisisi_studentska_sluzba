@@ -89,6 +89,16 @@ public class ProfesorBaza {
 		
 	}
 	
+	public void dodajProfesora(String ime, String prezime, String datum, 
+			String adresaS, String telefon, String email, 
+			String adresaK, String brLicneKarte, String titula,
+			String zvanje) {
+		
+		this.profesori.add(new Profesor(ime, prezime, datum, adresaS,
+				telefon, email, adresaK, brLicneKarte, titula, zvanje, null));
+		
+	}
+	
 	
 	
 }

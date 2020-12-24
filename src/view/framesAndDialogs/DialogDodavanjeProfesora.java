@@ -4,6 +4,12 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -12,17 +18,23 @@ import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.text.MaskFormatter;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 import controller.buttonAction.ButtonAction;
+import controller.profesor.ProfesoriController;
+import model.Profesor;
 
 public class DialogDodavanjeProfesora extends JDialog{
 
 	private static final long serialVersionUID = 3844060477268188498L;
-
-	private int dialog=2;
+	
+	private Profesor profesor;
+	private Boolean []provera= {false, false, false, false, false, false, false, false};
+	
 	
 	public DialogDodavanjeProfesora(Container c)
 	{
@@ -65,18 +77,7 @@ public class DialogDodavanjeProfesora extends JDialog{
 		JPanel panelDatum= new JPanel(new FlowLayout(FlowLayout.LEFT));
 		JLabel lblDatum = new JLabel("Datum rođenja* ");
 		
-		MaskFormatter mask = null;
-		try {
-			
-			mask= new MaskFormatter("##/##/####");
-			mask.setPlaceholderCharacter('_');
-			
-		}catch(Exception e)
-		{
-			e.printStackTrace();
-		}
-		
-		JFormattedTextField txtDatum = new JFormattedTextField(mask);
+		JFormattedTextField txtDatum = new JFormattedTextField();
 		
 		lblDatum.setPreferredSize(dim);
 		txtDatum.setPreferredSize(dim);
@@ -99,7 +100,8 @@ public class DialogDodavanjeProfesora extends JDialog{
 		
 		JPanel panelTelefon = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		JLabel lblTelefon = new JLabel("Kontakt telefon* ");
-		JTextField txtTelefon = new JTextField();
+		
+		JFormattedTextField txtTelefon = new JFormattedTextField();
 		lblTelefon.setPreferredSize(dim);
 		txtTelefon.setPreferredSize(dim);
 		panelTelefon.add(Box.createHorizontalStrut(65));
@@ -167,9 +169,9 @@ public class DialogDodavanjeProfesora extends JDialog{
 		BoxLayout btn = new BoxLayout(panelBtn, BoxLayout.X_AXIS);
 		panelBtn.setLayout(btn);
 		JButton btnPotvrdi = new JButton("Potvrdi");
+		btnPotvrdi.setEnabled(false);
 		JButton btnPonisti = new JButton("Poništi");
 		ButtonAction.cancelAction(btnPonisti, this);
-		ButtonAction.potvrdiButton(btnPotvrdi, dialog);
 		panelBtn.add(btnPotvrdi);
 		panelBtn.add(Box.createHorizontalStrut(35));
 		panelBtn.add(btnPonisti);
@@ -177,7 +179,655 @@ public class DialogDodavanjeProfesora extends JDialog{
 		
 		add(panelMain);
 		
+		txtIme.getDocument().addDocumentListener(new DocumentListener() {
+
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				
+				enableBtn();
+				
+			}
+
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+			
+				enableBtn();
+			}
+
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				
+				enableBtn();
+			}
+			
+			private void enableBtn() {
+				
+				Boolean enable = false;
+				String imeReg = "^[\\p{L} .'-]+$";
+				
+				
+				if(txtIme.getText().trim().length()==0)
+				{
+					provera[0]= false;
+					lblIme.setText("Ime*");
+				}
+				else
+				{
+					Pattern pattern = Pattern.compile(imeReg, Pattern.CASE_INSENSITIVE);
+					Matcher matcher = pattern.matcher(txtIme.getText());
+					provera[0]= matcher.find();
+					if(provera[0]==true)
+					{
+						lblIme.setText("Ime");
+					}
+					else
+					{
+						lblIme.setText("Ime*");
+					}
+				}
+				
+				for(int i=0; i<8; i++)
+				{
+					if(provera[i]==false){
+						enable = false;
+						break;
+					}
+					else {
+						enable = true;
+					}
+					
+				}
+				
+				btnPotvrdi.setEnabled(enable);
+				
+			}
+			
+		});
 		
+		txtIme.addFocusListener(new FocusListener() {
+
+			@Override
+			public void focusGained(FocusEvent e) {
+				
+				
+			}
+
+			@Override
+			public void focusLost(FocusEvent e) {
+			
+				
+				if(txtIme.getText().trim().length()!=0)
+				{
+					String pocetno = txtIme.getText().substring(0,1).toUpperCase();
+					String ostatak = txtIme.getText().substring(1);
+					
+					txtIme.setText(pocetno+ostatak);
+					
+					/*String ime = txtIme.getText();
+					String []parts = ime.split(" ");
+					String []novo = parts;
+					int i=0;
+					for(String s : parts)
+					{
+						String pocetno = s.substring(0, 1);
+						String ostatak = s.substring(1);
+						pocetno = pocetno.toUpperCase();
+						novo[i]= pocetno+ostatak;
+						i++;
+					}
+					
+					String novoIme="";
+					i=0;
+					
+					do {
+						
+						novoIme= novoIme + novo[i] + " ";
+						i++;
+						
+					}while(i!= novo.length);
+					
+					txtIme.setText(novoIme);*/
+				}
+				
+			}
+			
+		});
+		
+		txtPrezime.getDocument().addDocumentListener(new DocumentListener() {
+
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+			
+				enableBtn();
+				
+			}
+
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				
+				enableBtn();
+			}
+
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				
+				enableBtn();
+			}
+			
+			private void enableBtn() {
+				
+				Boolean enable = false;
+				String prezimeReg = "^[\\p{L} -]+$";
+				
+				if(txtPrezime.getText().trim().length()==0)
+				{
+					provera[1]= false;
+					lblPrezime.setText("Prezime*");
+				}
+				else
+				{
+					Pattern pattern = Pattern.compile(prezimeReg, Pattern.CASE_INSENSITIVE);
+					Matcher matcher = pattern.matcher(txtPrezime.getText());
+					provera[1]= matcher.find();
+					if(provera[1]==true)
+					{
+						lblPrezime.setText("Prezime");
+					}
+					else
+					{
+						lblPrezime.setText("Prezime*");
+					}
+				}
+				
+				for(int i=0; i<8; i++)
+				{
+					
+					if(provera[i]==false){
+						enable = false;
+						break;
+					}
+					else {
+						enable = true;
+					}
+					
+				}
+				
+				btnPotvrdi.setEnabled(enable);
+			}
+			
+		});
+		
+		txtPrezime.addFocusListener(new FocusListener() {
+
+			@Override
+			public void focusGained(FocusEvent e) {
+				
+				
+			}
+
+			@Override
+			public void focusLost(FocusEvent e) {
+				
+				
+					if(txtPrezime.getText().trim().length()!=0) {
+						
+						String []parts = txtPrezime.getText().split("-");
+						String []prezime = parts;
+						String novoP="";
+						int i=0;
+						
+						for(String s : parts)
+						{
+							String pocetno= s.substring(0,1).toUpperCase();
+							String ostatak= s.substring(1);
+							
+							prezime[i]= pocetno+ostatak;
+
+							i++;
+						}
+						
+						i=0;
+						while(i!=prezime.length)
+						{
+							if(i==0) {
+								
+								novoP= prezime[i];
+								
+							}
+							else
+							{
+								novoP= novoP + '-' + prezime[i];
+							}
+							
+							i++;
+						}
+						
+						txtPrezime.setText(novoP);
+						
+					}
+					
+				
+				
+				}
+				
+				
+			
+			
+			
+			
+			
+		});
+		
+		txtDatum.getDocument().addDocumentListener(new DocumentListener() {
+
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				
+				enableBtn();
+				
+			}
+
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				
+				enableBtn();
+			}
+
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				
+				enableBtn();
+			}
+			
+			private void enableBtn() {
+				
+				Boolean enable = false;
+				String datumReg = "^(\\d{2}[-/.]?){2}\\d{4}$";
+				if(txtDatum.getText().trim().length()==0)
+				{
+					provera[2]= false;
+					lblDatum.setText("Datum rođenja*");
+				}
+				else
+				{
+					Pattern pattern = Pattern.compile(datumReg);
+					Matcher matcher = pattern.matcher(txtDatum.getText());
+					provera[2]= matcher.find();
+					
+					if(provera[2]==true)
+					{
+						lblDatum.setText("Datum rođenja");
+					}
+					else
+					{
+						lblDatum.setText("Datum rođenja*");
+					}
+					
+				}
+				
+				for(int i=0; i<8; i++)
+				{
+					
+					if(provera[i]==false){
+						enable = false;
+						break;
+					}
+					else {
+						enable = true;
+					}
+					
+				}
+				
+				btnPotvrdi.setEnabled(enable);
+			}
+			
+		});
+		
+		txtAdresa.getDocument().addDocumentListener(new DocumentListener() {
+
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				
+				enableBtn();
+				
+			}
+
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+			
+				enableBtn();
+			}
+
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+			
+				enableBtn();
+			}
+			
+			private void enableBtn() {
+				
+				Boolean enable = false;
+				
+				if(txtAdresa.getText().trim().length()==0)
+				{
+					provera[3]= false;
+					lblAdresa.setText("Adresa stanovanja*");
+				}
+				else
+				{
+					provera[3]= true;
+					lblAdresa.setText("Adresa stanovanja");
+				}
+				
+				for(int i=0; i<8; i++)
+				{
+					
+					if(provera[i]==false){
+						enable = false;
+						break;
+					}
+					else {
+						enable = true;
+					}
+					
+				}
+				
+				btnPotvrdi.setEnabled(enable);
+			}
+			
+		});
+		
+		txtTelefon.getDocument().addDocumentListener(new DocumentListener() {
+
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				
+				enableBtn();
+				
+			}
+
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				
+				enableBtn();
+			}
+
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+			
+				enableBtn();
+			}
+			
+			private void enableBtn() {
+				
+				Boolean enable = false;
+				String phoneNumb = "^(\\d{3}[- .]?){2}\\d{3}$";
+				String phoneNumb2 = "^(\\d{3}[- .]?){2}\\d{4}$";
+				if(txtTelefon.getText().trim().length()==0)
+				{
+					provera[4]= false;
+					lblTelefon.setText("Kontakt telefon*");
+				}
+				else
+				{
+					Pattern pattern = Pattern.compile(phoneNumb);
+					Matcher matcher = pattern.matcher(txtTelefon.getText());
+					Pattern pattern2 = Pattern.compile(phoneNumb2);
+					Matcher matcher2 = pattern2.matcher(txtTelefon.getText());
+					provera[4]= matcher.find();
+					
+					if(matcher.find()!= true && matcher2.find()== true)
+						provera[4]= true;
+					
+					
+					if(provera[4]==true)
+					{
+						lblTelefon.setText("Kontakt telefon");
+					}
+					else
+					{
+						lblTelefon.setText("Kontakt telefon*");
+					}
+					
+				}
+				
+				for(int i=0; i<8; i++)
+				{
+					
+					if(provera[i]==false){
+						enable = false;
+						break;
+					}
+					else {
+						enable = true;
+					}
+					
+				}
+				
+				btnPotvrdi.setEnabled(enable);
+			}
+			
+		});
+		
+		txtEmail.getDocument().addDocumentListener(new DocumentListener() {
+
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				
+				enableBtn();
+				
+			}
+
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				
+				enableBtn();
+			}
+
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				
+				enableBtn();
+			}
+			
+			private void enableBtn() {
+				
+				Boolean enable = false;
+				String mailReg = "^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$";
+				
+				if(txtEmail.getText().trim().length()==0)
+				{
+					provera[5]= false;
+					lblEmail.setText("E-mail adresa*");
+				}
+				else
+				{
+					
+					Pattern pattern = Pattern.compile(mailReg, Pattern.CASE_INSENSITIVE);
+					Matcher matcher = pattern.matcher(txtEmail.getText());
+					provera[5]= matcher.find();
+					
+					if(provera[5]== true)
+					{
+						lblEmail.setText("E-mail adresa");
+					}
+					else
+						lblEmail.setText("E-mail adresa*");
+				}
+				
+				for(int i=0; i<8; i++)
+				{
+					
+					if(provera[i]==false){
+						enable = false;
+						break;
+					}
+					else {
+						enable = true;
+					}
+					
+				}
+				
+				btnPotvrdi.setEnabled(enable);
+			}
+			
+		});
+		
+		txtKancelarija.getDocument().addDocumentListener(new DocumentListener() {
+
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+			
+				enableBtn();
+				
+			}
+
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+			
+				enableBtn();
+			}
+
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				
+				enableBtn();
+			}
+			
+			private void enableBtn() {
+				
+				Boolean enable = false;
+				
+				if(txtKancelarija.getText().trim().length()==0)
+				{
+					provera[6]= false;
+					lblKancelarija.setText("Adresa kancelarije*");
+				}
+				else
+				{
+					provera[6]= true;
+					lblKancelarija.setText("Adresa kancelarije");
+				}
+				
+				for(int i=0; i<8; i++)
+				{
+					
+					if(provera[i]==false){
+						enable = false;
+						break;
+					}
+					else {
+						enable = true;
+					}
+					
+				}
+				
+				btnPotvrdi.setEnabled(enable);
+			}
+			
+		});
+		
+		txtLk.getDocument().addDocumentListener(new DocumentListener() {
+
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+			
+				enableBtn();
+				
+			}
+
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				
+				enableBtn();
+			}
+
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				
+				enableBtn();
+			}
+			
+			private void enableBtn() {
+				
+				Boolean enable = false;
+				String lkReg= "^\\d{9}$";
+				if(txtLk.getText().trim().length()==0)
+				{
+					provera[7]= false;
+					lblLk.setText("Broj lične karte*");
+				}
+				else
+				{
+
+					Pattern pattern = Pattern.compile(lkReg, Pattern.CASE_INSENSITIVE);
+					Matcher matcher = pattern.matcher(txtLk.getText());
+					provera[7]= matcher.find();
+					
+					if(provera[7]== true)
+					{
+						lblLk.setText("Broj lične karte");
+					}
+					else
+						lblLk.setText("Broj lične karte*");
+				}
+				
+				for(int i=0; i<8; i++)
+				{
+					
+					if(provera[i]==false){
+						enable = false;
+						break;
+					}
+					else {
+						enable = true;
+					}
+					
+				}
+				
+				btnPotvrdi.setEnabled(enable);
+			}
+			
+		});
+		
+		btnPotvrdi.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+			
+				
+				profesor = new Profesor();
+				profesor.setIme(txtIme.getText());
+				profesor.setPrezime(txtPrezime.getText());
+				profesor.setDatumRodjenja(txtDatum.getText());
+				profesor.setAdresaStanovanja(txtAdresa.getText());
+				profesor.setTelefon(txtTelefon.getText());
+				profesor.setEmail(txtEmail.getText());
+				profesor.setAdresaKancelarije(txtKancelarija.getText());
+				profesor.setBrLicneKarte(txtLk.getText());
+				profesor.setTitula(cboxTitula.getSelectedItem().toString());
+				profesor.setZvanje(cboxZvanje.getSelectedItem().toString());
+				profesor.setPredmeti(null);
+				
+				ProfesoriController pc = new ProfesoriController(profesor);
+				pc.dodajProfesora();
+				
+				JOptionPane.showMessageDialog(null, "Unos novog profesora je uspešno izvršen!");
+				
+				txtIme.setText("");
+				txtPrezime.setText("");
+				txtDatum.setText("");
+				txtAdresa.setText("");
+				txtTelefon.setText("");
+				txtEmail.setText("");
+				txtKancelarija.setText("");
+				txtLk.setText("");
+				cboxTitula.setSelectedIndex(0);
+				cboxZvanje.setSelectedIndex(0);
+				
+			}
+		});
+	
 	}
 	
 }
