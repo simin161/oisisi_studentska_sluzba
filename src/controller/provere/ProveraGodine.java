@@ -5,7 +5,7 @@ import java.time.format.DateTimeFormatter;
 
 public class ProveraGodine {
 
-	public static Boolean proveri(Boolean []provere, String datum) {
+	public static Boolean proveri(Boolean []provere, String datum, int br) {
 		
 		String []date = datum.split("/");
 		int dan = Integer.parseInt(date[0]);
@@ -52,11 +52,23 @@ public class ProveraGodine {
 			
 		}
 		
-		if((godina>trenutnaGod) || (godina> trenutnaGod - 23)) {
+		if(br==1) {
 			
-			pGodina = false;
+			//provera za punoletstvo studenta
 			
 		}
+		else if(br==2) {
+			
+			//provera da li je moguce da profesor ima barem master (sto se godina tice)
+			
+			if((godina>trenutnaGod) || (godina> trenutnaGod - 23)) {
+				
+				pGodina = false;
+				
+			}
+			
+		}
+
 		if(pDan==false || pMesec==false || pGodina==false) {
 			
 			return false;

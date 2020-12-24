@@ -482,7 +482,7 @@ public class DialogDodavanjeProfesora extends JDialog{
 				if(provera[2]==true)
 				{
 					Boolean check = true;
-					check = ProveraGodine.proveri(provera, txtDatum.getText());
+					check = ProveraGodine.proveri(provera, txtDatum.getText(), 2);
 					
 					if(check==false) {
 						
@@ -905,38 +905,20 @@ public class DialogDodavanjeProfesora extends JDialog{
 				
 				JOptionPane.showMessageDialog(null, "Unos novog profesora je uspešno izvršen!");
 				
-				txtIme.setText("");
-				txtPrezime.setText("");
-				txtDatum.setText("");
-				txtAdresa.setText("");
-				txtTelefon.setText("");
-				txtEmail.setText("");
-				txtKancelarija.setText("");
-				txtLk.setText("");
-				cboxTitula.setSelectedIndex(0);
-				cboxZvanje.setSelectedIndex(0);
-				
+				dispose();				
 			}
 		});
-	
 	}
-	
 	private Boolean proveraProvere(Boolean []provera) {
 		
 		Boolean check= false;
-		
 		for(int i=0; i<8; i++) {
-			
 			if(provera[i]==false) {
-				
 				check = false;
 				break;
-				
 			}
 			else {
-				
 				check = true;
-				
 			}
 		}
 		return check;
