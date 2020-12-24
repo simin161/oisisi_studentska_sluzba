@@ -1,0 +1,70 @@
+package controller.provere;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
+public class ProveraGodine {
+
+	public static Boolean proveri(Boolean []provere, String datum) {
+		
+		String []date = datum.split("/");
+		int dan = Integer.parseInt(date[0]);
+		int mesec = Integer.parseInt(date[1]);
+		int godina = Integer.parseInt(date[2]);
+		
+		Boolean pDan= true;
+		Boolean pMesec= true;
+		Boolean pGodina= true;
+		
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("YYYY");
+		LocalDateTime now = LocalDateTime.now();
+		int trenutnaGod = Integer.parseInt(dtf.format(now));
+		
+		if(mesec<1 || mesec >12) {
+			
+			pMesec=false;	
+		
+		}
+		if(dan<1) {
+			
+			pDan=false;
+		
+		}
+		if(dan>31) {
+			
+			pDan= false;
+			
+		}
+		if((dan==31 && (mesec==2 || mesec== 4 || mesec==6 || mesec==9 || mesec==11))){
+			
+			pDan= false;
+		
+		}
+		if(dan == 29 && mesec == 2) {
+			
+			if(godina % 4 != 0)
+				pDan= false;
+		}
+		
+		if(dan == 30 && mesec == 2) {
+			
+			pDan = false;
+			
+		}
+		
+		if((godina>trenutnaGod) || (godina> trenutnaGod - 23)) {
+			
+			pGodina = false;
+			
+		}
+		if(pDan==false || pMesec==false || pGodina==false) {
+			
+			return false;
+			
+		}
+		else
+			return true;
+		
+	}
+	
+}

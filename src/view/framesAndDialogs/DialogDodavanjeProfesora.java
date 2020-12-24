@@ -26,6 +26,7 @@ import javax.swing.event.DocumentListener;
 
 import controller.buttonAction.ButtonAction;
 import controller.profesor.ProfesoriController;
+import controller.provere.ProveraGodine;
 import model.Profesor;
 
 public class DialogDodavanjeProfesora extends JDialog{
@@ -226,17 +227,7 @@ public class DialogDodavanjeProfesora extends JDialog{
 					}
 				}
 				
-				for(int i=0; i<8; i++)
-				{
-					if(provera[i]==false){
-						enable = false;
-						break;
-					}
-					else {
-						enable = true;
-					}
-					
-				}
+				enable= proveraProvere(provera);
 				
 				btnPotvrdi.setEnabled(enable);
 				
@@ -249,7 +240,11 @@ public class DialogDodavanjeProfesora extends JDialog{
 			@Override
 			public void focusGained(FocusEvent e) {
 				
-				
+				if(provera[0]==false) {
+					
+					txtIme.setText("");
+					
+				}
 			}
 
 			@Override
@@ -289,6 +284,13 @@ public class DialogDodavanjeProfesora extends JDialog{
 					txtIme.setText(novoIme);*/
 				}
 				
+				if(provera[0]==false && txtIme.getText().trim().length()!=0) {
+					
+					JOptionPane.showMessageDialog(DialogDodavanjeProfesora.this, "Greška prilikom unosa imena.", "Greška: ", JOptionPane.ERROR_MESSAGE);
+					txtIme.setText("");
+					
+				}
+				
 			}
 			
 		});
@@ -317,7 +319,7 @@ public class DialogDodavanjeProfesora extends JDialog{
 			private void enableBtn() {
 				
 				Boolean enable = false;
-				String prezimeReg = "^[\\p{L} -]+$";
+				String prezimeReg = "^[\\p{L}-]+$";
 				
 				if(txtPrezime.getText().trim().length()==0)
 				{
@@ -339,18 +341,7 @@ public class DialogDodavanjeProfesora extends JDialog{
 					}
 				}
 				
-				for(int i=0; i<8; i++)
-				{
-					
-					if(provera[i]==false){
-						enable = false;
-						break;
-					}
-					else {
-						enable = true;
-					}
-					
-				}
+				enable= proveraProvere(provera);
 				
 				btnPotvrdi.setEnabled(enable);
 			}
@@ -362,6 +353,11 @@ public class DialogDodavanjeProfesora extends JDialog{
 			@Override
 			public void focusGained(FocusEvent e) {
 				
+				if(provera[1]==false) {
+					
+					txtPrezime.setText("");
+					
+				}
 				
 			}
 
@@ -407,15 +403,14 @@ public class DialogDodavanjeProfesora extends JDialog{
 					}
 					
 				
+					if(provera[1]==false && txtPrezime.getText().trim().length()!=0) {
+						
+						JOptionPane.showMessageDialog(DialogDodavanjeProfesora.this, "Greška prilikom unosa prezimena. Ukoliko imate dva ili više prezimena, unesite ih sa povlakom između.", "Greška: ", JOptionPane.ERROR_MESSAGE);
+						txtPrezime.setText("");
+						
+					}
 				
 				}
-				
-				
-			
-			
-			
-			
-			
 		});
 		
 		txtDatum.getDocument().addDocumentListener(new DocumentListener() {
@@ -442,7 +437,7 @@ public class DialogDodavanjeProfesora extends JDialog{
 			private void enableBtn() {
 				
 				Boolean enable = false;
-				String datumReg = "^(\\d{2}[-/.]?){2}\\d{4}$";
+				String datumReg = "[0-9]{2}[/][0-9]{2}[/][0-9]{4}";
 				if(txtDatum.getText().trim().length()==0)
 				{
 					provera[2]= false;
@@ -464,23 +459,45 @@ public class DialogDodavanjeProfesora extends JDialog{
 					}
 					
 				}
-				
-				for(int i=0; i<8; i++)
-				{
-					
-					if(provera[i]==false){
-						enable = false;
-						break;
-					}
-					else {
-						enable = true;
-					}
-					
-				}
+				enable= proveraProvere(provera);
 				
 				btnPotvrdi.setEnabled(enable);
 			}
-			
+		});
+		
+		txtDatum.addFocusListener(new FocusListener() {
+
+			@Override
+			public void focusGained(FocusEvent e) {
+				
+				if(provera[2]==false) {
+					
+					txtDatum.setText("");
+					
+				}
+			}
+			@Override
+			public void focusLost(FocusEvent e) {
+		
+				if(provera[2]==true)
+				{
+					Boolean check = true;
+					check = ProveraGodine.proveri(provera, txtDatum.getText());
+					
+					if(check==false) {
+						
+						JOptionPane.showMessageDialog(DialogDodavanjeProfesora.this, "Greška prilikom unosa datuma. Proverite Vaše podatke i probajte ponovo.", "Greška: ", JOptionPane.ERROR_MESSAGE);
+						txtDatum.setText("");
+						
+					}
+					
+				}
+				if(provera[2]==false && txtDatum.getText().trim().length()!=0) {
+					
+					JOptionPane.showMessageDialog(DialogDodavanjeProfesora.this, "Greška prilikom unosa datuma. Datum uneti u sledećem formatu: DD/MM/YYYY", "Greška: ", JOptionPane.ERROR_MESSAGE);
+					txtDatum.setText("");
+				}	
+			}
 		});
 		
 		txtAdresa.getDocument().addDocumentListener(new DocumentListener() {
@@ -519,21 +536,39 @@ public class DialogDodavanjeProfesora extends JDialog{
 					lblAdresa.setText("Adresa stanovanja");
 				}
 				
-				for(int i=0; i<8; i++)
-				{
-					
-					if(provera[i]==false){
-						enable = false;
-						break;
-					}
-					else {
-						enable = true;
-					}
-					
-				}
+				enable= proveraProvere(provera);
 				
 				btnPotvrdi.setEnabled(enable);
 			}
+			
+		});
+		
+		txtAdresa.addFocusListener(new FocusListener() {
+
+			@Override
+			public void focusGained(FocusEvent e) {
+			
+				if(provera[3]==false) {
+					
+					txtAdresa.setText("");
+					
+				}
+				
+			}
+
+			@Override
+			public void focusLost(FocusEvent e) {
+			
+				if(provera[3]==false) {
+					
+					txtAdresa.setText("");
+				}
+				
+				
+			}
+			
+			
+			
 			
 		});
 		
@@ -561,8 +596,8 @@ public class DialogDodavanjeProfesora extends JDialog{
 			private void enableBtn() {
 				
 				Boolean enable = false;
-				String phoneNumb = "^(\\d{3}[- .]?){2}\\d{3}$";
-				String phoneNumb2 = "^(\\d{3}[- .]?){2}\\d{4}$";
+				String phoneNumb = "^(\\d{3}[- ]?){2}\\d{3}$";
+				String phoneNumb2 = "^(\\d{3}[- ]?){2}\\d{4}$";
 				if(txtTelefon.getText().trim().length()==0)
 				{
 					provera[4]= false;
@@ -591,22 +626,33 @@ public class DialogDodavanjeProfesora extends JDialog{
 					
 				}
 				
-				for(int i=0; i<8; i++)
-				{
-					
-					if(provera[i]==false){
-						enable = false;
-						break;
-					}
-					else {
-						enable = true;
-					}
-					
-				}
+				enable= proveraProvere(provera);
 				
 				btnPotvrdi.setEnabled(enable);
 			}
 			
+		});
+		
+		txtTelefon.addFocusListener(new FocusListener() {
+
+			@Override
+			public void focusGained(FocusEvent e) {
+		
+				if(provera[4]==false)
+					txtTelefon.setText("");
+				
+			}
+
+			@Override
+			public void focusLost(FocusEvent e) {
+				
+				if(provera[4]==false && txtTelefon.getText().trim().length()!=0)
+				{
+					JOptionPane.showMessageDialog(DialogDodavanjeProfesora.this, "Greška prilikom unosa broja telefona. Broj uneti u jednom od sledećih formata: 000 000 0000 | 000-000-0000", "Greška: ", JOptionPane.ERROR_MESSAGE);
+					txtTelefon.setText("");
+				}
+				
+			}
 		});
 		
 		txtEmail.getDocument().addDocumentListener(new DocumentListener() {
@@ -655,21 +701,38 @@ public class DialogDodavanjeProfesora extends JDialog{
 						lblEmail.setText("E-mail adresa*");
 				}
 				
-				for(int i=0; i<8; i++)
-				{
-					
-					if(provera[i]==false){
-						enable = false;
-						break;
-					}
-					else {
-						enable = true;
-					}
-					
-				}
+				enable= proveraProvere(provera);
 				
 				btnPotvrdi.setEnabled(enable);
 			}
+			
+		});
+		
+		txtEmail.addFocusListener(new FocusListener() {
+
+			@Override
+			public void focusGained(FocusEvent e) {
+				
+				if(provera[5]==false) {
+					
+					txtEmail.setText("");
+					
+				}
+			}
+
+			@Override
+			public void focusLost(FocusEvent e) {
+				
+				if(provera[5]==false && txtEmail.getText().trim().length()!=0) {
+					
+					JOptionPane.showMessageDialog(DialogDodavanjeProfesora.this, "Greška prilikom unosa e-mail adrese. Unesite validnu e-mail adresu poput: example@something.domain ", "Greška: ", JOptionPane.ERROR_MESSAGE);
+					txtEmail.setText("");
+					
+				}
+				
+			}
+			
+			
 			
 		});
 		
@@ -709,21 +772,38 @@ public class DialogDodavanjeProfesora extends JDialog{
 					lblKancelarija.setText("Adresa kancelarije");
 				}
 				
-				for(int i=0; i<8; i++)
-				{
-					
-					if(provera[i]==false){
-						enable = false;
-						break;
-					}
-					else {
-						enable = true;
-					}
-					
-				}
+				enable= proveraProvere(provera);
 				
 				btnPotvrdi.setEnabled(enable);
 			}
+			
+		});
+		
+		txtKancelarija.addFocusListener(new FocusListener() {
+
+			@Override
+			public void focusGained(FocusEvent e) {
+			
+				if(provera[6]==false) {
+					
+					txtKancelarija.setText("");
+					
+				}
+				
+			}
+
+			@Override
+			public void focusLost(FocusEvent e) {
+			
+				if(provera[6]==false && txtKancelarija.getText().trim().length()!=0) {
+					
+					txtKancelarija.setText("");
+					
+				}
+				
+			}
+			
+			
 			
 		});
 		
@@ -772,22 +852,33 @@ public class DialogDodavanjeProfesora extends JDialog{
 						lblLk.setText("Broj lične karte*");
 				}
 				
-				for(int i=0; i<8; i++)
-				{
-					
-					if(provera[i]==false){
-						enable = false;
-						break;
-					}
-					else {
-						enable = true;
-					}
-					
-				}
+				enable= proveraProvere(provera);
 				
 				btnPotvrdi.setEnabled(enable);
 			}
 			
+		});
+		
+		txtLk.addFocusListener(new FocusListener() {
+
+			@Override
+			public void focusGained(FocusEvent e) {
+				
+				if(provera[7]==false) {
+					
+					txtLk.setText("");
+		
+				}	
+			}
+			@Override
+			public void focusLost(FocusEvent e) {
+				
+				if(provera[7]==false && txtLk.getText().trim().length()!=0) {
+					
+					JOptionPane.showMessageDialog(DialogDodavanjeProfesora.this, "Greška prilikom unosa broja lične karte. Broj mora imati devet cifara.", "Greška: ", JOptionPane.ERROR_MESSAGE);
+					txtLk.setText("");	
+				}
+			}
 		});
 		
 		btnPotvrdi.addActionListener(new ActionListener() {
@@ -830,4 +921,24 @@ public class DialogDodavanjeProfesora extends JDialog{
 	
 	}
 	
+	private Boolean proveraProvere(Boolean []provera) {
+		
+		Boolean check= false;
+		
+		for(int i=0; i<8; i++) {
+			
+			if(provera[i]==false) {
+				
+				check = false;
+				break;
+				
+			}
+			else {
+				
+				check = true;
+				
+			}
+		}
+		return check;
+	}
 }
