@@ -24,9 +24,18 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 import controller.ActionChangeTField;
 import controller.buttonAction.ButtonAction;
+import controller.provere.ProveraAdrese;
+import controller.provere.ProveraDatuma;
+import controller.provere.ProveraEmaila;
+import controller.provere.ProveraGodine;
+import controller.provere.ProveraImena;
+import controller.provere.ProveraIndeksa;
+import controller.provere.ProveraPrezimena;
 import model.Student;
 import model.baze.StudentBaza;
 import model.nabrojiviTipovi.Status;
@@ -41,13 +50,13 @@ public class DialogAddStudent extends JDialog {
 	 */
 	private static final long serialVersionUID = 4412711478828503212L;
 
-	private int num = 1;
 	private boolean enable = false;
 	private boolean indExists = false;
 	private boolean tooYoung = false;
 	private boolean invalidYear = false;
 	private int godRodj = -1;
 	private int godUpis = -1;
+	private boolean shown = false;
 
 	public DialogAddStudent(Container cont) {
 
@@ -77,7 +86,6 @@ public class DialogAddStudent extends JDialog {
 		JButton buttonPonisti = new JButton("Poništi");
 		ButtonAction.cancelAction(buttonPonisti, this);
 		buttonPotvrdi.setEnabled(false);
-		// panelButton.add(buttonPotvrdi);
 
 		JPanel panelMain = new JPanel();
 		BoxLayout b = new BoxLayout(panelMain, BoxLayout.Y_AXIS);
@@ -87,46 +95,6 @@ public class DialogAddStudent extends JDialog {
 		JLabel labelName = new JLabel("Ime* ");
 		labelName.setForeground(Color.red);
 		JTextField tFName = new JTextField();
-
-		tFName.addFocusListener(new FocusListener() {
-
-			@Override
-			public void focusGained(FocusEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void focusLost(FocusEvent e) {
-				text[0] = tFName.getText().trim();
-				Pattern pattern = Pattern.compile("[A-ZŠĐČĆŽ][a-zšđčćž]*", Pattern.CASE_INSENSITIVE);
-				Matcher matcher = pattern.matcher(tFName.getText());
-				valid[0] = matcher.matches();
-
-				tFName.setText(setString(tFName.getText()));
-				changeLabel(valid[0], "Ime*", "Ime", labelName);
-
-				if (!valid[0] && !text[0].equals("")) {
-					JOptionPane.showMessageDialog(DialogAddStudent.this,
-							"Pogrešno uneto ime! (Primer ispravnog unosa: Petar)", "Greška: ",
-							JOptionPane.ERROR_MESSAGE);
-					enable = false;
-				} else {
-					enable = true;
-					for (int i = 0; i < 8; ++i) {
-						if (text[i].equals("") || !valid[i]) {
-							enable = false;
-							break;
-						}
-					}
-				}
-				buttonPotvrdi.setEnabled(enable && !indExists && !tooYoung && !invalidYear);
-			}
-
-		});
-
-		buttonPotvrdi.setEnabled(enable);
-
 		labelName.setPreferredSize(dim);
 		tFName.setPreferredSize(dim);
 		panelName.add(Box.createHorizontalStrut(65));
@@ -140,43 +108,6 @@ public class DialogAddStudent extends JDialog {
 		labelPrezime.setForeground(Color.red);
 		labelPrezime.setPreferredSize(dim);
 		tFPrezime.setPreferredSize(dim);
-		tFPrezime.addFocusListener(new FocusListener() {
-
-			@Override
-			public void focusGained(FocusEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void focusLost(FocusEvent e) {
-				text[1] = tFPrezime.getText().trim();
-				Pattern pattern = Pattern.compile("[A-ZŠĐČĆŽ][a-zšđčćž]*", Pattern.CASE_INSENSITIVE);
-				Matcher matcher = pattern.matcher(tFPrezime.getText());
-				valid[1] = matcher.matches();
-
-				tFPrezime.setText(setString(tFPrezime.getText()));
-				changeLabel(valid[1], "Prezime*", "Prezime", labelPrezime);
-
-				if (!valid[1] && !text[1].equals("")) {
-					JOptionPane.showMessageDialog(DialogAddStudent.this,
-							"Pogrešno uneto prezime! (Primer ispravnog unosa: Petrović)", "Greška: ",
-							JOptionPane.ERROR_MESSAGE);
-					enable = false;
-				} else {
-					enable = true;
-					for (int i = 0; i < 8; ++i) {
-						if (text[i].equals("") || !valid[i]) {
-							enable = false;
-							break;
-						}
-					}
-
-					buttonPotvrdi.setEnabled(enable && !indExists && !tooYoung && !invalidYear);
-				}
-			}
-
-		});
 		panelPrezime.add(Box.createHorizontalStrut(65));
 		panelPrezime.add(labelPrezime);
 		panelPrezime.add(tFPrezime);
@@ -188,47 +119,6 @@ public class DialogAddStudent extends JDialog {
 		JTextField tfDatumR = new JTextField();
 		labelDatumR.setPreferredSize(dim);
 		tfDatumR.setPreferredSize(dim);
-		tfDatumR.addFocusListener(new FocusListener() {
-
-			@Override
-			public void focusGained(FocusEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void focusLost(FocusEvent e) {
-				text[2] = tfDatumR.getText().trim();
-				Pattern pattern = Pattern.compile("[0-9]{2}[/][0-9]{2}[/][0-9]{4}");
-				Matcher matcher = pattern.matcher(tfDatumR.getText());
-				valid[2] = matcher.matches();
-				godRodj = -1;
-				changeLabel(valid[2], "Datum rođenja*", "Datum rođenja", labelDatumR);
-
-				if (!valid[2] && !text[2].equals("")) {
-					JOptionPane.showMessageDialog(DialogAddStudent.this,
-							"Pogrešno unet datum! Ispravan unos : DD/MM/YYYY", "Greška: ", JOptionPane.ERROR_MESSAGE);
-					enable = false;
-				} else {
-					enable = true;
-					for (int i = 0; i < 8; ++i) {
-						if (text[i].equals("") || !valid[i]) {
-							enable = false;
-							break;
-						}
-					}
-				}
-				
-				if(valid[2]) {
-					String[] datum = text[2].split("/");
-					godRodj = Integer.parseInt(datum[2]);
-					
-				}
-
-				buttonPotvrdi.setEnabled(enable && !indExists && !tooYoung && !invalidYear);
-			}
-
-		});
 		panelDatumR.add(Box.createHorizontalStrut(65));
 		panelDatumR.add(labelDatumR);
 		panelDatumR.add(tfDatumR);
@@ -240,43 +130,6 @@ public class DialogAddStudent extends JDialog {
 		JTextField tFAdr = new JTextField();
 		labelAdr.setPreferredSize(dim);
 		tFAdr.setPreferredSize(dim);
-		tFAdr.addFocusListener(new FocusListener() {
-
-			@Override
-			public void focusGained(FocusEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void focusLost(FocusEvent e) {
-				text[3] = tFAdr.getText().trim();
-				Pattern pattern = Pattern.compile(
-						"[ŠĐČĆŽšđčćžA-z]+\\s[0-9]+[,]\\s[ŠĐČĆŽšđčćžA-z]+");
-				Matcher matcher = pattern.matcher(tFAdr.getText());
-				valid[3] = matcher.find();
-
-				changeLabel(valid[3], "Adresa stanovanja*", "Adresa stanovanja", labelAdr);
-
-				if (!valid[3] && !text[3].equals("")) {
-					JOptionPane.showMessageDialog(DialogAddStudent.this,
-							"Pogrešno uneta adresa! Ispravan unos: ulica i broj, mesto", "Greška: ",
-							JOptionPane.ERROR_MESSAGE);
-					enable = false;
-				} else {
-					enable = true;
-					for (int i = 0; i < 8; ++i) {
-						if (text[i].equals("") || !valid[i]) {
-							enable = false;
-							break;
-						}
-					}
-				}
-
-				buttonPotvrdi.setEnabled(enable && !indExists && !tooYoung && !invalidYear);
-			}
-
-		});
 		panelAdr.add(Box.createHorizontalStrut(65));
 		panelAdr.add(labelAdr);
 		panelAdr.add(tFAdr);
@@ -288,40 +141,6 @@ public class DialogAddStudent extends JDialog {
 		labelBr.setForeground(Color.red);
 		labelBr.setPreferredSize(dim);
 		tFBr.setPreferredSize(dim);
-		tFBr.addFocusListener(new FocusListener() {
-
-			@Override
-			public void focusGained(FocusEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void focusLost(FocusEvent e) {
-				text[4] = tFBr.getText().trim();
-				Pattern pattern = Pattern.compile("[0-9]{3}/[0-9]{3,5}-[0-9]{3,5}");
-				Matcher matcher = pattern.matcher(tFBr.getText());
-				valid[4] = matcher.matches();
-
-				changeLabel(valid[4], "Broj telefona*", "Broj telefona", labelBr);
-
-				if (!valid[4] && !text[4].equals("")) {
-					JOptionPane.showMessageDialog(DialogAddStudent.this,
-							"Pogrešno unet broj telefona! (Primer: 123/123-123", "Greška: ", JOptionPane.ERROR_MESSAGE);
-					enable = false;
-				} else {
-					enable = true;
-					for (int i = 0; i < 8; ++i) {
-						if (text[i].equals("") || !valid[i]) {
-							enable = false;
-							break;
-						}
-					}
-				}
-				buttonPotvrdi.setEnabled(enable && !indExists && !tooYoung && !invalidYear);
-			}
-
-		});
 		panelBr.add(Box.createHorizontalStrut(65));
 		panelBr.add(labelBr);
 		panelBr.add(tFBr);
@@ -333,40 +152,6 @@ public class DialogAddStudent extends JDialog {
 		JTextField tFEmail = new JTextField();
 		labelEmail.setPreferredSize(dim);
 		tFEmail.setPreferredSize(dim);
-		tFEmail.addFocusListener(new FocusListener() {
-
-			@Override
-			public void focusGained(FocusEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void focusLost(FocusEvent e) {
-				text[5] = tFEmail.getText().trim();
-				Pattern pattern = Pattern.compile("[A-Za-z0-9._%-]+@[A-Za-z0-9._-]+\\.[A-Za-z]{2,4}",
-						Pattern.CASE_INSENSITIVE);
-				Matcher matcher = pattern.matcher(tFEmail.getText());
-				valid[5] = matcher.matches();
-				changeLabel(valid[5], "E-mail adresa*", "E-mail adresa", labelEmail);
-
-				if (!valid[5] && !text[5].equals("")) {
-					JOptionPane.showMessageDialog(DialogAddStudent.this, "Pogrešno uneta e-mail adresa!", "Greška: ",
-							JOptionPane.ERROR_MESSAGE);
-					enable = false;
-				} else {
-					enable = true;
-					for (int i = 0; i < 8; ++i) {
-						if (text[i].equals("") || !valid[i]) {
-							enable = false;
-							break;
-						}
-					}
-				}
-				buttonPotvrdi.setEnabled(enable && !indExists && !tooYoung && !invalidYear);
-			}
-
-		});
 		panelEmail.add(Box.createHorizontalStrut(65));
 		panelEmail.add(labelEmail);
 		panelEmail.add(tFEmail);
@@ -378,52 +163,6 @@ public class DialogAddStudent extends JDialog {
 		JTextField tFBrI = new JTextField();
 		labelBrI.setPreferredSize(dim);
 		tFBrI.setPreferredSize(dim);
-		tFBrI.addFocusListener(new FocusListener() {
-
-			@Override
-			public void focusGained(FocusEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void focusLost(FocusEvent e) {
-				text[6] = tFBrI.getText().trim();
-				Pattern pattern = Pattern.compile("([A-ZŠĐČĆŽ]+)?[0-9]+([/][0-9]+)?", Pattern.CASE_INSENSITIVE);
-				Matcher matcher = pattern.matcher(tFBrI.getText());
-				valid[6] = matcher.matches();
-				
-				tFBrI.setText(tFBrI.getText().toUpperCase());
-				text[6] = text[6].toUpperCase();
-				indExists = false;
-				for (Student s : students) {
-					if (s.getBrIndeksa().equals(text[6])) {
-						indExists = true;
-						JOptionPane.showMessageDialog(DialogAddStudent.this, "Broj indeksa postoji!", "Greška: ",
-								JOptionPane.ERROR_MESSAGE);
-						break;
-					}
-				}
-
-				if (!valid[6] && !text[6].equals("")) {
-					JOptionPane.showMessageDialog(DialogAddStudent.this, "Pogrešno unet broj indeksa!", "Greška: ",
-							JOptionPane.ERROR_MESSAGE);
-					enable = false;
-				} else {
-
-					enable = true;
-					for (int i = 0; i < 8; ++i) {
-						if ((text[i].equals("") || !valid[i])) {
-							enable = false;
-							break;
-						}
-					}
-				}
-				changeLabel(valid[6] && !indExists, "Broj indeksa*", "Broj indeksa", labelBrI);
-				buttonPotvrdi.setEnabled(enable && !indExists && !tooYoung && !invalidYear);
-			}
-
-		});
 		panelBrI.add(Box.createHorizontalStrut(65));
 		panelBrI.add(labelBrI);
 		panelBrI.add(tFBrI);
@@ -435,65 +174,6 @@ public class DialogAddStudent extends JDialog {
 		JTextField tFGodU = new JTextField();
 		labelGodU.setPreferredSize(dim);
 		tFGodU.setPreferredSize(dim);
-		tFGodU.addFocusListener(new FocusListener() {
-
-			@Override
-			public void focusGained(FocusEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void focusLost(FocusEvent e) {
-				text[7] = tFGodU.getText().trim();
-				Pattern pattern = Pattern.compile("[0-9]{4,4}"); // NAPOMENA: godina jos dugo nece imati vise od 4 cifre
-				Matcher matcher = pattern.matcher(tFGodU.getText());
-				valid[7] = matcher.matches();
-				
-				tooYoung = false;
-				invalidYear = false;
-				godUpis = -1;
-				if (!valid[7] && !text[7].equals("")) {
-					JOptionPane.showMessageDialog(DialogAddStudent.this,
-							"Pogrešno uneta godina upisa! Ispravan unos: YYYY", "Greška: ", JOptionPane.ERROR_MESSAGE);
-					enable = false;
-				} else {
-					enable = true;
-					for (int i = 0; i < 8; ++i) {
-						if (text[i].equals("") || !valid[i]) {
-							enable = false;
-							break;
-						}
-					}
-				}
-				
-				if(valid[7]) {
-					godUpis = Integer.parseInt(text[7]);
-					
-
-					DateTimeFormatter dtf = DateTimeFormatter.ofPattern("YYYY");
-					LocalDateTime now = LocalDateTime.now();
-					String trenutnaGod= dtf.format(now);
-					int trGod = Integer.parseInt(trenutnaGod);
-					
-					if(godUpis > trGod) {
-						JOptionPane.showMessageDialog(DialogAddStudent.this,
-								"Godina upisa ne može biti veća od trenutne godine!", "Greška: ", JOptionPane.ERROR_MESSAGE);
-						invalidYear = true;
-					}
-					
-					if(godRodj != -1  && (godUpis-godRodj < 18)) {
-						tooYoung = true;
-						JOptionPane.showMessageDialog(DialogAddStudent.this,
-								"Osoba mora imati više od 18 godina!", "Greška: ", JOptionPane.ERROR_MESSAGE);
-					}
-				}
-				
-				changeLabel(valid[7] && !tooYoung && !invalidYear , "Godina upisa*", "Godina upisa", labelGodU);
-				buttonPotvrdi.setEnabled(enable && !indExists && !tooYoung && !invalidYear);
-			}
-
-		});
 		panelGodU.add(Box.createHorizontalStrut(65));
 		panelGodU.add(labelGodU);
 		panelGodU.add(tFGodU);
@@ -532,6 +212,659 @@ public class DialogAddStudent extends JDialog {
 		panelButton.add(buttonPonisti);
 		panelMain.add(panelButton);
 
+		tFName.addFocusListener(new FocusListener() {
+
+			@Override
+			public void focusGained(FocusEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void focusLost(FocusEvent e) {
+				text[0] = tFName.getText().trim();
+
+				if (!text[0].equals("")) {
+					valid[0] = ProveraImena.proveriIme(tFName.getText());
+				} else {
+					valid[0] = false;
+					tFName.setText("");
+				}
+				changeLabel(valid[0], "Ime*", "Ime", labelName);
+
+				if (!valid[0] && !text[0].equals("")) {
+					JOptionPane.showMessageDialog(DialogAddStudent.this,
+							"Pogrešno uneto ime! (Primer ispravnog unosa: Petar)", "Greška: ",
+							JOptionPane.ERROR_MESSAGE);
+					tFName.setText("");
+					text[0] = "";
+					enable = false;
+				} else {
+					setEnable(text, valid);
+				}
+				tFName.setText(setString(tFName.getText()));
+				buttonPotvrdi.setEnabled(enable && !indExists && !tooYoung && !invalidYear);
+			}
+
+		});
+
+		tFName.getDocument().addDocumentListener(new DocumentListener() {
+
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				check();
+
+			}
+
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				check();
+
+			}
+
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				check();
+
+			}
+
+			private void check() {
+				valid[0] = ProveraImena.proveriIme(tFName.getText());
+
+				changeLabel(valid[0], "Ime*", "Ime", labelName);
+			}
+
+		});
+
+		tFPrezime.addFocusListener(new FocusListener() {
+
+			@Override
+			public void focusGained(FocusEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void focusLost(FocusEvent e) {
+				text[1] = tFPrezime.getText().trim();
+
+				if (!text[1].equals(""))
+					valid[1] = ProveraPrezimena.proveriPrezime(tFPrezime.getText());
+				else {
+					valid[1] = false;
+					tFPrezime.setText("");
+				}
+
+				tFPrezime.setText(setString(tFPrezime.getText()));
+				changeLabel(valid[1], "Prezime*", "Prezime", labelPrezime);
+
+				if (!valid[1] && !text[1].equals("")) {
+					JOptionPane.showMessageDialog(DialogAddStudent.this,
+							"Pogrešno uneto prezime! (Primer ispravnog unosa: Petrović)", "Greška: ",
+							JOptionPane.ERROR_MESSAGE);
+					tFPrezime.setText("");
+					text[1] = "";
+					enable = false;
+				} else {
+
+					setEnable(text, valid);
+				}
+
+				buttonPotvrdi.setEnabled(enable && !indExists && !tooYoung && !invalidYear);
+			}
+
+		});
+
+		tFPrezime.getDocument().addDocumentListener(new DocumentListener() {
+
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				check();
+
+			}
+
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				check();
+
+			}
+
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				check();
+
+			}
+
+			private void check() {
+				valid[1] = ProveraPrezimena.proveriPrezime(tFPrezime.getText());
+				changeLabel(valid[1], "Prezime*", "Prezime", labelPrezime);
+			}
+
+		});
+
+		tfDatumR.addFocusListener(new FocusListener() {
+
+			@Override
+			public void focusGained(FocusEvent e) {
+				if (shown) {
+					tfDatumR.setText("");
+					valid[2] = false;
+					shown = false;
+					godRodj = -1;
+				}
+
+			}
+
+			@Override
+			public void focusLost(FocusEvent e) {
+				text[2] = tfDatumR.getText().trim();
+
+				if (!text[2].equals("")) {
+					valid[2] = ProveraDatuma.proveriDatum(tfDatumR.getText());
+				} else {
+					tfDatumR.setText("");
+					valid[2] = false;
+					godRodj = -1;
+					tooYoung = true;
+				}
+				godRodj = -1;
+
+				if (valid[2]) {
+					if (ProveraGodine.proveri(text[2], 0)) {
+
+						String[] datum = text[2].split("/");
+						godRodj = Integer.parseInt(datum[2]);
+
+						DateTimeFormatter dtf = DateTimeFormatter.ofPattern("YYYY");
+						LocalDateTime now = LocalDateTime.now();
+						String trenutnaGod = dtf.format(now);
+						int trGod = Integer.parseInt(trenutnaGod);
+
+						tooYoung = false;
+						if (trGod - godRodj < 18) {
+							tooYoung = true;
+							tfDatumR.setText("");
+							text[2] = "";
+							godRodj = -1;
+
+							JOptionPane.showMessageDialog(DialogAddStudent.this, "Osoba mora imati više od 18 godina!",
+									"Greška: ", JOptionPane.ERROR_MESSAGE);
+						} else if (godUpis != -1) {
+							if (godRodj >= godUpis) {
+								invalidYear = true;
+								shown = true;
+								JOptionPane.showMessageDialog(DialogAddStudent.this,
+										"Godina upisa ne može biti manja ili jednaka od godine rođenja!\nProverite godinu upisa ili godinu rođenja!!",
+										"Greška: ", JOptionPane.ERROR_MESSAGE);
+
+							} else if (godUpis - godRodj < 18) {
+
+								invalidYear = true;
+								shown = true;
+								int pom = godRodj + 18;
+								JOptionPane.showMessageDialog(DialogAddStudent.this,
+										"Godina upisa mora biti minimalno " + pom + "!\nProverite godinu upisa ili godinu rođenja!", "Greška: ",
+										JOptionPane.ERROR_MESSAGE);
+
+							}
+						}
+
+					} else {
+						valid[2] = false;
+						tooYoung = true;
+						tfDatumR.setText("");
+						text[2] = "";
+						godRodj = -1;
+
+						JOptionPane.showMessageDialog(DialogAddStudent.this, "Datum nije validan", "Greška: ",
+								JOptionPane.ERROR_MESSAGE);
+					}
+				}
+
+				if (!valid[2] && !text[2].equals("")) {
+					tfDatumR.setText("");
+					text[2] = "";
+					tooYoung = true;
+					enable = false;
+
+					JOptionPane.showMessageDialog(DialogAddStudent.this,
+							"Pogrešno unet datum! Ispravan unos : DD/MM/YYYY", "Greška: ", JOptionPane.ERROR_MESSAGE);
+
+				} else {
+
+					setEnable(text, valid);
+				}
+
+				changeLabel(valid[7] && !invalidYear && !shown, "Godina upisa*", "Godina upisa", labelGodU);
+				changeLabel(valid[2] && !tooYoung && !shown, "Datum rođenja*", "Datum rođenja", labelDatumR);
+				buttonPotvrdi.setEnabled(enable && !indExists && !tooYoung && !invalidYear);
+			}
+
+		});
+
+		tfDatumR.getDocument().addDocumentListener(new DocumentListener() {
+
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				check();
+
+			}
+
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				check();
+
+			}
+
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				check();
+
+			}
+
+			private void check() {
+				valid[2] = ProveraDatuma.proveriDatum(tfDatumR.getText());
+				changeLabel(valid[2], "Datum rođenja*", "Datum rođenja", labelDatumR);
+			}
+
+		});
+
+		tFAdr.addFocusListener(new FocusListener() {
+
+			@Override
+			public void focusGained(FocusEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void focusLost(FocusEvent e) {
+				text[3] = tFAdr.getText().trim();
+
+				if (!text[3].equals(""))
+					valid[3] = ProveraAdrese.proveriAdresu(tFAdr.getText());
+				else {
+					valid[3] = false;
+					tFAdr.setText("");
+				}
+
+				changeLabel(valid[3], "Adresa stanovanja*", "Adresa stanovanja", labelAdr);
+
+				if (!valid[3] && !text[3].equals("")) {
+					tFAdr.setText("");
+					text[3] = "";
+					enable = false;
+
+					JOptionPane.showMessageDialog(DialogAddStudent.this,
+							"Pogrešno uneta adresa! Ispravan unos: ulica i broj, mesto", "Greška: ",
+							JOptionPane.ERROR_MESSAGE);
+
+				} else {
+
+					setEnable(text, valid);
+				}
+
+				buttonPotvrdi.setEnabled(enable && !indExists && !tooYoung && !invalidYear);
+			}
+
+		});
+
+		tFAdr.getDocument().addDocumentListener(new DocumentListener() {
+
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				check();
+
+			}
+
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				check();
+
+			}
+
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				check();
+
+			}
+
+			private void check() {
+				valid[3] = ProveraAdrese.proveriAdresu(tFAdr.getText());
+				changeLabel(valid[3], "Adresa stanovanja*", "Adresa stanovanja", labelAdr);
+			}
+
+		});
+
+		tFBr.addFocusListener(new FocusListener() {
+
+			@Override
+			public void focusGained(FocusEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void focusLost(FocusEvent e) {
+				text[4] = tFBr.getText().trim();
+				Pattern pattern = Pattern.compile("[0-9]{3}/[0-9]{3,5}-[0-9]{3,5}");
+				Matcher matcher = pattern.matcher(tFBr.getText());
+
+				if (!text[4].equals("")) {
+					valid[4] = matcher.matches();
+				} else {
+					tFBr.setText("");
+					valid[4] = false;
+				}
+
+				changeLabel(valid[4], "Broj telefona*", "Broj telefona", labelBr);
+
+				if (!valid[4] && !text[4].equals("")) {
+					tFBr.setText("");
+					text[4] = "";
+					enable = false;
+
+					JOptionPane.showMessageDialog(DialogAddStudent.this,
+							"Pogrešno unet broj telefona! (Primer: 123/123-123)", "Greška: ", JOptionPane.ERROR_MESSAGE);
+
+				} else {
+
+					setEnable(text, valid);
+				}
+				buttonPotvrdi.setEnabled(enable && !indExists && !tooYoung && !invalidYear);
+			}
+
+		});
+
+		tFBr.getDocument().addDocumentListener(new DocumentListener() {
+
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				check();
+
+			}
+
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				check();
+
+			}
+
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				check();
+
+			}
+
+			private void check() {
+				Pattern pattern = Pattern.compile("[0-9]{3}/[0-9]{3,5}-[0-9]{3,5}");
+				Matcher matcher = pattern.matcher(tFBr.getText());
+				valid[4] = matcher.matches();
+				changeLabel(valid[4], "Broj telefona*", "Broj telefona", labelBr);
+			}
+
+		});
+
+		tFEmail.addFocusListener(new FocusListener() {
+
+			@Override
+			public void focusGained(FocusEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void focusLost(FocusEvent e) {
+				text[5] = tFEmail.getText().trim();
+
+				if (!text[5].equals(""))
+					valid[5] = ProveraEmaila.proveriEmail(tFEmail.getText());
+				else {
+					valid[5] = false;
+					tFEmail.setText("");
+				}
+				changeLabel(valid[5], "E-mail adresa*", "E-mail adresa", labelEmail);
+
+				if (!valid[5] && !text[5].equals("")) {
+					tFEmail.setText("");
+					text[5] = "";
+					enable = false;
+
+					JOptionPane.showMessageDialog(DialogAddStudent.this, "Pogrešno uneta e-mail adresa!", "Greška: ",
+							JOptionPane.ERROR_MESSAGE);
+
+				} else {
+
+					setEnable(text, valid);
+				}
+				buttonPotvrdi.setEnabled(enable && !indExists && !tooYoung && !invalidYear);
+			}
+
+		});
+
+		tFEmail.getDocument().addDocumentListener(new DocumentListener() {
+
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				check();
+
+			}
+
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				check();
+
+			}
+
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				check();
+
+			}
+
+			private void check() {
+				valid[5] = ProveraEmaila.proveriEmail(tFEmail.getText());
+				changeLabel(valid[5], "E-mail adresa*", "E-mail adresa", labelEmail);
+			}
+
+		});
+
+		tFBrI.addFocusListener(new FocusListener() {
+
+			@Override
+			public void focusGained(FocusEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void focusLost(FocusEvent e) {
+				text[6] = tFBrI.getText().trim();
+
+				if (!text[6].equals("")) {
+					valid[6] = ProveraIndeksa.proveriIndeks(tFBrI.getText());
+				} else {
+					valid[6] = false;
+					tFBrI.setText("");
+				}
+				text[6] = text[6].toUpperCase();
+
+				indExists = ProveraIndeksa.checkExists(students, text[6]);
+				if (indExists) {
+					tFBrI.setText("");
+					text[6] = "";
+					valid[6] = false;
+					JOptionPane.showMessageDialog(DialogAddStudent.this, "Broj indeksa postoji!", "Greška: ",
+							JOptionPane.ERROR_MESSAGE);
+				}
+
+				if (!valid[6] && !text[6].equals("")) {
+					tFBrI.setText("");
+					text[6] = "";
+					enable = false;
+					indExists = true;
+
+					JOptionPane.showMessageDialog(DialogAddStudent.this, "Pogrešno unet broj indeksa!", "Greška: ",
+							JOptionPane.ERROR_MESSAGE);
+				} else {
+
+					setEnable(text, valid);
+				}
+				tFBrI.setText(tFBrI.getText().toUpperCase());
+				changeLabel(valid[6] && !indExists, "Broj indeksa*", "Broj indeksa", labelBrI);
+				buttonPotvrdi.setEnabled(enable && !indExists && !tooYoung && !invalidYear);
+			}
+
+		});
+
+		tFBrI.getDocument().addDocumentListener(new DocumentListener() {
+
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				check();
+
+			}
+
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				check();
+
+			}
+
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				check();
+
+			}
+
+			private void check() {
+				valid[6] = ProveraIndeksa.proveriIndeks(tFBrI.getText());
+				changeLabel(valid[6], "Broj indeksa*", "Broj indeksa", labelBrI);
+			}
+
+		});
+
+		tFGodU.addFocusListener(new FocusListener() {
+
+			@Override
+			public void focusGained(FocusEvent e) {
+				if (shown) {
+					tFGodU.setText("");
+					text[7] = "";
+					shown = false;
+					godUpis = -1;
+				}
+
+			}
+
+			@Override
+			public void focusLost(FocusEvent e) {
+				text[7] = tFGodU.getText().trim();
+				Pattern pattern = Pattern.compile("[0-9]{4,4}"); // NAPOMENA: godina jos dugo nece imati vise od 4 cifre
+				Matcher matcher = pattern.matcher(tFGodU.getText());
+
+				if (!text[7].equals("")) {
+					valid[7] = matcher.matches();
+				} else {
+					valid[7] = false;
+					tFGodU.setText("");
+				}
+
+				if (valid[7]) {
+					godUpis = Integer.parseInt(text[7]);
+					invalidYear = false;
+					DateTimeFormatter dtf = DateTimeFormatter.ofPattern("YYYY");
+					LocalDateTime now = LocalDateTime.now();
+					String trenutnaGod = dtf.format(now);
+					int trGod = Integer.parseInt(trenutnaGod);
+
+					if (godUpis > trGod) {
+						tFGodU.setText("");
+						text[7] = "";
+						invalidYear = true;
+						godUpis = -1;
+						valid[7] = false;
+
+						JOptionPane.showMessageDialog(DialogAddStudent.this,
+								"Godina upisa ne može biti veća od trenutne godine!", "Greška: ",
+								JOptionPane.ERROR_MESSAGE);
+
+					} else if (godRodj != -1) {
+						if (godUpis <= godRodj) {
+
+							invalidYear = true;
+							shown = true;
+							JOptionPane.showMessageDialog(DialogAddStudent.this,
+									"Godina upisa ne može biti manja ili jednaka od godine rođenja!\nProverite godinu upisa ili godinu rođenja!", "Greška: ",
+									JOptionPane.ERROR_MESSAGE);
+
+						} else if (godUpis - godRodj < 18) {
+							tFGodU.setText("");
+							godUpis = -1;
+							valid[7] = false;
+							text[7] = "";
+							invalidYear = true;
+							shown = true;
+							int pom = godRodj + 18;
+							JOptionPane.showMessageDialog(DialogAddStudent.this,
+									"Godina upisa mora biti minimalno " + pom + "!", "Greška: ",
+									JOptionPane.ERROR_MESSAGE);
+
+						}
+					}
+
+				}
+
+				if (!valid[7] && !text[7].equals("")) {
+					tFGodU.setText("");
+					text[7] = "";
+					godUpis = -1;
+					enable = false;
+					invalidYear = true;
+					JOptionPane.showMessageDialog(DialogAddStudent.this,
+							"Pogrešno uneta godina upisa! Ispravan unos: YYYY", "Greška: ", JOptionPane.ERROR_MESSAGE);
+
+				} else {
+
+					setEnable(text, valid);
+				}
+
+				changeLabel(valid[7] && !invalidYear && !shown, "Godina upisa*", "Godina upisa", labelGodU);
+				changeLabel(valid[2] && !tooYoung && !shown, "Datum rođenja*", "Datum rođenja", labelDatumR);
+				buttonPotvrdi.setEnabled(enable && !indExists && !tooYoung && !invalidYear);
+			}
+
+		});
+
+		tFGodU.getDocument().addDocumentListener(new DocumentListener() {
+
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				check();
+
+			}
+
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				check();
+
+			}
+
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				check();
+
+			}
+
+			private void check() {
+				Pattern pattern = Pattern.compile("[0-9]{4,4}"); // NAPOMENA: godina jos dugo nece imati vise od 4 cifre
+				Matcher matcher = pattern.matcher(tFGodU.getText());
+				valid[7] = matcher.matches();
+				changeLabel(valid[7], "Godina upisa*", "Godina upisa", labelGodU);
+			}
+
+		});
+
 		// https://stackoverflow.com/questions/14902410/switching-jtextfields-by-pressing-enter-key
 		ActionChangeTField.changeTField(tFName, tFPrezime);
 		ActionChangeTField.changeTField(tFPrezime, tfDatumR);
@@ -548,34 +881,41 @@ public class DialogAddStudent extends JDialog {
 			}
 
 		});
-		
+
 		buttonPotvrdi.addActionListener(new ActionListener() {
-		
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String status = cBFin.getSelectedItem().toString();
 				Status s = status.equals("Budžet") ? Status.B : Status.S;
 				String trGod = cBTGodS.getSelectedItem().toString();
 				int trenutnaGodina = 1;
-				switch(trGod) {
-				case "I (prva)" : trenutnaGodina = 1;
-				break;
-				case "II (druga)" : trenutnaGodina = 2;
-				break;
-				case "III (treća)": trenutnaGodina = 3;
-				break;
-				case "IV (četvrta)": trenutnaGodina = 4;
-				break;
+				switch (trGod) {
+				case "I (prva)":
+					trenutnaGodina = 1;
+					break;
+				case "II (druga)":
+					trenutnaGodina = 2;
+					break;
+				case "III (treća)":
+					trenutnaGodina = 3;
+					break;
+				case "IV (četvrta)":
+					trenutnaGodina = 4;
+					break;
 				}
-				Student st = new Student(tFPrezime.getText(), tFName.getText(), tfDatumR.getText(), tFAdr.getText(), tFBr.getText(),
-						tFEmail.getText(), tFBrI.getText().toUpperCase(), godUpis, trenutnaGodina, s, 0,
+				// ako je student tek sad dodat, lista polozenih predmeta ce biti prazna ->
+				// prosek je 0
+				Student st = new Student(tFPrezime.getText(), tFName.getText(), tfDatumR.getText(), tFAdr.getText(),
+						tFBr.getText(), tFEmail.getText(), tFBrI.getText().toUpperCase(), godUpis, trenutnaGodina, s, 0,
 						null, null);
-				
+
 				students.add(st);
 				StudentBaza.getInstance().setStudents(students);
-				PrikazStudenta.getInstance().update("", 0);
+				PrikazStudenta.getInstance().update();
+				JOptionPane.showMessageDialog(DialogAddStudent.this, "Unos novog studenta je uspešno izvršen!");
 				dispose();
-				
+
 			}
 		});
 
@@ -598,6 +938,16 @@ public class DialogAddStudent extends JDialog {
 		} else {
 			lbl.setText(f);
 			lbl.setForeground(Color.red);
+		}
+	}
+
+	private void setEnable(String[] text, boolean[] valid) {
+		enable = true;
+		for (int i = 0; i < 8; ++i) {
+			if (text[i].equals("") || !valid[i]) {
+				enable = false;
+				break;
+			}
 		}
 	}
 

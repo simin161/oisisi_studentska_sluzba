@@ -12,7 +12,7 @@ public class ProveraDatuma {
 		
 		Pattern pattern = Pattern.compile(datumReg);
 		Matcher matcher = pattern.matcher(datum);
-		provera= matcher.find();
+		provera= matcher.matches();
 		
 		return provera;
 		
