@@ -1,44 +1,82 @@
-Glavni prozor sadrzi:  1. Menu bar
+Glavni prozor sadrži:  1. Menu bar
                                     2. Status bar
                                     3. Toolbar
-                                    4. *bice dodato naknadno*
+                                    4. Tabove (student, profesor, predmet)
 ________________________________________________________________________________________________________________________________
 
 1. Meni bar se sastoji od tri podmenija: 1.1. File
 	                                     1.2. Edit
 	                                     1.3. Help
 
-1.1 File u sebi sadrzi opcije "New" i "Close". 
-**Klikom na opciju "New" dodaju se novi entiteti. (jos nije realizovano)
-Precica za "New" jeste CTRL+N, a mnemonik je "N".
-**Klikom na opciju "Close" izlazi se iz aplikacije. (jos nije realizovano)
-Precica za "Close" je CTRL+C, a mnemonik "C".
+1.1 File u sebi sadrži opcije "New" i "Close". 
+**Klikom na opciju "New" dodaju se novi entiteti.
+Prečica za "New" jeste CTRL+N, a mnemonik je "N". 
+U zavisnosti od izabranog taba prikazaće se odgovarajući dijalog za dodavanje. Ukoliko je izabran tab "Studenti" prikazaće se
+dijalog za dodavanje studenata, ako je izabran tab "Profesori" prikazaće se dijalog za dodavanje profesora i ukoliko je izabran
+tab "Predmeti" omogući će se dodavanje predmeta.
+entiteta u sistem.
+**Klikom na opciju "Close" izlazi se iz aplikacije.
+Prečica za "Close" je CTRL+C, a mnemonik "C".
 
-1.2 Edit u sebi sadrzi opcije "Edit" i "Delete".
-**Klikom na opciju "Edit" menja se postojeci intet u sistemu (jos nije realizovano).
+1.2 Edit u sebi sadrži opcije "Edit" i "Delete".
+**Klikom na opciju "Edit" menja se postojeći entitet u sistemu (jos nije realizovano).
 Precica za "Edit" je CTRL+E, a mnemonik "E".
-**Klikom na opciju "Delete" brise se postojeci entitet iz sistemu (jos nije realizovano). 
-Precica za "Delete" je CTRL+D, a mnemonik "D".
+U zavisnosti od izabranog taba prikazaće se odgovarajući dijalog za izmenu entiteta.
+**Klikom na opciju "Delete" briše se postojeći entitet iz sistema (jos nije realizovano). 
+Prečica za "Delete" je CTRL+D, a mnemonik "D".
+Izabrani entitet u tabeli će se izbrisati izborom ove opcije.
 
-1.3 Help sadrzi opcije "Help" i "About".
+1.3 Help sadrži opcije "Help" i "About".
 **Klikom na opciju "Help" pojavljuje se istoimeni prozor sa uputstvom za upotrebu aplikacije, kao i sa opisom.
-Precica za "Help" je CTRL+H, a mnemonik "H". (dopunjavace se)
+Prečica za "Help" je CTRL+H, a mnemonik "H". (dopunjavace se)
 **Klikom na opciju "About" pojavljuje se istoimeni prozor u kojem se nalazi informacija o verziji aplikacije,
-i kratak opis iste. Takodje, nalazi se i sazeta biografija svakog od autora.
-Precice za "Abotu" je CTRL+A, a mnemonik "A". (dopunjavace se)
+i kratak opis iste. Takođe, nalazi se i sažeta biografija svakog od autora.
+Prečice za "Abotu" je CTRL+A, a mnemonik "A". (dopunjavace se)
 
 ________________________________________________________________________________________________________________________________
 
-2.Status bar, koji se nalazi pri dnu glavnog prozora, sadrzi naziv aplikacije, u levom uglu, kao i datum i vreme, u desnom uglu.
+2.Status bar, koji se nalazi pri dnu glavnog prozora, sadrži naziv aplikacije, u levom uglu, kao i datum i vreme, u desnom uglu.
 
 ________________________________________________________________________________________________________________________________
 
-3. Tool bar se nalazi ispod menija. Sadrzi opcije za dodavanje podataka u tabelu (prvo dugme), zatim
-dugme za izmenu podataka u tabli (drugo dugme), kao i opciju za brisanje podataka iz tabele (trece dugme).
-Tool bar takodje sadrzi i tekstualno polje u koje se moze uneti kriterijum pretrage i pritiskom na dugme pored, pretrazice se
-tabela koja je trenutno aktivna. Rezultat izvrsavanje pretrage jesu entiteti koji zadovoljavaju zadati kriterijum.
-(jos nisu implementirane funkcionalnosti)
+3. Tool bar se nalazi ispod menija. Sadrži opcije za dodavanje podataka u tabelu (prvo dugme), zatim
+dugme za izmenu podataka u tabeli (drugo dugme), kao i opciju za brisanje podataka iz tabele (treće dugme).
+Tool bar takođe sadrži i tekstualno polje u koje se može uneti kriterijum pretrage i pritiskom na dugme pored, pretražiće se
+tabela koja je trenutno aktivna. Rezultat izvršavanje pretrage jesu entiteti koji zadovoljavaju zadati kriterijum.
+(jos nisu implementirane funkcionalnosti). Prilikom klika na opciju za dodavanje ili korišćenjem akceleratora CTRL+N, prikazaće 
+se odgovarajući dijalog u zavisnosti od izabranog taba (dijalog za dodavanje studenata - izabran tab "Studenti", 
+dijalog za dodavanje profesora - izabran tab "Profesori", dijalog za dodavanje predmeta - izabran tab "Predmeti").
+Prilikom klika na dugme ili korišćenjem akceleratora CTRL+E za izmenu podataka prikazaće se odgovarajući dijalozi 
+u zavisnosti od izabranog taba u glavnom prozoru. Prilikom klika na dugme ili korišćenjem akceleratora CTRL+D za brisanje podataka,
+obrisaće se izabrani entitet iz sistema.
 
 ________________________________________________________________________________________________________________________________
 
-4. *bice dodato naknadno*
+4. U tabovima su prikazani svi entiteti koji postoje u sistemu. Tab "Student" sadrži tabelu studenata. U svakoj vrsti tabele se 
+nalazi tačno jedan student i njegovi podaci. Tabela ima šest kolona (broj indeksa, ime, prezime, trenutna godina studija, status,
+prosečna ocena). Tab "Profesori" sadrži tabelu profesora. U svakoj vrsti se nalaze podaci o tačno jednom profesoru. Tabela ima 
+četiri kolone (ime, prezime, titula, zvanje). Tab "Predmeti" sadrži tabelu predmeta. U svakoj vrsti se nalaze podaci o tačno 
+jednom predmetu. Tabela ima pet kolona (šifra predmeta, naziv, broj ESPB bodova, godina na kojoj se predmet izvodi, semestar u
+kome se predmet izvodi.
+________________________________________________________________________________________________________________________________
+FUNKCIONALNOSTI SISTEMA
+Dodavanje entiteta:
+-Dodavanje studenata: 
+Dijalog za dodavanje studenata se prikazuje ukoliko je izabran tab "Studenti". Potrebno je uneti ime, prezime, datum rođenja,
+adresu stanovanja, broj telefona, e-mail adresu, broj indeksa, godinu upisa, i izabrati jednu od opcija za trenutnu godinu 
+studija ( I prva, II druga, III treća, IV četvrta) i za način finansiranja (budžet, samofinansiranje). Samo ukoliko su sva
+polja ispravno popunjena omogućiće se dodavanje studenta u sistem. Prosečna ocena se računa iz položenih predmeta tog studenta.
+Prilikom dodavanja u sistem, student neće imati ni jedan položeni predmet, te će prosek na početku biti nula.
+
+-Dodavanje profesora:
+Dijalog za dodavanje profesora se prikazuje ukoliko je izabran tab "Profesori". Potrebno je uneti ime, prezime, datum rođenja,
+adresu stanovanja, kontakt telefon, e-mail adresu, adresu kancelarije, broj lične karte kao i izabrati jednu od opcija za
+titulu (BSc, MSc, master, doktor, profesor doktor) i zvanje (saradnik u nastavi, asistent, asistent sa doktoratom, docent,
+vanredni profesor, redovni profesor, profesor emeritus, dekan). Samo ukoliko su sva polja ispravno popunjena omogućiće se 
+dodavanje profesora u sistem.
+
+-Dodavanje predmeta:
+Dijalog za dodavanje predmeta se prikazuje ukoliko je izabran tab "Predmeti"
+(dopunjavaće se)
+
+---DOPUNJAVAĆE SE---

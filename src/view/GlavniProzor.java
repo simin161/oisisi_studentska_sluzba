@@ -91,7 +91,7 @@ public class GlavniProzor extends JFrame{
 				
 				rbrTaba = tabbedPane.getSelectedIndex();
 				toolbar.updateRbr(rbrTaba, frame);
-				menuBar.updateRbr(rbrTaba, frame);
+				menuBar.updateRbr(rbrTaba);
 			}
 			
 		});

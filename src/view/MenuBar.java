@@ -3,6 +3,7 @@ package view;
 import java.awt.Container;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
+import java.io.File;
 
 import javax.swing.ImageIcon;
 import javax.swing.JMenu;
@@ -25,13 +26,10 @@ public class MenuBar extends JMenuBar {
 
 	private int rbr = 0;
 	private AbstractActionNew actionNew;
-	private Container cont;
-	
+
 	@SuppressWarnings("deprecation")
 	public MenuBar(int width, int height, Container cont) {
-		
-		this.cont = cont;
-		
+
 		JMenu menuFile = new JMenu("File");
 		menuFile.setMnemonic('F');
 		add(menuFile);
@@ -46,7 +44,7 @@ public class MenuBar extends JMenuBar {
 
 		// menu bar file
 
-		JMenuItem menuItemNew = new JMenuItem("New", new ImageIcon("images/add3.png"));
+		JMenuItem menuItemNew = new JMenuItem("New", new ImageIcon("images" + File.separator + "add3.png"));
 		menuItemNew.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_MASK));
 		menuItemNew.setMnemonic('N');
 		actionNew = new AbstractActionNew(rbr, cont);
@@ -55,7 +53,7 @@ public class MenuBar extends JMenuBar {
 
 		menuFile.addSeparator();
 
-		JMenuItem menuItemClose = new JMenuItem("Close", new ImageIcon("images/close2.png"));
+		JMenuItem menuItemClose = new JMenuItem("Close", new ImageIcon("images" + File.separator + "close2.png"));
 		menuItemClose.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.CTRL_MASK));
 		menuItemClose.setMnemonic('C');
 		ActionClose.closeAction(menuItemClose);
@@ -63,7 +61,7 @@ public class MenuBar extends JMenuBar {
 
 		// menu bar edit
 
-		JMenuItem menuItemEdit = new JMenuItem("Edit", new ImageIcon("images/edit3.png"));
+		JMenuItem menuItemEdit = new JMenuItem("Edit", new ImageIcon("images" + File.separator + "edit3.png"));
 		menuItemEdit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, InputEvent.CTRL_MASK));
 		menuItemEdit.setMnemonic('E');
 		AbstractActionEdit actionEdit = new AbstractActionEdit();
@@ -72,7 +70,7 @@ public class MenuBar extends JMenuBar {
 
 		menuEdit.addSeparator();
 
-		JMenuItem menuItemDelete = new JMenuItem("Delete", new ImageIcon("images/delete3.png"));
+		JMenuItem menuItemDelete = new JMenuItem("Delete", new ImageIcon("images" + File.separator + "delete3.png"));
 		menuItemDelete.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_D, InputEvent.CTRL_MASK));
 		menuItemDelete.setMnemonic('D');
 		AbstractActionDelete actionDelete = new AbstractActionDelete();
@@ -81,28 +79,27 @@ public class MenuBar extends JMenuBar {
 
 		// menu bar help
 
-		JMenuItem menuItemHelp = new JMenuItem("Help", new ImageIcon("images/help2.png"));
+		JMenuItem menuItemHelp = new JMenuItem("Help", new ImageIcon("images" + File.separator + "help2.png"));
 		menuItemHelp.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_H, InputEvent.CTRL_MASK));
 		menuItemHelp.setMnemonic('H');
-		ActionHelpAbout.helpAboutAction(menuItemHelp, "Help", "text/help.txt", "images/help.png", (int) (width * 0.75),
-				(int)(height*0.85), cont);
+		ActionHelpAbout.helpAboutAction(menuItemHelp, "Help", "text" + File.separator + "help.txt",
+				"images" + File.separator + "help.png", (int) (width * 0.75), (int) (height * 0.85), cont);
 		menuHelp.add(menuItemHelp);
 
 		menuHelp.addSeparator();
 
-		JMenuItem menuItemAbout = new JMenuItem("About", new ImageIcon("images/about2.png"));
+		JMenuItem menuItemAbout = new JMenuItem("About", new ImageIcon("images" + File.separator + "about2.png"));
 		menuItemAbout.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, InputEvent.CTRL_MASK));
 		menuItemAbout.setMnemonic('A');
-		ActionHelpAbout.helpAboutAction(menuItemAbout, "About", "text/about.txt", "images/about.png",
-				(int) (width * 0.75), (int) (height * 0.75), cont);
+		ActionHelpAbout.helpAboutAction(menuItemAbout, "About", "text" + File.separator + "about.txt",
+				"images" + File.separator + "about.png", (int) (width * 0.75), (int) (height * 0.75), cont);
 		menuHelp.add(menuItemAbout);
 
 	}
-	
-		public void updateRbr(int rbr, Container cont) {
-		
-			this.rbr = rbr;
-			this.actionNew.updateRbr(rbr);
-			this.cont = cont;
-		}
+
+	public void updateRbr(int rbr) {
+
+		this.rbr = rbr;
+		this.actionNew.updateRbr(rbr);
+	}
 }
