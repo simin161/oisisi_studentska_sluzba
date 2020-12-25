@@ -2,6 +2,9 @@ package model;
 
 import java.util.List;
 
+import model.nabrojiviTipovi.Titula;
+import model.nabrojiviTipovi.Zvanje;
+
 public class Profesor {
 
 	private String prezime;
@@ -12,13 +15,13 @@ public class Profesor {
 	private String email;
 	private String adresaKancelarije;
 	private String brLicneKarte;
-	private String titula;
-	private String zvanje;
+	private Titula titula;
+	private Zvanje zvanje;
 	private List<Predmet> predmeti;
 	
 	
 	public Profesor(String ime, String prezime, String datumRodjenja, String adresaStanovanja, String telefon,
-			String email, String adresaKancelarije, String brLicneKarte, String titula, String zvanje,
+			String email, String adresaKancelarije, String brLicneKarte, Titula titula, Zvanje zvanje,
 			List<Predmet> predmeti) {
 		super();
 		this.prezime = prezime;
@@ -85,16 +88,16 @@ public class Profesor {
 	public void setBrLicneKarte(String brLicneKarte) {
 		this.brLicneKarte = brLicneKarte;
 	}
-	public String getTitula() {
+	public Titula getTitula() {
 		return titula;
 	}
-	public void setTitula(String titula) {
+	public void setTitula(Titula titula) {
 		this.titula = titula;
 	}
-	public String getZvanje() {
+	public Zvanje getZvanje() {
 		return zvanje;
 	}
-	public void setZvanje(String zvanje) {
+	public void setZvanje(Zvanje zvanje) {
 		this.zvanje = zvanje;
 	}
 	public List<Predmet> getPredmeti() {
