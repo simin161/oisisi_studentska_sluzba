@@ -8,8 +8,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -26,7 +24,14 @@ import javax.swing.event.DocumentListener;
 
 import controller.buttonAction.ButtonAction;
 import controller.profesor.ProfesoriController;
+import controller.provere.ProveraAdrese;
+import controller.provere.ProveraDatuma;
+import controller.provere.ProveraEmaila;
 import controller.provere.ProveraGodine;
+import controller.provere.ProveraImena;
+import controller.provere.ProveraLk;
+import controller.provere.ProveraPrezimena;
+import controller.provere.ProveraTelefona;
 import model.Profesor;
 
 public class DialogDodavanjeProfesora extends JDialog{
@@ -204,8 +209,6 @@ public class DialogDodavanjeProfesora extends JDialog{
 			private void enableBtn() {
 				
 				Boolean enable = false;
-				String imeReg = "^[\\p{L} .'-]+$";
-				
 				
 				if(txtIme.getText().trim().length()==0)
 				{
@@ -214,9 +217,7 @@ public class DialogDodavanjeProfesora extends JDialog{
 				}
 				else
 				{
-					Pattern pattern = Pattern.compile(imeReg, Pattern.CASE_INSENSITIVE);
-					Matcher matcher = pattern.matcher(txtIme.getText());
-					provera[0]= matcher.find();
+					provera[0] = ProveraImena.proveriIme(txtIme.getText());
 					if(provera[0]==true)
 					{
 						lblIme.setText("Ime");
@@ -258,35 +259,12 @@ public class DialogDodavanjeProfesora extends JDialog{
 					
 					txtIme.setText(pocetno+ostatak);
 					
-					/*String ime = txtIme.getText();
-					String []parts = ime.split(" ");
-					String []novo = parts;
-					int i=0;
-					for(String s : parts)
-					{
-						String pocetno = s.substring(0, 1);
-						String ostatak = s.substring(1);
-						pocetno = pocetno.toUpperCase();
-						novo[i]= pocetno+ostatak;
-						i++;
-					}
-					
-					String novoIme="";
-					i=0;
-					
-					do {
-						
-						novoIme= novoIme + novo[i] + " ";
-						i++;
-						
-					}while(i!= novo.length);
-					
-					txtIme.setText(novoIme);*/
 				}
 				
 				if(provera[0]==false && txtIme.getText().trim().length()!=0) {
 					
-					JOptionPane.showMessageDialog(DialogDodavanjeProfesora.this, "Greška prilikom unosa imena.", "Greška: ", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(DialogDodavanjeProfesora.this, "Greška prilikom unosa imena.", 
+							"Greška: ", JOptionPane.ERROR_MESSAGE);
 					txtIme.setText("");
 					
 				}
@@ -319,7 +297,6 @@ public class DialogDodavanjeProfesora extends JDialog{
 			private void enableBtn() {
 				
 				Boolean enable = false;
-				String prezimeReg = "^[\\p{L}-]+$";
 				
 				if(txtPrezime.getText().trim().length()==0)
 				{
@@ -328,9 +305,7 @@ public class DialogDodavanjeProfesora extends JDialog{
 				}
 				else
 				{
-					Pattern pattern = Pattern.compile(prezimeReg, Pattern.CASE_INSENSITIVE);
-					Matcher matcher = pattern.matcher(txtPrezime.getText());
-					provera[1]= matcher.find();
+					provera[1]= ProveraPrezimena.proveriPrezime(txtPrezime.getText());
 					if(provera[1]==true)
 					{
 						lblPrezime.setText("Prezime");
@@ -401,15 +376,13 @@ public class DialogDodavanjeProfesora extends JDialog{
 						txtPrezime.setText(novoP);
 						
 					}
-					
-				
 					if(provera[1]==false && txtPrezime.getText().trim().length()!=0) {
 						
-						JOptionPane.showMessageDialog(DialogDodavanjeProfesora.this, "Greška prilikom unosa prezimena. Ukoliko imate dva ili više prezimena, unesite ih sa povlakom između.", "Greška: ", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(DialogDodavanjeProfesora.this, "Greška prilikom unosa prezimena. "
+								+ "Ukoliko imate dva ili više prezimena, unesite ih sa povlakom između.", "Greška: ", JOptionPane.ERROR_MESSAGE);
 						txtPrezime.setText("");
 						
 					}
-				
 				}
 		});
 		
@@ -437,7 +410,6 @@ public class DialogDodavanjeProfesora extends JDialog{
 			private void enableBtn() {
 				
 				Boolean enable = false;
-				String datumReg = "[0-9]{2}[/][0-9]{2}[/][0-9]{4}";
 				if(txtDatum.getText().trim().length()==0)
 				{
 					provera[2]= false;
@@ -445,10 +417,7 @@ public class DialogDodavanjeProfesora extends JDialog{
 				}
 				else
 				{
-					Pattern pattern = Pattern.compile(datumReg);
-					Matcher matcher = pattern.matcher(txtDatum.getText());
-					provera[2]= matcher.find();
-					
+					provera[2]= ProveraDatuma.proveriDatum(txtDatum.getText());
 					if(provera[2]==true)
 					{
 						lblDatum.setText("Datum rođenja");
@@ -482,11 +451,12 @@ public class DialogDodavanjeProfesora extends JDialog{
 				if(provera[2]==true)
 				{
 					Boolean check = true;
-					check = ProveraGodine.proveri(provera, txtDatum.getText(), 2);
+					check = ProveraGodine.proveri(txtDatum.getText(), 2);
 					
 					if(check==false) {
 						
-						JOptionPane.showMessageDialog(DialogDodavanjeProfesora.this, "Greška prilikom unosa datuma. Proverite Vaše podatke i probajte ponovo.", "Greška: ", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(DialogDodavanjeProfesora.this, "Greška prilikom unosa datuma. "
+								+ "Proverite Vaše podatke i probajte ponovo.", "Greška: ", JOptionPane.ERROR_MESSAGE);
 						txtDatum.setText("");
 						
 					}
@@ -494,7 +464,8 @@ public class DialogDodavanjeProfesora extends JDialog{
 				}
 				if(provera[2]==false && txtDatum.getText().trim().length()!=0) {
 					
-					JOptionPane.showMessageDialog(DialogDodavanjeProfesora.this, "Greška prilikom unosa datuma. Datum uneti u sledećem formatu: DD/MM/YYYY", "Greška: ", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(DialogDodavanjeProfesora.this, "Greška prilikom unosa datuma. "
+							+ "Datum uneti u sledećem formatu: DD/MM/YYYY", "Greška: ", JOptionPane.ERROR_MESSAGE);
 					txtDatum.setText("");
 				}	
 			}
@@ -532,8 +503,11 @@ public class DialogDodavanjeProfesora extends JDialog{
 				}
 				else
 				{
-					provera[3]= true;
-					lblAdresa.setText("Adresa stanovanja");
+					provera[3]= ProveraAdrese.proveriAdresu(txtAdresa.getText());
+					if(provera[3]==false)
+						lblAdresa.setText("Adresa stanovanja*");
+					else
+						lblAdresa.setText("Adresa stanovanja");
 				}
 				
 				enable= proveraProvere(provera);
@@ -559,17 +533,15 @@ public class DialogDodavanjeProfesora extends JDialog{
 			@Override
 			public void focusLost(FocusEvent e) {
 			
-				if(provera[3]==false) {
+				if(provera[3]==false && txtAdresa.getText().trim().length()!=0) {
 					
+					JOptionPane.showMessageDialog(DialogDodavanjeProfesora.this, "Greška prilikom unosa adrese. "
+							+ "Adresu je potrebno uneti u sledećem formatu: ULICA I BROJ, MESTO BORAVKA. ", "Greška: ", JOptionPane.ERROR_MESSAGE);
 					txtAdresa.setText("");
 				}
 				
 				
 			}
-			
-			
-			
-			
 		});
 		
 		txtTelefon.getDocument().addDocumentListener(new DocumentListener() {
@@ -596,25 +568,14 @@ public class DialogDodavanjeProfesora extends JDialog{
 			private void enableBtn() {
 				
 				Boolean enable = false;
-				String phoneNumb = "^(\\d{3}[- ]?){2}\\d{3}$";
-				String phoneNumb2 = "^(\\d{3}[- ]?){2}\\d{4}$";
-				if(txtTelefon.getText().trim().length()==0)
-				{
+				if(txtTelefon.getText().trim().length()==0){
+					
 					provera[4]= false;
 					lblTelefon.setText("Kontakt telefon*");
 				}
-				else
-				{
-					Pattern pattern = Pattern.compile(phoneNumb);
-					Matcher matcher = pattern.matcher(txtTelefon.getText());
-					Pattern pattern2 = Pattern.compile(phoneNumb2);
-					Matcher matcher2 = pattern2.matcher(txtTelefon.getText());
-					provera[4]= matcher.find();
+				else{
 					
-					if(matcher.find()!= true && matcher2.find()== true)
-						provera[4]= true;
-					
-					
+					provera[4]= ProveraTelefona.proveriTelefon(txtTelefon.getText());
 					if(provera[4]==true)
 					{
 						lblTelefon.setText("Kontakt telefon");
@@ -623,7 +584,6 @@ public class DialogDodavanjeProfesora extends JDialog{
 					{
 						lblTelefon.setText("Kontakt telefon*");
 					}
-					
 				}
 				
 				enable= proveraProvere(provera);
@@ -648,7 +608,8 @@ public class DialogDodavanjeProfesora extends JDialog{
 				
 				if(provera[4]==false && txtTelefon.getText().trim().length()!=0)
 				{
-					JOptionPane.showMessageDialog(DialogDodavanjeProfesora.this, "Greška prilikom unosa broja telefona. Broj uneti u jednom od sledećih formata: 000 000 0000 | 000-000-0000", "Greška: ", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(DialogDodavanjeProfesora.this, "Greška prilikom unosa broja telefona. "
+							+ "Broj uneti u jednom od sledećih formata: 000 000 0000 | 000-000-0000", "Greška: ", JOptionPane.ERROR_MESSAGE);
 					txtTelefon.setText("");
 				}
 				
@@ -679,7 +640,6 @@ public class DialogDodavanjeProfesora extends JDialog{
 			private void enableBtn() {
 				
 				Boolean enable = false;
-				String mailReg = "^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$";
 				
 				if(txtEmail.getText().trim().length()==0)
 				{
@@ -688,11 +648,7 @@ public class DialogDodavanjeProfesora extends JDialog{
 				}
 				else
 				{
-					
-					Pattern pattern = Pattern.compile(mailReg, Pattern.CASE_INSENSITIVE);
-					Matcher matcher = pattern.matcher(txtEmail.getText());
-					provera[5]= matcher.find();
-					
+					provera[5]= ProveraEmaila.proveriEmail(txtEmail.getText());
 					if(provera[5]== true)
 					{
 						lblEmail.setText("E-mail adresa");
@@ -725,15 +681,12 @@ public class DialogDodavanjeProfesora extends JDialog{
 				
 				if(provera[5]==false && txtEmail.getText().trim().length()!=0) {
 					
-					JOptionPane.showMessageDialog(DialogDodavanjeProfesora.this, "Greška prilikom unosa e-mail adrese. Unesite validnu e-mail adresu poput: example@something.domain ", "Greška: ", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(DialogDodavanjeProfesora.this, "Greška prilikom unosa e-mail adrese. "
+							+ "Unesite validnu e-mail adresu poput: example@something.domain ", "Greška: ", JOptionPane.ERROR_MESSAGE);
 					txtEmail.setText("");
 					
 				}
-				
 			}
-			
-			
-			
 		});
 		
 		txtKancelarija.getDocument().addDocumentListener(new DocumentListener() {
@@ -768,8 +721,12 @@ public class DialogDodavanjeProfesora extends JDialog{
 				}
 				else
 				{
-					provera[6]= true;
-					lblKancelarija.setText("Adresa kancelarije");
+					provera[6]= ProveraAdrese.proveriAdresu(txtKancelarija.getText());
+					
+					if(provera[6]==false)
+						lblKancelarija.setText("Adresa kancelarije*");
+					else
+						lblKancelarija.setText("Adresa kancelarije");
 				}
 				
 				enable= proveraProvere(provera);
@@ -797,14 +754,12 @@ public class DialogDodavanjeProfesora extends JDialog{
 			
 				if(provera[6]==false && txtKancelarija.getText().trim().length()!=0) {
 					
+					JOptionPane.showMessageDialog(DialogDodavanjeProfesora.this, "Greška prilikom unosa adrese kancelarije. "
+							+ "Proverite Vaše podatke i probajte ponovo.", "Greška: ", JOptionPane.ERROR_MESSAGE);
 					txtKancelarija.setText("");
 					
 				}
-				
 			}
-			
-			
-			
 		});
 		
 		txtLk.getDocument().addDocumentListener(new DocumentListener() {
@@ -831,7 +786,6 @@ public class DialogDodavanjeProfesora extends JDialog{
 			private void enableBtn() {
 				
 				Boolean enable = false;
-				String lkReg= "^\\d{9}$";
 				if(txtLk.getText().trim().length()==0)
 				{
 					provera[7]= false;
@@ -839,10 +793,7 @@ public class DialogDodavanjeProfesora extends JDialog{
 				}
 				else
 				{
-
-					Pattern pattern = Pattern.compile(lkReg, Pattern.CASE_INSENSITIVE);
-					Matcher matcher = pattern.matcher(txtLk.getText());
-					provera[7]= matcher.find();
+					provera[7]= ProveraLk.proveriBrLk(txtLk.getText());
 					
 					if(provera[7]== true)
 					{
@@ -867,7 +818,7 @@ public class DialogDodavanjeProfesora extends JDialog{
 				if(provera[7]==false) {
 					
 					txtLk.setText("");
-		
+
 				}	
 			}
 			@Override
@@ -875,7 +826,8 @@ public class DialogDodavanjeProfesora extends JDialog{
 				
 				if(provera[7]==false && txtLk.getText().trim().length()!=0) {
 					
-					JOptionPane.showMessageDialog(DialogDodavanjeProfesora.this, "Greška prilikom unosa broja lične karte. Broj mora imati devet cifara.", "Greška: ", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(DialogDodavanjeProfesora.this, "Greška prilikom unosa broja lične karte. "
+							+ "Broj mora imati devet cifara.", "Greška: ", JOptionPane.ERROR_MESSAGE);
 					txtLk.setText("");	
 				}
 			}

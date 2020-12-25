@@ -5,6 +5,7 @@ package controller;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.io.File;
 
 import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
@@ -28,7 +29,7 @@ public class AbstractActionNew extends AbstractAction{
 		putValue(NAME, "New");
 		putValue(MNEMONIC_KEY, KeyEvent.VK_N);
 		putValue(SHORT_DESCRIPTION, "Dodavanje podataka u tabelu");
-		putValue(SMALL_ICON, new ImageIcon("images/add2.png"));
+		putValue(SMALL_ICON, new ImageIcon("images"+ File.separator +"add2.png"));
 		putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_N, KeyEvent.CTRL_MASK));
 		
 	}

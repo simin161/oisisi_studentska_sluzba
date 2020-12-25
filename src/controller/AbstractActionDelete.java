@@ -4,6 +4,7 @@ package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.io.File;
 
 import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
@@ -19,7 +20,7 @@ public class AbstractActionDelete extends AbstractAction{
 		putValue(NAME, "Delete");
 		putValue(MNEMONIC_KEY, KeyEvent.VK_D);
 		putValue(SHORT_DESCRIPTION, "Brisanje podataka iz tabele");
-		putValue(SMALL_ICON, new ImageIcon("images/delete2.png"));
+		putValue(SMALL_ICON, new ImageIcon("images"+File.separator+"delete2.png"));
 		putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_D, KeyEvent.CTRL_MASK));
 		
 	}
