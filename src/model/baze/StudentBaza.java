@@ -1,7 +1,10 @@
 //vezbe06
 package model.baze;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import model.Student;
@@ -40,7 +43,14 @@ public class StudentBaza {
 	private void initializeStudents() {
 		this.students = new ArrayList<Student>();
 		// test
-		students.add(new Student("Prezimic", "Imenko", "01.01.1000", "adresa stanovica 00", "123456789",
+		Date date = null;
+		try {
+			date = new SimpleDateFormat("dd/MM/yyyy").parse("10/12/1995");
+		} catch (ParseException e) {
+			
+			e.printStackTrace();
+		}
+		students.add(new Student("Prezimic", "Imenko", date , "adresa stanovica 00", "123456789",
 				"email@email.com", "XX12345", 1099, 2, Status.B, 8.91, null, null));
 	}
 

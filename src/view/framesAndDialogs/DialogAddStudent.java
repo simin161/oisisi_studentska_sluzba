@@ -9,8 +9,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -351,6 +354,11 @@ public class DialogAddStudent extends JDialog {
 					valid[2] = false;
 					shown = false;
 					godRodj = -1;
+
+					if(godUpis != -1) {
+						valid[7] = true;
+						invalidYear = false;
+					}
 				}
 
 			}
@@ -904,9 +912,16 @@ public class DialogAddStudent extends JDialog {
 					trenutnaGodina = 4;
 					break;
 				}
-				// ako je student tek sad dodat, lista polozenih predmeta ce biti prazna ->
-				// prosek je 0
-				Student st = new Student(tFPrezime.getText(), tFName.getText(), tfDatumR.getText(), tFAdr.getText(),
+				
+			    Date date1 = null;
+				try {
+					date1 = new SimpleDateFormat("dd/MM/yyyy").parse(tfDatumR.getText());
+				} catch (ParseException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+
+				Student st = new Student(tFPrezime.getText(), tFName.getText(), date1, tFAdr.getText(),
 						tFBr.getText(), tFEmail.getText(), tFBrI.getText().toUpperCase(), godUpis, trenutnaGodina, s, 0,
 						null, null);
 

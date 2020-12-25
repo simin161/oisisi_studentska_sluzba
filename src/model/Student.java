@@ -1,5 +1,6 @@
 package model;
 
+import java.util.Date;
 import java.util.List;
 
 import model.nabrojiviTipovi.Status;
@@ -8,7 +9,7 @@ public class Student {
 
 	private String prezime;
 	private String ime;
-	private String datumRodjenja;
+	private Date datumRodjenja;
 	private String adresaStanovanja;
 	private String telefon;
 	private String email;
@@ -20,7 +21,7 @@ public class Student {
 	private List<Ocena> polozeno;
 	private List<Predmet> nepolozeno;
 
-	public Student(String prezime, String ime, String datumRodjenja, String adresaStanovanja, String telefon,
+	public Student(String prezime, String ime, Date datumRodjenja, String adresaStanovanja, String telefon,
 			String email, String brIndeksa, int godinaUpisa, int trenutnaGodina, Status status, double prosecnaOcena,
 			List<Ocena> polozeno, List<Predmet> nepolozeno) {
 		super();
@@ -47,7 +48,7 @@ public class Student {
 		return ime;
 	}
 
-	public String getDatumRodjenja() {
+	public Date getDatumRodjenja() {
 		return datumRodjenja;
 	}
 
@@ -108,7 +109,7 @@ public class Student {
 		this.ime = ime;
 	}
 
-	public void setDatumRodjenja(String datumRodjenja) {
+	public void setDatumRodjenja(Date datumRodjenja) {
 		this.datumRodjenja = datumRodjenja;
 	}
 
