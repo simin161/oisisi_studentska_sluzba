@@ -9,6 +9,7 @@ import java.io.File;
 
 import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 
 import view.framesAndDialogs.DialogAddStudent;
@@ -37,22 +38,21 @@ public class AbstractActionNew extends AbstractAction{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
-		if(this.rbrTaba==0)
-		{
+		if(this.rbrTaba==0){
+			@SuppressWarnings("unused")
 			DialogAddStudent dialogAddS = new DialogAddStudent(c);
 		}
-		else if(this.rbrTaba==1)
-		{
+		else if(this.rbrTaba==1){
+			
 			DialogDodavanjeProfesora ddp = new DialogDodavanjeProfesora(c);
 			ddp.setVisible(true);
 		}
-		else if(this.rbrTaba==2)
-		{
+		else if(this.rbrTaba==2){
+			
 			//predmet
 		}
-		else
-		{
-			System.out.println("ERROR");
+		else{
+			JOptionPane.showMessageDialog(null, "Greška.", "Greška: ", JOptionPane.ERROR_MESSAGE);
 		}
 		
 	}

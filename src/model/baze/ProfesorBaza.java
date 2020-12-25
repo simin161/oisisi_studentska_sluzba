@@ -13,9 +13,10 @@ public class ProfesorBaza {
 	
 	public static ProfesorBaza getInstance() {
 		
-		if(instance == null)
-		{
+		if(instance == null){
+			
 			instance = new ProfesorBaza();
+		
 		}
 		
 		return instance;
@@ -69,9 +70,10 @@ public class ProfesorBaza {
 		
 	}
 	
-	public Profesor getRow(int rowIndex)
-	{
+	public Profesor getRow(int rowIndex) {
+		
 		return this.profesori.get(rowIndex);
+	
 	}
 	
 	public String getValueAt(int row, int column) {

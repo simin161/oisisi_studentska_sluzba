@@ -5,7 +5,7 @@ import java.util.regex.Pattern;
 
 public class ProveraEmaila {
 
-	public static Boolean proveriEmail(String email){
+	public static Boolean proveriEmail(String email) {
 		
 		Boolean provera = false;
 		String mailReg = "^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$";

@@ -13,8 +13,8 @@ public class ProfesorTable extends JTable{
 
 	private static final long serialVersionUID = -1028457065900424585L;
 
-	public ProfesorTable()
-	{
+	public ProfesorTable() {
+		
 		this.setRowSelectionAllowed(true);
 		this.setColumnSelectionAllowed(false);
 		this.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -26,13 +26,15 @@ public class ProfesorTable extends JTable{
 		
 		Component c = super.prepareRenderer(renderer, row, column);
 		
-		if(isRowSelected(row))
-		{
+		if(isRowSelected(row)) {
+			
 			c.setBackground(Color.CYAN);
+	
 		}
-		else
-		{
+		else {
+			
 			c.setBackground(Color.WHITE);
+		
 		}
 		
 		return c;

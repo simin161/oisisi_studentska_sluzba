@@ -25,8 +25,8 @@ public class Toolbar extends JToolBar{
 	private AbstractActionDelete adelete = new AbstractActionDelete();
 	
 	
-	public Toolbar(int rbr, Container c)
-	{	
+	public Toolbar(int rbr, Container c) {
+		
 		super(SwingConstants.HORIZONTAL);
 		setRollover(true);
 		setFloatable(false);

@@ -210,22 +210,19 @@ public class DialogDodavanjeProfesora extends JDialog{
 				
 				Boolean enable = false;
 				
-				if(txtIme.getText().trim().length()==0)
-				{
+				if(txtIme.getText().trim().length()==0) {
+					
 					provera[0]= false;
 					lblIme.setText("Ime*");
 				}
-				else
-				{
+				else {
+					
 					provera[0] = ProveraImena.proveriIme(txtIme.getText());
 					if(provera[0]==true)
-					{
 						lblIme.setText("Ime");
-					}
 					else
-					{
 						lblIme.setText("Ime*");
-					}
+					
 				}
 				
 				enable= proveraProvere(provera);
@@ -252,8 +249,8 @@ public class DialogDodavanjeProfesora extends JDialog{
 			public void focusLost(FocusEvent e) {
 			
 				
-				if(txtIme.getText().trim().length()!=0)
-				{
+				if(txtIme.getText().trim().length()!=0) {
+					
 					String pocetno = txtIme.getText().substring(0,1).toUpperCase();
 					String ostatak = txtIme.getText().substring(1);
 					
@@ -298,22 +295,21 @@ public class DialogDodavanjeProfesora extends JDialog{
 				
 				Boolean enable = false;
 				
-				if(txtPrezime.getText().trim().length()==0)
-				{
+				if(txtPrezime.getText().trim().length()==0) {
+					
 					provera[1]= false;
 					lblPrezime.setText("Prezime*");
+				
 				}
-				else
-				{
+				else {
+					
 					provera[1]= ProveraPrezimena.proveriPrezime(txtPrezime.getText());
+					
 					if(provera[1]==true)
-					{
 						lblPrezime.setText("Prezime");
-					}
 					else
-					{
 						lblPrezime.setText("Prezime*");
-					}
+					
 				}
 				
 				enable= proveraProvere(provera);
@@ -347,8 +343,8 @@ public class DialogDodavanjeProfesora extends JDialog{
 						String novoP="";
 						int i=0;
 						
-						for(String s : parts)
-						{
+						for(String s : parts) {
+							
 							String pocetno= s.substring(0,1).toUpperCase();
 							String ostatak= s.substring(1);
 							
@@ -358,15 +354,14 @@ public class DialogDodavanjeProfesora extends JDialog{
 						}
 						
 						i=0;
-						while(i!=prezime.length)
-						{
+						while(i!=prezime.length) {
+							
 							if(i==0) {
 								
 								novoP= prezime[i];
 								
 							}
-							else
-							{
+							else {
 								novoP= novoP + '-' + prezime[i];
 							}
 							
@@ -410,22 +405,19 @@ public class DialogDodavanjeProfesora extends JDialog{
 			private void enableBtn() {
 				
 				Boolean enable = false;
-				if(txtDatum.getText().trim().length()==0)
-				{
+				if(txtDatum.getText().trim().length()==0) {
+					
 					provera[2]= false;
 					lblDatum.setText("Datum rođenja*");
+					
 				}
-				else
-				{
+				else {
+					
 					provera[2]= ProveraDatuma.proveriDatum(txtDatum.getText());
 					if(provera[2]==true)
-					{
 						lblDatum.setText("Datum rođenja");
-					}
 					else
-					{
 						lblDatum.setText("Datum rođenja*");
-					}
 					
 				}
 				enable= proveraProvere(provera);
@@ -448,8 +440,8 @@ public class DialogDodavanjeProfesora extends JDialog{
 			@Override
 			public void focusLost(FocusEvent e) {
 		
-				if(provera[2]==true)
-				{
+				if(provera[2]==true) {
+					
 					Boolean check = true;
 					check = ProveraGodine.proveri(txtDatum.getText(), 2);
 					
@@ -496,13 +488,13 @@ public class DialogDodavanjeProfesora extends JDialog{
 				
 				Boolean enable = false;
 				
-				if(txtAdresa.getText().trim().length()==0)
-				{
+				if(txtAdresa.getText().trim().length()==0) {
+					
 					provera[3]= false;
 					lblAdresa.setText("Adresa stanovanja*");
 				}
-				else
-				{
+				else {
+					
 					provera[3]= ProveraAdrese.proveriAdresu(txtAdresa.getText());
 					if(provera[3]==false)
 						lblAdresa.setText("Adresa stanovanja*");
@@ -568,20 +560,22 @@ public class DialogDodavanjeProfesora extends JDialog{
 			private void enableBtn() {
 				
 				Boolean enable = false;
-				if(txtTelefon.getText().trim().length()==0){
+				if(txtTelefon.getText().trim().length()==0) {
 					
 					provera[4]= false;
 					lblTelefon.setText("Kontakt telefon*");
+				
 				}
-				else{
+				else {
 					
 					provera[4]= ProveraTelefona.proveriTelefon(txtTelefon.getText());
-					if(provera[4]==true)
-					{
+					if(provera[4]==true) {
+						
 						lblTelefon.setText("Kontakt telefon");
+						
 					}
-					else
-					{
+					else {
+						
 						lblTelefon.setText("Kontakt telefon*");
 					}
 				}
@@ -606,8 +600,8 @@ public class DialogDodavanjeProfesora extends JDialog{
 			@Override
 			public void focusLost(FocusEvent e) {
 				
-				if(provera[4]==false && txtTelefon.getText().trim().length()!=0)
-				{
+				if(provera[4]==false && txtTelefon.getText().trim().length()!=0) {
+					
 					JOptionPane.showMessageDialog(DialogDodavanjeProfesora.this, "Greška prilikom unosa broja telefona. "
 							+ "Broj uneti u jednom od sledećih formata: 000 000 0000 | 000-000-0000", "Greška: ", JOptionPane.ERROR_MESSAGE);
 					txtTelefon.setText("");
@@ -649,10 +643,8 @@ public class DialogDodavanjeProfesora extends JDialog{
 				else
 				{
 					provera[5]= ProveraEmaila.proveriEmail(txtEmail.getText());
-					if(provera[5]== true)
-					{
+					if(provera[5]== true) 
 						lblEmail.setText("E-mail adresa");
-					}
 					else
 						lblEmail.setText("E-mail adresa*");
 				}
@@ -714,13 +706,14 @@ public class DialogDodavanjeProfesora extends JDialog{
 				
 				Boolean enable = false;
 				
-				if(txtKancelarija.getText().trim().length()==0)
-				{
+				if(txtKancelarija.getText().trim().length()==0) {
+					
 					provera[6]= false;
 					lblKancelarija.setText("Adresa kancelarije*");
+				
 				}
-				else
-				{
+				else {
+					
 					provera[6]= ProveraAdrese.proveriAdresu(txtKancelarija.getText());
 					
 					if(provera[6]==false)
@@ -786,19 +779,18 @@ public class DialogDodavanjeProfesora extends JDialog{
 			private void enableBtn() {
 				
 				Boolean enable = false;
-				if(txtLk.getText().trim().length()==0)
-				{
+				if(txtLk.getText().trim().length()==0) {
+					
 					provera[7]= false;
 					lblLk.setText("Broj lične karte*");
+					
 				}
-				else
-				{
+				else {
+					
 					provera[7]= ProveraLk.proveriBrLk(txtLk.getText());
 					
-					if(provera[7]== true)
-					{
+					if(provera[7]== true) 
 						lblLk.setText("Broj lične karte");
-					}
 					else
 						lblLk.setText("Broj lične karte*");
 				}
@@ -815,11 +807,9 @@ public class DialogDodavanjeProfesora extends JDialog{
 			@Override
 			public void focusGained(FocusEvent e) {
 				
-				if(provera[7]==false) {
-					
+				if(provera[7]==false) 
 					txtLk.setText("");
-
-				}	
+				
 			}
 			@Override
 			public void focusLost(FocusEvent e) {

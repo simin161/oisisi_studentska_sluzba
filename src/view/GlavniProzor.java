@@ -50,6 +50,8 @@ public class GlavniProzor extends JFrame{
 		panelSsluzba.add(panelToolbar, BorderLayout.NORTH);
 		panelToolbar.setLayout(new BorderLayout(0,0));
 		
+		/* --- Toolbar --- */
+		
 		Toolbar toolbar = new Toolbar(rbrTaba, this);
 		panelToolbar.add(toolbar);
 		

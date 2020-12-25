@@ -10,8 +10,7 @@ public class AbstractTableModelProfesori extends AbstractTableModel{
 
 	private static final long serialVersionUID = 4009682820013416129L;
 
-	public AbstractTableModelProfesori()
-	{
+	public AbstractTableModelProfesori() {
 		
 	}
 	
