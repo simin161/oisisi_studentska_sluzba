@@ -75,7 +75,16 @@ public class Student {
 	public int getTrenutnaGodina() {
 		return trenutnaGodina;
 	}
-
+	
+	public String getTrenutnaGodinaAsString() {
+		switch(trenutnaGodina) {
+		case 1: return "I (prva)";
+		case 2: return "II (druga)";
+		case 3: return "III (treća)";
+		case 4: return "IV (četvrta)";
+		default: return "";
+		}
+	}
 	public Status getStatus() {
 		return status;
 	}

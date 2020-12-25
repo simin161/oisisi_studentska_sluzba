@@ -45,7 +45,7 @@ public class StudentBaza {
 		// test
 		Date date = null;
 		try {
-			date = new SimpleDateFormat("dd/MM/yyyy").parse("10/12/1995");
+			date = new SimpleDateFormat("dd/MM/yyyy").parse("10/12/1000");
 		} catch (ParseException e) {
 			
 			e.printStackTrace();
@@ -93,7 +93,7 @@ public class StudentBaza {
 		case 2:
 			return student.getPrezime();
 		case 3:
-			return Integer.toString(student.getTrenutnaGodina());
+			return student.getTrenutnaGodinaAsString();
 		case 4:
 			return student.getStatusAsString();
 		case 5:
