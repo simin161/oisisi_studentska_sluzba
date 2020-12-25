@@ -1,5 +1,6 @@
 package model;
 
+import java.util.Date;
 import java.util.List;
 
 import model.nabrojiviTipovi.Titula;
@@ -9,7 +10,7 @@ public class Profesor {
 
 	private String prezime;
 	private String ime;
-	private String datumRodjenja;
+	private Date datumRodjenja;
 	private String adresaStanovanja;
 	private String telefon;
 	private String email;
@@ -20,7 +21,7 @@ public class Profesor {
 	private List<Predmet> predmeti;
 	
 	
-	public Profesor(String ime, String prezime, String datumRodjenja, String adresaStanovanja, String telefon,
+	public Profesor(String ime, String prezime, Date datumRodjenja, String adresaStanovanja, String telefon,
 			String email, String adresaKancelarije, String brLicneKarte, Titula titula, Zvanje zvanje,
 			List<Predmet> predmeti) {
 		super();
@@ -52,10 +53,10 @@ public class Profesor {
 	public void setIme(String ime) {
 		this.ime = ime;
 	}
-	public String getDatumRodjenja() {
+	public Date getDatumRodjenja() {
 		return datumRodjenja;
 	}
-	public void setDatumRodjenja(String datumRodjenja) {
+	public void setDatumRodjenja(Date datumRodjenja) {
 		this.datumRodjenja = datumRodjenja;
 	}
 	public String getAdresaStanovanja() {

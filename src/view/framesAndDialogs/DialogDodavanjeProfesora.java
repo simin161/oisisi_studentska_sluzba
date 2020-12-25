@@ -8,6 +8,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -33,6 +36,8 @@ import controller.provere.ProveraLk;
 import controller.provere.ProveraPrezimena;
 import controller.provere.ProveraTelefona;
 import model.Profesor;
+import model.nabrojiviTipovi.Titula;
+import model.nabrojiviTipovi.Zvanje;
 
 public class DialogDodavanjeProfesora extends JDialog{
 
@@ -147,7 +152,18 @@ public class DialogDodavanjeProfesora extends JDialog{
 		
 		JPanel panelTitula = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		JLabel lblTitula = new JLabel("Titula* ");
-		String[] titule= {"Master", "Magistar", "Doktor"};
+		Titula []titula = Titula.values();
+		String []titule= {"","","","",""};
+		
+		for(int i = 0; i < titula.length; i++) {
+			
+			switch(titula[i]) {
+			
+				case profesor_doktor : titule[i] = "Profesor doktor"; break;
+				default: titule[i]= titula[i].toString();
+		
+			}
+		}
 		
 		@SuppressWarnings({ "rawtypes", "unchecked" })
 		JComboBox cboxTitula = new JComboBox(titule);
@@ -160,7 +176,23 @@ public class DialogDodavanjeProfesora extends JDialog{
 		
 		JPanel panelZvanje = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		JLabel lblZvanje = new JLabel("Zvanje* ");
-		String[] zvanja = {"Redovni profesor","Vanredni profesor","Docent", "Dekan", "Saradnik u nastavi"};
+		
+		Zvanje []zvanje = Zvanje.values();
+		String []zvanja= {"","","","","","","",""};
+		
+		for(int i = 0; i < zvanje.length; i++) {
+			
+			switch(zvanje[i]) {
+			
+				case Saradnik_u_nastavi : zvanja[i] = "Saradnik u nastavi"; break;
+				case Asistent_sa_doktoratom : zvanja[i]= "Asistent sa doktoratom"; break;
+				case Vanredni_profesor : zvanja[i]= "Vanredni profesor"; break;
+				case Redovni_profesor : zvanja[i]= "Redovni profesor"; break;
+				case Profesor_emeritus : zvanja[i]= "Profesor emeritus"; break;
+				default : zvanja[i]= zvanje[i].toString();
+		
+			}
+		}
 		
 		@SuppressWarnings({ "rawtypes", "unchecked" })
 		JComboBox cboxZvanje = new JComboBox(zvanja);
@@ -828,18 +860,26 @@ public class DialogDodavanjeProfesora extends JDialog{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 			
+				Date date = null;
+				
+				try {
+					date = new SimpleDateFormat("dd/MM/yyyy").parse(txtDatum.getText());
+				} catch (ParseException e1) {
+					
+					e1.printStackTrace();
+				}
 				
 				profesor = new Profesor();
 				profesor.setIme(txtIme.getText());
 				profesor.setPrezime(txtPrezime.getText());
-				profesor.setDatumRodjenja(txtDatum.getText());
+				profesor.setDatumRodjenja(date);
 				profesor.setAdresaStanovanja(txtAdresa.getText());
 				profesor.setTelefon(txtTelefon.getText());
 				profesor.setEmail(txtEmail.getText());
 				profesor.setAdresaKancelarije(txtKancelarija.getText());
 				profesor.setBrLicneKarte(txtLk.getText());
-				profesor.setTitula(cboxTitula.getSelectedItem().toString());
-				profesor.setZvanje(cboxZvanje.getSelectedItem().toString());
+				profesor.setTitula(titula[cboxTitula.getSelectedIndex()]);
+				profesor.setZvanje(zvanje[cboxZvanje.getSelectedIndex()]);
 				profesor.setPredmeti(null);
 				
 				ProfesoriController pc = new ProfesoriController(profesor);

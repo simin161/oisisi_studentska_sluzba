@@ -2,10 +2,15 @@
 
 package model.baze;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import model.Profesor;
+import model.nabrojiviTipovi.Titula;
+import model.nabrojiviTipovi.Zvanje;
 
 public class ProfesorBaza {
 
@@ -41,9 +46,16 @@ public class ProfesorBaza {
 	private void initProfesore() {
 		
 		this.profesori= new ArrayList<Profesor>();
+		Date date = null;
+		try {
+			date = new SimpleDateFormat("dd/MM/yyyy").parse("10/12/1985");
+		} catch (ParseException e) {
+			
+			e.printStackTrace();
+		}
 		//test primer, kasnije ce biti implementirano zapravo iz datoteke
-		profesori.add(new Profesor("Petar", "Petrovic", "10.10.1985.", "Negde daleko 10", "02144444", "jasmo@ja.com", "Negde blizu 10", "025161", "Doktor", "Docent", null));
-		profesori.add(new Profesor("Petar", "Markovic", "10.10.1985.", "Negde daleko 10", "02144444", "jasmo@ja.com", "Negde blizu 10", "025161", "Doktor", "Docent", null));
+		profesori.add(new Profesor("Petar", "Petrovic", date, "Negde daleko 10", "02144444", "jasmo@ja.com", "Negde blizu 10", "025161112", Titula.profesor_doktor, Zvanje.Docent, null));
+		profesori.add(new Profesor("Petar", "Markovic", date, "Negde daleko 10", "02144444", "jasmo@ja.com", "Negde blizu 10", "025161231", Titula.Doktor, Zvanje.Docent, null));
 		
 	}
 	
@@ -83,18 +95,39 @@ public class ProfesorBaza {
 			
 			case 0: return profesor.getIme();
 			case 1: return profesor.getPrezime();
-			case 2: return profesor.getTitula();
-			case 3: return profesor.getZvanje();
+			case 2: {
+				
+				switch(profesor.getTitula()) {
+				
+					case profesor_doktor : return "Profesor doktor";
+					default: return profesor.getTitula().toString();
+					
+				}	
+			}
+			case 3: {
+				
+				switch(profesor.getZvanje()) {
+				
+					case Saradnik_u_nastavi : return "Saradnik u nastavi";
+					case Asistent_sa_doktoratom : return "Asistent sa doktoratom";
+					case Vanredni_profesor : return "Vanredni profesor";
+					case Redovni_profesor : return "Redovni profesor";
+					case Profesor_emeritus : return "Profesor emeritus";
+					default: return profesor.getZvanje().toString();
+				
+				}
+				
+			}
 			default: return null;
 		
 		}
 		
 	}
 	
-	public void dodajProfesora(String ime, String prezime, String datum, 
+	public void dodajProfesora(String ime, String prezime, Date datum, 
 			String adresaS, String telefon, String email, 
-			String adresaK, String brLicneKarte, String titula,
-			String zvanje) {
+			String adresaK, String brLicneKarte, Titula titula,
+			Zvanje zvanje) {
 		
 		this.profesori.add(new Profesor(ime, prezime, datum, adresaS,
 				telefon, email, adresaK, brLicneKarte, titula, zvanje, null));
