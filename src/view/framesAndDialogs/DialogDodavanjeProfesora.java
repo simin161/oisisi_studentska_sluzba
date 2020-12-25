@@ -45,7 +45,7 @@ public class DialogDodavanjeProfesora extends JDialog{
 	
 	private Profesor profesor;
 	private Boolean []provera= {false, false, false, false, false, false, false, false};
-	
+	private Boolean check2= false;
 	
 	public DialogDodavanjeProfesora(Container c)
 	{
@@ -476,12 +476,14 @@ public class DialogDodavanjeProfesora extends JDialog{
 					
 					Boolean check = true;
 					check = ProveraGodine.proveri(txtDatum.getText(), 2);
+					check2 = check;
 					
 					if(check==false) {
 						
 						JOptionPane.showMessageDialog(DialogDodavanjeProfesora.this, "Greška prilikom unosa datuma. "
 								+ "Proverite Vaše podatke i probajte ponovo.", "Greška: ", JOptionPane.ERROR_MESSAGE);
 						txtDatum.setText("");
+						
 						
 					}
 					
@@ -491,6 +493,8 @@ public class DialogDodavanjeProfesora extends JDialog{
 					JOptionPane.showMessageDialog(DialogDodavanjeProfesora.this, "Greška prilikom unosa datuma. "
 							+ "Datum uneti u sledećem formatu: DD/MM/YYYY", "Greška: ", JOptionPane.ERROR_MESSAGE);
 					txtDatum.setText("");
+					
+					btnPotvrdi.setEnabled(false);
 				}	
 			}
 		});
@@ -860,34 +864,38 @@ public class DialogDodavanjeProfesora extends JDialog{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 			
-				Date date = null;
-				
-				try {
-					date = new SimpleDateFormat("dd/MM/yyyy").parse(txtDatum.getText());
-				} catch (ParseException e1) {
+				if(check2 == true) {
 					
-					e1.printStackTrace();
-				}
-				
-				profesor = new Profesor();
-				profesor.setIme(txtIme.getText());
-				profesor.setPrezime(txtPrezime.getText());
-				profesor.setDatumRodjenja(date);
-				profesor.setAdresaStanovanja(txtAdresa.getText());
-				profesor.setTelefon(txtTelefon.getText());
-				profesor.setEmail(txtEmail.getText());
-				profesor.setAdresaKancelarije(txtKancelarija.getText());
-				profesor.setBrLicneKarte(txtLk.getText());
-				profesor.setTitula(titula[cboxTitula.getSelectedIndex()]);
-				profesor.setZvanje(zvanje[cboxZvanje.getSelectedIndex()]);
-				profesor.setPredmeti(null);
-				
-				ProfesoriController pc = new ProfesoriController(profesor);
-				pc.dodajProfesora();
-				
-				JOptionPane.showMessageDialog(null, "Unos novog profesora je uspešno izvršen!");
-				
-				dispose();				
+					Date date = null;
+					
+					try {
+						date = new SimpleDateFormat("dd/MM/yyyy").parse(txtDatum.getText());
+					} catch (ParseException e1) {
+						
+						e1.printStackTrace();
+					}
+					
+					profesor = new Profesor();
+					profesor.setIme(txtIme.getText());
+					profesor.setPrezime(txtPrezime.getText());
+					profesor.setDatumRodjenja(date);
+					profesor.setAdresaStanovanja(txtAdresa.getText());
+					profesor.setTelefon(txtTelefon.getText());
+					profesor.setEmail(txtEmail.getText());
+					profesor.setAdresaKancelarije(txtKancelarija.getText());
+					profesor.setBrLicneKarte(txtLk.getText());
+					profesor.setTitula(titula[cboxTitula.getSelectedIndex()]);
+					profesor.setZvanje(zvanje[cboxZvanje.getSelectedIndex()]);
+					profesor.setPredmeti(null);
+					
+					ProfesoriController pc = new ProfesoriController(profesor);
+					pc.dodajProfesora();
+					
+					JOptionPane.showMessageDialog(null, "Unos novog profesora je uspešno izvršen!");
+					
+					dispose();	
+					
+				}			
 			}
 		});
 	}
