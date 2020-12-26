@@ -1,5 +1,6 @@
 package view.framesAndDialogs;
 
+import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -59,7 +60,7 @@ public class DialogDodavanjeProfesora extends JDialog{
 		setLocationRelativeTo(c);
 		setModal(true);
 		setResizable(false);
-		Dimension dim= new Dimension(150,20);
+		Dimension dim= new Dimension(155,20);
 		
 		JPanel panelMain = new JPanel();
 		BoxLayout box = new BoxLayout(panelMain, BoxLayout.Y_AXIS);
@@ -281,12 +282,13 @@ public class DialogDodavanjeProfesora extends JDialog{
 			public void focusLost(FocusEvent e) {
 			
 				
-				if(txtIme.getText().trim().length()!=0) {
+				if(txtIme.getText().trim().length()!=0 && provera[0]== true) {
 					
 					String pocetno = txtIme.getText().substring(0,1).toUpperCase();
 					String ostatak = txtIme.getText().substring(1);
 					
 					txtIme.setText(pocetno+ostatak);
+					lblIme.setForeground(Color.black);
 					
 				}
 				
@@ -295,6 +297,7 @@ public class DialogDodavanjeProfesora extends JDialog{
 					JOptionPane.showMessageDialog(DialogDodavanjeProfesora.this, "Greška prilikom unosa imena.", 
 							"Greška: ", JOptionPane.ERROR_MESSAGE);
 					txtIme.setText("");
+					lblIme.setForeground(Color.red);
 					
 				}
 				
@@ -445,14 +448,60 @@ public class DialogDodavanjeProfesora extends JDialog{
 				}
 				else {
 					
-					provera[2]= ProveraDatuma.proveriDatum(txtDatum.getText());
-					if(provera[2]==true)
-						lblDatum.setText("Datum rođenja");
-					else
-						lblDatum.setText("Datum rođenja*");
+					if(txtDatum.getText().length()==10) {
+						
+						provera[2]= ProveraDatuma.proveriDatum(txtDatum.getText());
+						if(provera[2]==true) {
+							
+							if(proveraProvere(provera)==true) {
+							
+								enable = ProveraGodine.proveri(txtDatum.getText(), 2);
+								
+							}
+							else
+								enable = false;
+							
+						}
+						else{
+
+							enable = false;
+							
+						}
+						
+					}
+					else {
+						
+						enable = false;
+						
+					}
 					
 				}
-				enable= proveraProvere(provera);
+				
+				
+				if(provera[2]== true && ProveraGodine.proveri(txtDatum.getText(), 2)==true) {
+					
+					lblDatum.setText("Datum rođenja");
+					
+				}
+				else {
+					
+					lblDatum.setText("Datum rođenja*");
+					
+				}
+				
+				if(provera[2]==true && ProveraGodine.proveri(txtDatum.getText(), 2)==false) {
+					
+					txtDatum.setToolTipText("Profesor ne sme imati manje od 23 godine.");
+					lblDatum.setForeground(Color.red);
+					lblDatum.setToolTipText("Profesor ne sme imati manje od 23 godine.");
+					
+				}
+				else {
+					
+					txtDatum.setToolTipText(null);
+					lblDatum.setForeground(Color.black);
+					lblDatum.setToolTipText(null);
+				}
 				
 				btnPotvrdi.setEnabled(enable);
 			}
@@ -468,6 +517,13 @@ public class DialogDodavanjeProfesora extends JDialog{
 					txtDatum.setText("");
 					
 				}
+				
+				if(txtDatum.getText().equals("")) {
+					
+					btnPotvrdi.setEnabled(false);
+					
+				}
+				
 			}
 			@Override
 			public void focusLost(FocusEvent e) {

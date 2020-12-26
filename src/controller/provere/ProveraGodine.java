@@ -8,9 +8,31 @@ public class ProveraGodine {
 	public static Boolean proveri(String datum, int br) {
 		
 		String []date = datum.split("/");
-		int dan = Integer.parseInt(date[0]);
-		int mesec = Integer.parseInt(date[1]);
-		int godina = Integer.parseInt(date[2]);
+		int dan = 0;
+		int mesec = 0;
+		int godina = 0;
+		
+		try {
+			
+			dan = Integer.parseInt(date[0]);
+			mesec = Integer.parseInt(date[1]);
+			godina = Integer.parseInt(date[2]);
+			
+			
+		}catch(Exception e) {
+			
+			
+			
+		}
+		
+		int brCifara = String.valueOf(godina).length();
+		
+		if(brCifara!=4) {
+			
+			return false;
+			
+		}
+		
 		
 		Boolean pDan= true;
 		Boolean pMesec= true;
