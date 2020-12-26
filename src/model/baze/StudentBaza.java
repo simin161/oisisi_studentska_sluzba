@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import model.Ocena;
+import model.Predmet;
 import model.Student;
 import model.nabrojiviTipovi.Status;
 
@@ -103,5 +105,14 @@ public class StudentBaza {
 
 		}
 
+	}
+	
+	public void dodajStudenta(String prezime, String ime, Date datumRodjenja, String adresaStanovanja, String telefon,
+			String email, String brIndeksa, int godinaUpisa, int trenutnaGodina, Status status, double prosecnaOcena,
+			List<Ocena> polozeno, List<Predmet> nepolozeno) {
+		
+		this.students.add(new Student(prezime, ime, datumRodjenja, adresaStanovanja, telefon, email, brIndeksa,
+				godinaUpisa, trenutnaGodina, status, prosecnaOcena, polozeno, nepolozeno));
+		
 	}
 }

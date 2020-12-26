@@ -39,10 +39,10 @@ import controller.provere.ProveraGodine;
 import controller.provere.ProveraImena;
 import controller.provere.ProveraIndeksa;
 import controller.provere.ProveraPrezimena;
+import controller.student.StudentController;
 import model.Student;
 import model.baze.StudentBaza;
 import model.nabrojiviTipovi.Status;
-import view.tabbedPanes.PrikazStudenta;
 
 //https://www.experts-exchange.com/questions/21314578/check-if-multiple-textfields-are-empty.html
 
@@ -982,10 +982,9 @@ public class DialogAddStudent extends JDialog {
 					Student st = new Student(tFPrezime.getText(), tFName.getText(), date1, tFAdr.getText(),
 							tFBr.getText(), tFEmail.getText(), tFBrI.getText().toUpperCase(), godUpis, trenutnaGodina,
 							s, 0, null, null);
-
-					students.add(st);
-					StudentBaza.getInstance().setStudents(students);
-					PrikazStudenta.getInstance().update();
+					
+					StudentController sc = new StudentController(st);
+					sc.dodajStudenta();
 					JOptionPane.showMessageDialog(DialogAddStudent.this, "Unos novog studenta je uspešno izvršen!");
 					dispose();
 				}
