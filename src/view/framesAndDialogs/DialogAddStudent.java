@@ -39,6 +39,7 @@ import controller.provere.ProveraGodine;
 import controller.provere.ProveraImena;
 import controller.provere.ProveraIndeksa;
 import controller.provere.ProveraPrezimena;
+import controller.student.StudentController;
 import model.Student;
 import model.baze.StudentBaza;
 import model.nabrojiviTipovi.Status;
@@ -982,10 +983,10 @@ public class DialogAddStudent extends JDialog {
 					Student st = new Student(tFPrezime.getText(), tFName.getText(), date1, tFAdr.getText(),
 							tFBr.getText(), tFEmail.getText(), tFBrI.getText().toUpperCase(), godUpis, trenutnaGodina,
 							s, 0, null, null);
+					
+					StudentController sc = new StudentController(st);
+					sc.dodajStudenta();
 
-					students.add(st);
-					StudentBaza.getInstance().setStudents(students);
-					PrikazStudenta.getInstance().update();
 					JOptionPane.showMessageDialog(DialogAddStudent.this, "Unos novog studenta je uspešno izvršen!");
 					dispose();
 				}
