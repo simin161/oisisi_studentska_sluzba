@@ -15,6 +15,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import view.tabbedPanes.PrikazPredmeta;
 import view.tabbedPanes.PrikazProfesora;
 import view.tabbedPanes.PrikazStudenta;
 
@@ -79,11 +80,9 @@ public class GlavniProzor extends JFrame{
 		JTabbedPane tabbedPane = new JTabbedPane();
 		tabbedPane.setBorder(new LineBorder(new Color(0,0,0)));
 		
-		JLabel lblPredmet = new JLabel("TODO: dodati prikazane predmete");
-		
 		tabbedPane.add("Studenti", PrikazStudenta.getInstance());
 		tabbedPane.add("Profesori", PrikazProfesora.getInstance());
-		tabbedPane.add("Predmeti", lblPredmet);
+		tabbedPane.add("Predmeti", PrikazPredmeta.getInstance());
 
 		tabbedPane.addChangeListener(new ChangeListener() {
 			
