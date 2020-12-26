@@ -13,6 +13,7 @@ import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 
 import view.framesAndDialogs.DialogAddStudent;
+import view.framesAndDialogs.DialogDodavanjePredmeta;
 import view.framesAndDialogs.DialogDodavanjeProfesora;
 
 public class AbstractActionNew extends AbstractAction{
@@ -49,7 +50,7 @@ public class AbstractActionNew extends AbstractAction{
 		}
 		else if(this.rbrTaba==2){
 			
-			//predmet
+			DialogDodavanjePredmeta dialog = new DialogDodavanjePredmeta(c);
 		}
 		else{
 			JOptionPane.showMessageDialog(null, "Greška.", "Greška: ", JOptionPane.ERROR_MESSAGE);

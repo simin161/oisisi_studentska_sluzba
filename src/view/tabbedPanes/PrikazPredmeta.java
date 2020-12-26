@@ -38,7 +38,7 @@ public class PrikazPredmeta extends JPanel{
 		
 	}
 	
-	private void updatePrikaz(String akcija, int vrednost) {
+	public void updatePrikaz(String akcija, int vrednost) {
 		
 		AbstractTableModelPredmeti model = (AbstractTableModelPredmeti) tabelaPredmet.getModel();
 		
