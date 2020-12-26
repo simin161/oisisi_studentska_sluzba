@@ -3,6 +3,8 @@
 package view.tabbedPanes;
 
 import java.awt.BorderLayout;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -55,8 +57,23 @@ public class PrikazPredmeta extends JPanel{
 		add(sPane, BorderLayout.CENTER);
 		
 		this.updatePrikaz(null, -1);
+		
+		tabelaPredmet.addPropertyChangeListener(new PropertyChangeListener() {
+
+			@Override
+			public void propertyChange(PropertyChangeEvent evt) {
+				// TODO Auto-generated method stub
+				
+				
+				
+			}
+			
+			
+			
+			
+		});
+		
 	}
-	
 	
 	public JTable getTable() {
 		

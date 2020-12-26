@@ -23,4 +23,19 @@ public class PredmetController {
 		PrikazPredmeta.getInstance().updatePrikaz("DODAT", -1);
 		
 	}
+	
+	public void izbrisiPredmet(int rowSelectedIndex) {
+		
+		if(rowSelectedIndex < 0) {
+			
+			return;
+			
+		}
+		
+		Predmet predmet = PredmetBaza.getInstance().getRow(rowSelectedIndex);
+		PredmetBaza.getInstance().izbrisiPredmet(predmet.getSifra());
+		PrikazPredmeta.getInstance().updatePrikaz("UKLONJEN", rowSelectedIndex);
+		
+	}
+	
 }
