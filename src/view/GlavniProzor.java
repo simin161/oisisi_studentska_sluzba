@@ -8,7 +8,6 @@ import java.awt.Toolkit;
 
 import javax.swing.Box;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.border.LineBorder;
@@ -25,8 +24,6 @@ public class GlavniProzor extends JFrame{
 
 	private int rbrTaba=0;
 	
-	private JFrame frame;
-	
 	public GlavniProzor()
 	{
 		Toolkit kit = Toolkit.getDefaultToolkit();
@@ -41,8 +38,6 @@ public class GlavniProzor extends JFrame{
 		
 		setLocationRelativeTo(null);
 		
-		frame = this;
-		
 		JPanel panelSsluzba = new JPanel();
 		getContentPane().add(panelSsluzba);
 		panelSsluzba.setLayout(new BorderLayout(0,0));
@@ -53,7 +48,7 @@ public class GlavniProzor extends JFrame{
 		
 		/* --- Toolbar --- */
 		
-		Toolbar toolbar = new Toolbar(rbrTaba, this);
+		Toolbar toolbar = new Toolbar(rbrTaba, this, PrikazStudenta.getInstance().getTable());
 		panelToolbar.add(toolbar);
 		
 		JPanel panelMain = new JPanel();
@@ -89,7 +84,16 @@ public class GlavniProzor extends JFrame{
 			public void stateChanged(ChangeEvent e) {
 				
 				rbrTaba = tabbedPane.getSelectedIndex();
-				toolbar.updateRbr(rbrTaba, frame);
+				
+				switch(rbrTaba) {
+				
+					case 0 : toolbar.updateRbr(rbrTaba, PrikazStudenta.getInstance().getTable()); break;
+					case 1 : toolbar.updateRbr(rbrTaba, PrikazProfesora.getInstance().getTable()); break;
+					case 2 : toolbar.updateRbr(rbrTaba, PrikazPredmeta.getInstance().getTable()); break;
+					default :
+					
+				}
+				
 				menuBar.updateRbr(rbrTaba);
 			}
 			
@@ -101,7 +105,7 @@ public class GlavniProzor extends JFrame{
 		
 		StatusBar statusBar = new StatusBar();
 		statusBar.addText("Studentska služba");
-		statusBar.addTimeAndDate();
+		statusBar.addTimeAndDate();	
 		statusBar.attach(getContentPane());
 		
 		

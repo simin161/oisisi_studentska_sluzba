@@ -73,8 +73,8 @@ public class MenuBar extends JMenuBar {
 		JMenuItem menuItemDelete = new JMenuItem("Delete", new ImageIcon("images" + File.separator + "delete3.png"));
 		menuItemDelete.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_D, InputEvent.CTRL_MASK));
 		menuItemDelete.setMnemonic('D');
-		AbstractActionDelete actionDelete = new AbstractActionDelete();
-		menuItemDelete.addActionListener(actionDelete);
+		//AbstractActionDelete actionDelete = new AbstractActionDelete();
+		//menuItemDelete.addActionListener(actionDelete);
 		menuEdit.add(menuItemDelete);
 
 		// menu bar help

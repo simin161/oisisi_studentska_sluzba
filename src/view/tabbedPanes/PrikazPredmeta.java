@@ -57,4 +57,10 @@ public class PrikazPredmeta extends JPanel{
 		this.updatePrikaz(null, -1);
 	}
 	
+	
+	public JTable getTable() {
+		
+		return tabelaPredmet;
+		
+	}
 }

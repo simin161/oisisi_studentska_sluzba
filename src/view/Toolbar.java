@@ -5,14 +5,18 @@ import java.awt.Dimension;
 import java.awt.Font;
 
 import javax.swing.Box;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.JToolBar;
 import javax.swing.SwingConstants;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 import controller.AbstractActionDelete;
 import controller.AbstractActionEdit;
 import controller.AbstractActionNew;
 import controller.AbstractActionPretraga;
+import controller.Pretraga.Pretraga;
 
 public class Toolbar extends JToolBar{
 
@@ -20,18 +24,19 @@ public class Toolbar extends JToolBar{
 
 	private int rbrT=0;
 	private Container co;
+	private JTable tabela = null;
 	private AbstractActionNew anew = new AbstractActionNew(rbrT, co);
 	private AbstractActionEdit aedit = new AbstractActionEdit();
-	private AbstractActionDelete adelete = new AbstractActionDelete();
+	private AbstractActionDelete adelete = new AbstractActionDelete(rbrT, co, tabela);
 	
 	
-	public Toolbar(int rbr, Container c) {
+	public Toolbar(int rbr, Container c, JTable tabela) {
 		
 		super(SwingConstants.HORIZONTAL);
 		setRollover(true);
 		setFloatable(false);
 		
-		updateRbr(rbr, c);
+		updateRbr(rbr, tabela);
 		
 		addSeparator();
 		
@@ -45,7 +50,7 @@ public class Toolbar extends JToolBar{
 		
 		addSeparator();
 		
-		adelete = new AbstractActionDelete();
+		adelete = new AbstractActionDelete(rbrT, co, tabela);
 		add(adelete);
 		
 		add(Box.createHorizontalGlue());
@@ -62,14 +67,48 @@ public class Toolbar extends JToolBar{
 		
 		addSeparator();
 		addSeparator();
+		
+		txtPretraga.getDocument().addDocumentListener(new DocumentListener() {
+
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				// TODO Auto-generated method stub
+				
+				pretrazi();
+				
+				
+			}
+
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				// TODO Auto-generated method stub
+				
+				pretrazi();
+				
+			}
+
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				// TODO Auto-generated method stub
+				
+				pretrazi();
+				
+			}
+			
+			private void pretrazi(){
+				
+				Pretraga.getInstance().pretrazi("");
+				
+			}
+		});
 	}
 	
-	public void updateRbr(int rbr, Container c) {
+	public void updateRbr(int rbr, JTable tabela) {
 		
 		this.rbrT = rbr;
 		this.anew.updateRbr(rbr);
-		this.co = c;
-		
+		this.adelete.updateRbr(rbr);
+		this.tabela = tabela;
 	}
 	
 }

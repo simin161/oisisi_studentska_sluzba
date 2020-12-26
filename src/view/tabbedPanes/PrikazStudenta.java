@@ -54,4 +54,10 @@ public class PrikazStudenta extends JPanel {
 		update();
 	}
 
+	
+	public JTable getTable() {
+		
+		return tableStudent;
+		
+	}
 }

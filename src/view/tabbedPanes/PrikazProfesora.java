@@ -58,4 +58,10 @@ public class PrikazProfesora extends JPanel{
 		
 	}
 	
+	public JTable getTable() {
+		
+		return tabelaProfesora;
+		
+	}
+	
 }

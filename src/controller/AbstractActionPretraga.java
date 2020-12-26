@@ -10,6 +10,8 @@ import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
 import javax.swing.KeyStroke;
 
+import controller.Pretraga.Pretraga;
+
 public class AbstractActionPretraga extends AbstractAction{
 
 	private static final long serialVersionUID = 5418007630716582931L;
@@ -29,6 +31,9 @@ public class AbstractActionPretraga extends AbstractAction{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
+		
+		Pretraga.getInstance();
+		
 		
 	}
 
