@@ -46,7 +46,7 @@ public class DialogDodavanjeProfesora extends JDialog{
 	
 	private Profesor profesor;
 	private Boolean []provera= {false, false, false, false, false, false, false, false};
-	private Boolean check2= false;
+
 	
 	public DialogDodavanjeProfesora(Container c)
 	{
@@ -532,7 +532,7 @@ public class DialogDodavanjeProfesora extends JDialog{
 					
 					Boolean check = true;
 					check = ProveraGodine.proveri(txtDatum.getText(), 2);
-					check2 = check;
+					provera[2]=check;
 					
 					if(check==false) {
 						
@@ -920,7 +920,7 @@ public class DialogDodavanjeProfesora extends JDialog{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 			
-				if(check2 == true) {
+				if(proveraProvere(provera) == true) {
 					
 					Date date = null;
 					
