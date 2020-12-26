@@ -105,5 +105,18 @@ public class PredmetBaza {
 		
 	}
 	
+	public void izbrisiPredmet(String sifra) {
+		
+		for(Predmet p : predmeti) {
+			
+			if(p.getSifra().equals(sifra))
+			{
+				predmeti.remove(p);
+				break;
+			}
+			
+		}
+		
+	}
 	
 }
