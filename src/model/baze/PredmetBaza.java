@@ -110,6 +110,7 @@ public class PredmetBaza {
 		
 	}
 	
+
 	public void dodajPredmet(String sifra, String naziv, Semestar semestar, int godina, Profesor profesor, int espb,
 			List<Student> polozili, List<Student> nisuPolozili) {
 		
@@ -117,5 +118,19 @@ public class PredmetBaza {
 		
 	}
 	
+
+	public void izbrisiPredmet(String sifra) {
+		
+		for(Predmet p : predmeti) {
+			
+			if(p.getSifra().equals(sifra))
+			{
+				predmeti.remove(p);
+				break;
+			}
+			
+		}
+		
+	}
 	
 }

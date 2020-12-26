@@ -23,5 +23,4 @@ public class PredmetController {
 		PrikazPredmeta.getInstance().updatePrikaz("DODAT", -1);
 		
 	}
-
 }
