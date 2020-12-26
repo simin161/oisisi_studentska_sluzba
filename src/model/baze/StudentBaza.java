@@ -9,11 +9,8 @@ import java.util.List;
 
 import model.Ocena;
 import model.Predmet;
-import model.Profesor;
 import model.Student;
 import model.nabrojiviTipovi.Status;
-import model.nabrojiviTipovi.Titula;
-import model.nabrojiviTipovi.Zvanje;
 
 public class StudentBaza {
 

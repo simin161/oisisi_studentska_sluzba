@@ -25,13 +25,13 @@ import javax.swing.event.DocumentListener;
 
 import controller.ActionChangeTField;
 import controller.buttonAction.ButtonAction;
+import controller.predmet.PredmetController;
 import controller.provere.ProveraEspb;
 import controller.provere.ProveraNazivaPredmeta;
 import controller.provere.ProveraSifrePredmeta;
 import model.Predmet;
 import model.baze.PredmetBaza;
 import model.nabrojiviTipovi.Semestar;
-import view.tabbedPanes.PrikazPredmeta;
 
 public class DialogDodavanjePredmeta extends JDialog {
 
@@ -167,7 +167,7 @@ public class DialogDodavanjePredmeta extends JDialog {
 					JOptionPane.showMessageDialog(DialogDodavanjePredmeta.this, "Šifra predmeta postoji!", "Greška: ",
 							JOptionPane.ERROR_MESSAGE);
 				}
-				
+
 				txtSifra.setText(txtSifra.getText().toUpperCase());
 
 			}
@@ -196,7 +196,7 @@ public class DialogDodavanjePredmeta extends JDialog {
 
 			private void check() {
 				valid[0] = ProveraSifrePredmeta.proveriSifruPredmeta(txtSifra.getText());
-				System.out.println(valid[0]);
+
 				exists = false;
 				if (valid[0]) {
 					exists = ProveraSifrePredmeta.checkExists(txtSifra.getText().toUpperCase(), predmeti);
@@ -296,7 +296,7 @@ public class DialogDodavanjePredmeta extends JDialog {
 					JOptionPane.showMessageDialog(DialogDodavanjePredmeta.this,
 							"Broj ESPB bodova ne može biti veći od 60!", "Greška: ", JOptionPane.ERROR_MESSAGE);
 				}
-				
+
 				txtEspb.setText(txtEspb.getText().trim());
 
 			}
@@ -393,11 +393,9 @@ public class DialogDodavanjePredmeta extends JDialog {
 				}
 				int espb = Integer.parseInt(txtEspb.getText());
 
-				predmeti.add(new Predmet(txtSifra.getText().trim().toUpperCase(), txtNaziv.getText(), sem, god, null,
-						espb, null, null));
-
-				PredmetBaza.getInstance().setPredmete(predmeti);
-				PrikazPredmeta.getInstance().updatePrikaz("DODAT", -1);
+				PredmetController pc = new PredmetController(new Predmet(txtSifra.getText().trim().toUpperCase(),
+						txtNaziv.getText(), sem, god, null, espb, null, null));
+				pc.dodajPredmet();
 
 				JOptionPane.showMessageDialog(null, "Unos novog predmeta je uspešno izvršen!");
 
