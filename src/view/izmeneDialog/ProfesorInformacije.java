@@ -2,6 +2,7 @@ package view.izmeneDialog;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -13,15 +14,21 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 
+import model.Profesor;
+import model.baze.ProfesorBaza;
 import model.nabrojiviTipovi.Titula;
 import model.nabrojiviTipovi.Zvanje;
+import view.tabbedPanes.PrikazProfesora;
 
 public class ProfesorInformacije extends JPanel {
 
 	private static final long serialVersionUID = 6158052650225024929L;
 
 	private static ProfesorInformacije instance = null;
+	private Boolean []provera = new Boolean[7];
+	
 	
 	public static ProfesorInformacije getInstance() {
 		
@@ -204,10 +211,37 @@ public class ProfesorInformacije extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 		
-				
-				
+				Window w = SwingUtilities.getWindowAncestor(ProfesorInformacije.this);
+				w.dispose();
 			}
 		});
+		
+		btnPotvrdi.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			
+			
+		});
+		
+		
+		int selectedProfesor = PrikazProfesora.getInstance().getSelectedRow();
+		Profesor profesor= ProfesorBaza.getInstance().getRow(selectedProfesor);
+		
+		txtIme.setText(profesor.getIme());
+		txtPrezime.setText(profesor.getPrezime());
+		txtDatum.setText(profesor.getDatumRodjenja().toString());
+		txtAdresa.setText(profesor.getAdresaStanovanja());
+		txtTelefon.setText(profesor.getTelefon());
+		txtEmail.setText(profesor.getEmail());
+		txtKancelarija.setText(profesor.getAdresaKancelarije());
+		txtLk.setText(profesor.getBrLicneKarte());
+		cboxTitula.setSelectedItem(profesor.getTitula().toString());
+		cboxZvanje.setSelectedItem(profesor.getZvanje().toString());
 		
 	}
 	

@@ -16,6 +16,7 @@ import controller.student.StudentController;
 import model.Student;
 import view.izmeneDialog.IzmenaProfesora;
 import view.izmeneDialog.IzmenaStudent;
+import view.tabbedPanes.PrikazProfesora;
 import view.tabbedPanes.PrikazStudenta;
 
 public class AbstractActionEdit extends AbstractAction {
@@ -52,9 +53,14 @@ public class AbstractActionEdit extends AbstractAction {
 			}
 		} else if (this.rbrTaba == 1) {
 
-			// profesor
-			IzmenaProfesora ip = new IzmenaProfesora(this.c);
-			ip.setVisible(true);
+			int selectedRow = PrikazProfesora.getInstance().getSelectedRow();
+			
+			if(selectedRow >= 0) {
+				
+				IzmenaProfesora ip = new IzmenaProfesora(this.c);
+				ip.setVisible(true);
+				
+			}
 
 		} else if (this.rbrTaba == 2) {
 

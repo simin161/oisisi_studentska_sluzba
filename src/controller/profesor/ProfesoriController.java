@@ -51,4 +51,19 @@ public class ProfesoriController {
 
 	}
 
+public void izmeniProfesora(int rowSelectedIndex, Profesor prof) {
+		
+		if(rowSelectedIndex < 0) {
+			
+			return;
+			
+		}
+		
+		Profesor profesor = ProfesorBaza.getInstance().getRow(rowSelectedIndex);
+		ProfesorBaza.getInstance().izmeniProfesora(prof);
+		
+		PrikazProfesora.getInstance().updatePrikaz(null, -1);
+		
+	}
+	
 }

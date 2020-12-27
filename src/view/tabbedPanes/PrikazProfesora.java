@@ -58,13 +58,9 @@ public class PrikazProfesora extends JPanel{
 		
 	}
 	
-	public JTable getTable() {
-		
-		return tabelaProfesora;
-		
-	}
-	
 	public int getSelectedRow() {
+		
+		
 		return tabelaProfesora.getSelectedRow();
 	}
 	

@@ -144,5 +144,26 @@ public class ProfesorBaza {
 	}
 	
 	
+	public void izmeniProfesora(Profesor p) {
+		
+		for(Profesor pr : profesori) {
+			
+			if(pr.getBrLicneKarte().equals(p.getBrLicneKarte())) {
+				
+				pr.setIme(p.getIme());
+				pr.setPrezime(p.getPrezime());
+				pr.setDatumRodjenja(p.getDatumRodjenja());
+				pr.setAdresaStanovanja(p.getAdresaStanovanja());
+				pr.setTelefon(p.getTelefon());
+				pr.setEmail(p.getEmail());
+				pr.setAdresaKancelarije(p.getAdresaKancelarije());
+				pr.setBrLicneKarte(p.getBrLicneKarte());
+				
+			}
+			
+		}
+		
+	}
+	
 	
 }
