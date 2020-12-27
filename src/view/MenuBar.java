@@ -11,11 +11,11 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
 
-import controller.ActionHelpAbout;
 import controller.AbstractActionDelete;
 import controller.AbstractActionEdit;
 import controller.AbstractActionNew;
 import controller.ActionClose;
+import controller.ActionHelpAbout;
 
 public class MenuBar extends JMenuBar {
 

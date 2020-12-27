@@ -30,6 +30,7 @@ public class Toolbar extends JToolBar{
 		super(SwingConstants.HORIZONTAL);
 		setRollover(true);
 		setFloatable(false);
+		this.co = c;
 		
 		updateRbr(rbr, c);
 		
