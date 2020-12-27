@@ -53,14 +53,11 @@ public class DialogAddStudent extends JDialog {
 	 */
 	private static final long serialVersionUID = 4412711478828503212L;
 
-	private boolean enable = false;
 	private boolean indExists = false;
 	private boolean tooYoung = false;
 	private boolean tooYoung1 = false;
 	private boolean invalidYear = false;
 	private boolean validYearDR = false;
-	private boolean higherYear = false;
-	private boolean higherYearDR = false;
 	private int godRodj = -1;
 	private int godUpis = -1;
 	private boolean shown = false;
@@ -241,14 +238,12 @@ public class DialogAddStudent extends JDialog {
 				if (!valid[0] && !text[0].equals("")) {
 					tFName.setText("");
 					text[0] = "";
-					// enable = false;
 
 					JOptionPane.showMessageDialog(DialogAddStudent.this,
 							"Pogrešno uneto ime! (Primer ispravnog unosa: Petar)", "Greška: ",
 							JOptionPane.ERROR_MESSAGE);
 
 				}
-				tFName.setText(setString(tFName.getText()));
 
 			}
 
@@ -304,12 +299,9 @@ public class DialogAddStudent extends JDialog {
 					tFPrezime.setText("");
 				}
 
-				tFPrezime.setText(setString(tFPrezime.getText()));
-
 				if (!valid[1] && !text[1].equals("")) {
 					tFPrezime.setText("");
 					text[1] = "";
-					enable = false;
 					JOptionPane.showMessageDialog(DialogAddStudent.this,
 							"Pogrešno uneto prezime! (Primer ispravnog unosa: Petrović)", "Greška: ",
 							JOptionPane.ERROR_MESSAGE);
@@ -436,17 +428,11 @@ public class DialogAddStudent extends JDialog {
 					tfDatumR.setText("");
 					text[2] = "";
 					tooYoung = true;
-					enable = false;
 
 					JOptionPane.showMessageDialog(DialogAddStudent.this,
 							"Pogrešno unet datum! Ispravan unos : DD/MM/YYYY", "Greška: ", JOptionPane.ERROR_MESSAGE);
 
-				} else {
-
-					setEnable(text, valid);
 				}
-
-				buttonPotvrdi.setEnabled(enable && !indExists && !tooYoung && !invalidYear);
 			}
 
 		});
@@ -478,7 +464,6 @@ public class DialogAddStudent extends JDialog {
 				tooYoung = false;
 				tooYoung1 = false;
 				invalidYear = false;
-				higherYearDR = false;
 
 				if (valid[2]) {
 					validYearDR = ProveraGodine.proveri(text[2], 0);
@@ -499,7 +484,6 @@ public class DialogAddStudent extends JDialog {
 						} else if (godUpis != -1) {
 							if (godRodj >= godUpis) {
 								invalidYear = true;
-								higherYearDR = true;
 								valid[2] = false;
 							} else if (godUpis - godRodj < 18) {
 								tooYoung1 = true;
@@ -545,7 +529,6 @@ public class DialogAddStudent extends JDialog {
 				if (!valid[3] && !text[3].equals("")) {
 					tFAdr.setText("");
 					text[3] = "";
-					enable = false;
 
 					JOptionPane.showMessageDialog(DialogAddStudent.this,
 							"Pogrešno uneta adresa! Ispravan unos: ulica i broj, mesto", "Greška: ",
@@ -608,8 +591,7 @@ public class DialogAddStudent extends JDialog {
 				if (!valid[4] && !text[4].equals("")) {
 					tFBr.setText("");
 					text[4] = "";
-					enable = false;
-
+					
 					JOptionPane.showMessageDialog(DialogAddStudent.this,
 							"Pogrešno unet broj telefona! (Primer: 123/123-123)", "Greška: ",
 							JOptionPane.ERROR_MESSAGE);
@@ -671,7 +653,6 @@ public class DialogAddStudent extends JDialog {
 				if (!valid[5] && !text[5].equals("")) {
 					tFEmail.setText("");
 					text[5] = "";
-					enable = false;
 
 					JOptionPane.showMessageDialog(DialogAddStudent.this, "Pogrešno uneta e-mail adresa!", "Greška: ",
 							JOptionPane.ERROR_MESSAGE);
@@ -739,13 +720,11 @@ public class DialogAddStudent extends JDialog {
 				if (!valid[6] && !text[6].equals("")) {
 					tFBrI.setText("");
 					text[6] = "";
-					enable = false;
 					indExists = true;
 
 					JOptionPane.showMessageDialog(DialogAddStudent.this, "Pogrešno unet broj indeksa!", "Greška: ",
 							JOptionPane.ERROR_MESSAGE);
 				}
-				tFBrI.setText(tFBrI.getText().toUpperCase());
 			}
 
 		});
@@ -855,15 +834,11 @@ public class DialogAddStudent extends JDialog {
 					tFGodU.setText("");
 					text[7] = "";
 					godUpis = -1;
-					enable = false;
 					invalidYear = true;
 					JOptionPane.showMessageDialog(DialogAddStudent.this,
 							"Pogrešno uneta godina upisa! Ispravan unos: YYYY", "Greška: ", JOptionPane.ERROR_MESSAGE);
 
-				} else {
-
-					setEnable(text, valid);
-				}
+				} 
 			}
 
 		});
@@ -894,7 +869,6 @@ public class DialogAddStudent extends JDialog {
 				valid[7] = matcher.matches();
 				tooYoung = false;
 				invalidYear = false;
-				higherYear = false;
 
 				DateTimeFormatter dtf = DateTimeFormatter.ofPattern("YYYY");
 				LocalDateTime now = LocalDateTime.now();
@@ -904,7 +878,6 @@ public class DialogAddStudent extends JDialog {
 					godUpis = Integer.parseInt(tFGodU.getText().trim());
 					if (godUpis > trGod) {
 						invalidYear = true;
-						higherYear = true;
 						godUpis = -1;
 						valid[7] = false;
 
@@ -952,6 +925,10 @@ public class DialogAddStudent extends JDialog {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (!indExists && !tooYoung && !invalidYear) {
+					tFBrI.setText(tFBrI.getText().toUpperCase());
+					tFPrezime.setText(setString(tFPrezime.getText()));
+					tFName.setText(setString(tFName.getText()));
+
 					String status = cBFin.getSelectedItem().toString();
 					Status s = status.equals("Budžet") ? Status.B : Status.S;
 					String trGod = cBTGodS.getSelectedItem().toString();
@@ -1011,16 +988,6 @@ public class DialogAddStudent extends JDialog {
 		} else {
 			lbl.setText(f);
 			lbl.setForeground(Color.red);
-		}
-	}
-
-	private void setEnable(String[] text, boolean[] valid) {
-		enable = true;
-		for (int i = 0; i < 8; ++i) {
-			if (text[i].equals("") || !valid[i]) {
-				enable = false;
-				break;
-			}
 		}
 	}
 
