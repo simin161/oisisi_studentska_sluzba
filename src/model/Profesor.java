@@ -6,6 +6,8 @@ import java.util.List;
 import model.nabrojiviTipovi.Titula;
 import model.nabrojiviTipovi.Zvanje;
 
+
+
 public class Profesor {
 
 	private String prezime;
