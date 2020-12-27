@@ -134,6 +134,15 @@ public class ProfesorBaza {
 		
 	}
 	
+	public void izbrisiProfesora(String id) {
+		for(Profesor p : profesori) {
+			if(id.equals(p.getBrLicneKarte())){
+				profesori.remove(p);
+				break;
+			}
+		}
+	}
+	
 	
 	
 }

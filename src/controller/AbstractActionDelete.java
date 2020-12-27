@@ -13,8 +13,10 @@ import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 
 import controller.predmet.PredmetController;
+import controller.profesor.ProfesoriController;
 import controller.student.StudentController;
 import view.tabbedPanes.PrikazPredmeta;
+import view.tabbedPanes.PrikazProfesora;
 import view.tabbedPanes.PrikazStudenta;
 
 public class AbstractActionDelete extends AbstractAction {
@@ -47,10 +49,7 @@ public class AbstractActionDelete extends AbstractAction {
 
 			if (row != -1) {
 
-				String[] opcije = new String[2];
-
-				opcije[0] = "Da"; // vrednost 0
-				opcije[1] = "Ne"; // vrednost 1
+				String[] opcije = {"Da", "Ne"};
 
 				int i = JOptionPane.showOptionDialog(c, "Da li ste sigurni da želite da obrišete studenta?",
 						"Brisanje studenta", JOptionPane.YES_NO_OPTION, JOptionPane.DEFAULT_OPTION, null, opcije,
@@ -65,7 +64,23 @@ public class AbstractActionDelete extends AbstractAction {
 			}
 		} else if (this.rbrTaba == 1) {
 
-			// profesor
+			int row = PrikazProfesora.getInstance().getSelectedRow();
+
+			if (row != -1) {
+
+				String[] opcije = {"Da", "Ne"};
+
+				int i = JOptionPane.showOptionDialog(c, "Da li ste sigurni da želite da obrišete profesora?",
+						"Brisanje profesora", JOptionPane.YES_NO_OPTION, JOptionPane.DEFAULT_OPTION, null, opcije,
+						opcije[0]);
+
+				if (i == 0) {
+
+					ProfesoriController.getInstance().izbrisiProfesora(row);
+
+				}
+
+			}
 
 		} else if (this.rbrTaba == 2) {
 

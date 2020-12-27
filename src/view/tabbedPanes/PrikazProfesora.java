@@ -64,4 +64,8 @@ public class PrikazProfesora extends JPanel{
 		
 	}
 	
+	public int getSelectedRow() {
+		return tabelaProfesora.getSelectedRow();
+	}
+	
 }
