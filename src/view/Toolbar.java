@@ -5,7 +5,6 @@ import java.awt.Dimension;
 import java.awt.Font;
 
 import javax.swing.Box;
-import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.JToolBar;
 import javax.swing.SwingConstants;
@@ -24,10 +23,9 @@ public class Toolbar extends JToolBar{
 
 	private int rbrT=0;
 	private Container co;
-	private int selectedRow = -1;
 	private AbstractActionNew anew = new AbstractActionNew(rbrT, co);
 	private AbstractActionEdit aedit = new AbstractActionEdit();
-	private AbstractActionDelete adelete = new AbstractActionDelete(rbrT, co, selectedRow);
+	private AbstractActionDelete adelete = new AbstractActionDelete(rbrT, co);
 	
 	
 	public Toolbar(int rbr, Container c) {
@@ -50,7 +48,7 @@ public class Toolbar extends JToolBar{
 		
 		addSeparator();
 		
-		adelete = new AbstractActionDelete(rbrT, co, selectedRow);
+		adelete = new AbstractActionDelete(rbrT, co);
 		add(adelete);
 		
 		add(Box.createHorizontalGlue());
@@ -108,12 +106,6 @@ public class Toolbar extends JToolBar{
 		this.rbrT = rbr;
 		this.anew.updateRbr(rbr);
 		this.adelete.updateRbr(rbr);
-	}
-	
-	public void updateRow(int row) {
-		
-		this.selectedRow = row;
-		this.adelete.updateRow(row);
 	}
 	
 }

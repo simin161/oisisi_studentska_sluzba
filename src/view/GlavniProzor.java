@@ -79,7 +79,7 @@ public class GlavniProzor extends JFrame{
 		tabbedPane.add("Studenti", PrikazStudenta.getInstance());
 		tabbedPane.add("Profesori", PrikazProfesora.getInstance());
 		tabbedPane.add("Predmeti", PrikazPredmeta.getInstance());
-
+	
 		tabbedPane.addChangeListener(new ChangeListener() {
 			
 			public void stateChanged(ChangeEvent e) {
@@ -89,12 +89,11 @@ public class GlavniProzor extends JFrame{
 				toolbar.updateRbr(rbrTaba);
 				menuBar.updateRbr(rbrTaba);
 				
-				selectedRow = PrikazPredmeta.getInstance().getSelectedRow();
-				System.out.println(selectedRow);
-				toolbar.updateRow(selectedRow);
 			}
 			
 		});
+		
+		
 		
 		panelMain.add(tabbedPane, BorderLayout.CENTER);
 		

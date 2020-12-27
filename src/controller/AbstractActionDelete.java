@@ -10,11 +10,10 @@ import java.io.File;
 import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
 import javax.swing.KeyStroke;
-import javax.swing.table.DefaultTableModel;
 
 import controller.predmet.PredmetController;
+import view.tabbedPanes.PrikazPredmeta;
 
 public class AbstractActionDelete extends AbstractAction{
 
@@ -22,14 +21,12 @@ public class AbstractActionDelete extends AbstractAction{
 
 	private int rbrTaba;
 	private Container c;
-	private int row= -1;
 	
 	@SuppressWarnings("deprecation")
-	public AbstractActionDelete(int rbr, Container c, int selectedRow) {
+	public AbstractActionDelete(int rbr, Container c) {
 		
 		this.rbrTaba = rbr;
 		this.c = c;
-		this.row = selectedRow;
 		
 		putValue(NAME, "Delete");
 		putValue(MNEMONIC_KEY, KeyEvent.VK_D);
@@ -56,7 +53,8 @@ public class AbstractActionDelete extends AbstractAction{
 			
 			//if()  provera da li je selektovan red? 
 				
-			System.out.println(row);
+			int row = PrikazPredmeta.getInstance().getSelectedRow();
+			
 			if(row != -1) {
 				
 				String []opcije = new String[2];
@@ -88,12 +86,6 @@ public class AbstractActionDelete extends AbstractAction{
 		
 		this.rbrTaba = rbr;
 
-	}
-	
-	public void updateRow(int row) {
-		
-		this.row = row;
-		
 	}
 	
 }

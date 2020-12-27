@@ -51,7 +51,7 @@ public class PrikazPredmeta extends JPanel{
 		
 		tabelaPredmet= new PredmetTable();
 		JScrollPane sPane = new JScrollPane(tabelaPredmet);
-		
+
 		add(sPane, BorderLayout.CENTER);
 		
 		this.updatePrikaz(null, -1);
