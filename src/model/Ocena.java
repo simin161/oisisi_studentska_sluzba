@@ -1,12 +1,14 @@
 package model;
 
+import java.util.Date;
+
 public class Ocena {
 	private Student student;
 	private Predmet predmet;
 	private int ocena;
-	private String datumPolaganja;
+	private Date datumPolaganja;
 
-	public Ocena(Student student, Predmet predmet, int ocena, String datumPolaganja) {
+	public Ocena(Student student, Predmet predmet, int ocena, Date datumPolaganja) {
 		super();
 		this.student = student;
 		this.predmet = predmet;
@@ -26,7 +28,7 @@ public class Ocena {
 		return ocena;
 	}
 
-	public String getDatumPolaganja() {
+	public Date getDatumPolaganja() {
 		return datumPolaganja;
 	}
 
@@ -42,7 +44,7 @@ public class Ocena {
 		this.ocena = ocena;
 	}
 
-	public void setDatumPolaganja(String datumPolaganja) {
+	public void setDatumPolaganja(Date datumPolaganja) {
 		this.datumPolaganja = datumPolaganja;
 	}
 
