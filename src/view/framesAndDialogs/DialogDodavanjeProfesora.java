@@ -40,6 +40,7 @@ import model.Profesor;
 import model.nabrojiviTipovi.Titula;
 import model.nabrojiviTipovi.Zvanje;
 
+
 public class DialogDodavanjeProfesora extends JDialog{
 
 	private static final long serialVersionUID = 3844060477268188498L;
@@ -277,17 +278,6 @@ public class DialogDodavanjeProfesora extends JDialog{
 
 			@Override
 			public void focusLost(FocusEvent e) {
-			
-				
-				if(txtIme.getText().trim().length()!=0 && provera[0]== true) {
-					
-					String pocetno = txtIme.getText().substring(0,1).toUpperCase();
-					String ostatak = txtIme.getText().substring(1);
-					
-					txtIme.setText(pocetno+ostatak);
-					lblIme.setForeground(Color.black);
-					
-				}
 				
 				if(provera[0]==false && txtIme.getText().trim().length()!=0) {
 					
@@ -367,42 +357,6 @@ public class DialogDodavanjeProfesora extends JDialog{
 			@Override
 			public void focusLost(FocusEvent e) {
 				
-				
-					if(txtPrezime.getText().trim().length()!=0) {
-						
-						String []parts = txtPrezime.getText().split("-");
-						String []prezime = parts;
-						String novoP="";
-						int i=0;
-						
-						for(String s : parts) {
-							
-							String pocetno= s.substring(0,1).toUpperCase();
-							String ostatak= s.substring(1);
-							
-							prezime[i]= pocetno+ostatak;
-
-							i++;
-						}
-						
-						i=0;
-						while(i!=prezime.length) {
-							
-							if(i==0) {
-								
-								novoP= prezime[i];
-								
-							}
-							else {
-								novoP= novoP + '-' + prezime[i];
-							}
-							
-							i++;
-						}
-						
-						txtPrezime.setText(novoP);
-						
-					}
 					if(provera[1]==false && txtPrezime.getText().trim().length()!=0) {
 						
 						JOptionPane.showMessageDialog(DialogDodavanjeProfesora.this, "Greška prilikom unosa prezimena. "
@@ -927,6 +881,41 @@ public class DialogDodavanjeProfesora extends JDialog{
 						
 						e1.printStackTrace();
 					}
+					
+					String []parts = txtPrezime.getText().split("-");
+					String []prezime = parts;
+					String novoP="";
+					int i=0;
+					
+					for(String s : parts) {
+						
+						String pocetno= s.substring(0,1).toUpperCase();
+						String ostatak= s.substring(1);
+						
+						prezime[i]= pocetno+ostatak;
+
+						i++;
+					}
+					
+					i=0;
+					while(i!=prezime.length) {
+						
+						if(i==0) {
+							
+							novoP= prezime[i];
+							
+						}
+						else {
+							novoP= novoP + '-' + prezime[i];
+						}
+						
+						i++;
+					}
+					txtPrezime.setText(novoP);
+					
+					String pocetno = txtIme.getText().substring(0,1).toUpperCase();
+					String ostatak = txtIme.getText().substring(1);
+					txtIme.setText(pocetno+ostatak);
 					
 					profesor = new Profesor();
 					profesor.setIme(txtIme.getText());
