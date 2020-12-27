@@ -24,7 +24,7 @@ public class Toolbar extends JToolBar{
 	private int rbrT=0;
 	private Container co;
 	private AbstractActionNew anew = new AbstractActionNew(rbrT, co);
-	private AbstractActionEdit aedit = new AbstractActionEdit();
+	private AbstractActionEdit aedit = new AbstractActionEdit(rbrT, co);
 	private AbstractActionDelete adelete = new AbstractActionDelete(rbrT, co);
 	
 	
@@ -43,7 +43,7 @@ public class Toolbar extends JToolBar{
 		
 		addSeparator();
 		
-		aedit = new AbstractActionEdit();
+		aedit = new AbstractActionEdit(rbrT, co);
 		add(aedit);	
 		
 		addSeparator();
@@ -106,6 +106,7 @@ public class Toolbar extends JToolBar{
 		this.rbrT = rbr;
 		this.anew.updateRbr(rbr);
 		this.adelete.updateRbr(rbr);
+		this.aedit.updateRbr(rbr);
 	}
 	
 }

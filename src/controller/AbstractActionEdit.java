@@ -2,20 +2,30 @@
 
 package controller;
 
+import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.io.File;
 
 import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
+
+import view.izmeneDialog.IzmenaProfesora;
 
 public class AbstractActionEdit extends AbstractAction{
 	
 	private static final long serialVersionUID = 543708384897911092L;
 
+	private int rbrTaba=-1;
+	private Container c;
+	
 	@SuppressWarnings("deprecation")
-	public AbstractActionEdit() {
+	public AbstractActionEdit(int rbr, Container c) {
+		
+		this.rbrTaba = rbr;
+		this.c = c;
 		
 		putValue(NAME, "Edit");
 		putValue(MNEMONIC_KEY, KeyEvent.VK_E);
@@ -28,6 +38,36 @@ public class AbstractActionEdit extends AbstractAction{
 	
 	@Override
 	public void actionPerformed(ActionEvent e){
+		
+		if(this.rbrTaba == 0) {
+			
+			//studenti
+			
+		}
+		else if(this.rbrTaba == 1) {
+			
+			//profesor
+			IzmenaProfesora ip = new IzmenaProfesora(this.c);
+			ip.setVisible(true);
+		
+		}
+		else if(this.rbrTaba == 2) {
+			
+			//predmeti
+			
+		}
+		else {
+			
+			JOptionPane.showMessageDialog(null, "Greška.", "Greška: ", JOptionPane.ERROR_MESSAGE);
+			
+		}
+		
+	}
+	
+	
+	public void updateRbr(int rbr) {
+		
+		this.rbrTaba = rbr;
 		
 	}
 	

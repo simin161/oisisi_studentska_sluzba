@@ -63,8 +63,8 @@ public class MenuBar extends JMenuBar {
 		JMenuItem menuItemEdit = new JMenuItem("Edit", new ImageIcon("images" + File.separator + "edit3.png"));
 		menuItemEdit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, InputEvent.CTRL_MASK));
 		menuItemEdit.setMnemonic('E');
-		AbstractActionEdit actionEdit = new AbstractActionEdit();
-		menuItemEdit.addActionListener(actionEdit);
+		//AbstractActionEdit actionEdit = new AbstractActionEdit();
+		//menuItemEdit.addActionListener(actionEdit);
 		menuEdit.add(menuItemEdit);
 
 		menuEdit.addSeparator();

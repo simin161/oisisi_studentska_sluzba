@@ -88,9 +88,7 @@ public class DialogDodavanjeProfesora extends JDialog{
 		
 		JPanel panelDatum= new JPanel(new FlowLayout(FlowLayout.LEFT));
 		JLabel lblDatum = new JLabel("Datum rođenja* ");
-		
 		JFormattedTextField txtDatum = new JFormattedTextField();
-		
 		lblDatum.setPreferredSize(dim);
 		txtDatum.setPreferredSize(dim);
 		txtDatum.setToolTipText("Dan/Mesec/Godina");
@@ -112,8 +110,7 @@ public class DialogDodavanjeProfesora extends JDialog{
 		
 		JPanel panelTelefon = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		JLabel lblTelefon = new JLabel("Kontakt telefon* ");
-		
-		JFormattedTextField txtTelefon = new JFormattedTextField();
+		JTextField txtTelefon = new JTextField();
 		lblTelefon.setPreferredSize(dim);
 		txtTelefon.setPreferredSize(dim);
 		panelTelefon.add(Box.createHorizontalStrut(65));
