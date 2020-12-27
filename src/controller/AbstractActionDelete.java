@@ -13,79 +13,97 @@ import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 
 import controller.predmet.PredmetController;
+import controller.student.StudentController;
 import view.tabbedPanes.PrikazPredmeta;
+import view.tabbedPanes.PrikazStudenta;
 
-public class AbstractActionDelete extends AbstractAction{
+public class AbstractActionDelete extends AbstractAction {
 
 	private static final long serialVersionUID = 7464546556386918717L;
 
 	private int rbrTaba;
 	private Container c;
-	
+
 	@SuppressWarnings("deprecation")
 	public AbstractActionDelete(int rbr, Container c) {
-		
+
 		this.rbrTaba = rbr;
 		this.c = c;
-		
+
 		putValue(NAME, "Delete");
 		putValue(MNEMONIC_KEY, KeyEvent.VK_D);
 		putValue(SHORT_DESCRIPTION, "Brisanje podataka iz tabele");
-		putValue(SMALL_ICON, new ImageIcon("images"+File.separator+"delete2.png"));
+		putValue(SMALL_ICON, new ImageIcon("images" + File.separator + "delete2.png"));
 		putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_D, KeyEvent.CTRL_MASK));
-		
+
 	}
-	
+
 	@Override
-	public void actionPerformed(ActionEvent e){
-		
-		if(this.rbrTaba==0) {
-			
-			//student
-			
-		}
-		else if(this.rbrTaba==1) {
-			
-			//profesor
-			
-		}
-		else if(this.rbrTaba==2) {
-			
-			//if()  provera da li je selektovan red? 
-				
-			int row = PrikazPredmeta.getInstance().getSelectedRow();
-			
-			if(row != -1) {
-				
-				String []opcije = new String[2];
-				
-				opcije[0]= "Da"; //vrednost 0
-				opcije[1]= "Ne"; //vrednost 1
-				
-				int i = JOptionPane.showOptionDialog(c, "Da li ste sigurni da želite da obrišete predmet?", "Brisanje predmeta", JOptionPane.YES_NO_OPTION, JOptionPane.DEFAULT_OPTION, null, opcije, opcije[0]);
-			
-				if(i==0) {
-					
-				
-					PredmetController.getInstance().izbrisiPredmet(row);
-					
+	public void actionPerformed(ActionEvent e) {
+
+		if (this.rbrTaba == 0) {
+
+			int row = PrikazStudenta.getInstance().getSelectedRow();
+
+			if (row != -1) {
+
+				String[] opcije = new String[2];
+
+				opcije[0] = "Da"; // vrednost 0
+				opcije[1] = "Ne"; // vrednost 1
+
+				int i = JOptionPane.showOptionDialog(c, "Da li ste sigurni da želite da obrišete studenta?",
+						"Brisanje studenta", JOptionPane.YES_NO_OPTION, JOptionPane.DEFAULT_OPTION, null, opcije,
+						opcije[0]);
+
+				if (i == 0) {
+
+					StudentController.getInstance().izbrisiStudenta(row);
+
 				}
-				
+
+			}
+		} else if (this.rbrTaba == 1) {
+
+			// profesor
+
+		} else if (this.rbrTaba == 2) {
+
+			// if() provera da li je selektovan red?
+
+			int row = PrikazPredmeta.getInstance().getSelectedRow();
+
+			if (row != -1) {
+
+				String[] opcije = new String[2];
+
+				opcije[0] = "Da"; // vrednost 0
+				opcije[1] = "Ne"; // vrednost 1
+
+				int i = JOptionPane.showOptionDialog(c, "Da li ste sigurni da želite da obrišete predmet?",
+						"Brisanje predmeta", JOptionPane.YES_NO_OPTION, JOptionPane.DEFAULT_OPTION, null, opcije,
+						opcije[0]);
+
+				if (i == 0) {
+
+					PredmetController.getInstance().izbrisiPredmet(row);
+
+				}
+
 			}
 
-		}
-		else {
-			
+		} else {
+
 			JOptionPane.showMessageDialog(this.c, "Greška.", "Greška: ", JOptionPane.ERROR_MESSAGE);
-			
+
 		}
-		
+
 	}
-	
+
 	public void updateRbr(int rbr) {
-		
+
 		this.rbrTaba = rbr;
 
 	}
-	
+
 }

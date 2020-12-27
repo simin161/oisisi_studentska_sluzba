@@ -50,6 +50,7 @@ public class AbstractActionNew extends AbstractAction{
 		}
 		else if(this.rbrTaba==2){
 			
+			@SuppressWarnings("unused")
 			DialogDodavanjePredmeta dialog = new DialogDodavanjePredmeta(c);
 		}
 		else{

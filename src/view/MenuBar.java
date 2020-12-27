@@ -11,6 +11,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
 
+import controller.AbstractActionDelete;
 import controller.AbstractActionEdit;
 import controller.AbstractActionNew;
 import controller.ActionClose;
@@ -25,6 +26,7 @@ public class MenuBar extends JMenuBar {
 
 	private int rbr = 0;
 	private AbstractActionNew actionNew;
+	private AbstractActionDelete actionDelete;
 
 	@SuppressWarnings("deprecation")
 	public MenuBar(int width, int height, Container cont) {
@@ -72,8 +74,8 @@ public class MenuBar extends JMenuBar {
 		JMenuItem menuItemDelete = new JMenuItem("Delete", new ImageIcon("images" + File.separator + "delete3.png"));
 		menuItemDelete.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_D, InputEvent.CTRL_MASK));
 		menuItemDelete.setMnemonic('D');
-		//AbstractActionDelete actionDelete = new AbstractActionDelete();
-		//menuItemDelete.addActionListener(actionDelete);
+		actionDelete = new AbstractActionDelete(rbr, cont);
+		menuItemDelete.addActionListener(actionDelete);
 		menuEdit.add(menuItemDelete);
 
 		// menu bar help
@@ -100,5 +102,6 @@ public class MenuBar extends JMenuBar {
 
 		this.rbr = rbr;
 		this.actionNew.updateRbr(rbr);
+		this.actionDelete.updateRbr(rbr);
 	}
 }

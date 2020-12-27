@@ -35,7 +35,7 @@ public class PrikazStudenta extends JPanel {
 		showTable();
 	}
 
-	public void update() {
+	public void update(String akcija, int r) {
 
 		AbstractTableModelStudents model = (AbstractTableModelStudents) tableStudent.getModel();
 
@@ -51,7 +51,7 @@ public class PrikazStudenta extends JPanel {
 
 		add(sP, BorderLayout.CENTER);
 
-		update();
+		update(null, -1);
 	}
 
 	
@@ -59,5 +59,9 @@ public class PrikazStudenta extends JPanel {
 		
 		return tableStudent;
 		
+	}
+	
+	public int getSelectedRow() {
+		return tableStudent.getSelectedRow();
 	}
 }

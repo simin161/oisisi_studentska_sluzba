@@ -115,4 +115,13 @@ public class StudentBaza {
 				godinaUpisa, trenutnaGodina, status, prosecnaOcena, polozeno, nepolozeno));
 		
 	}
+	
+	public void izbrisiStudenta(String id) {
+		for(Student s : students) {
+			if(id.equals(s.getBrIndeksa())) {
+				students.remove(s);
+				break;
+			}
+		}
+	}
 }
