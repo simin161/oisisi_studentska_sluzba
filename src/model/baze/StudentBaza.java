@@ -124,4 +124,22 @@ public class StudentBaza {
 			}
 		}
 	}
+	
+	public void izmeniStudenta(String prezime, String ime, Date datumRodjenja, String adresaStanovanja, String telefon,
+			String email, String brIndeksa, int godinaUpisa, int trenutnaGodina, Status status) {
+			for (Student s : students) {
+				if (brIndeksa.equals(s.getBrIndeksa())) {
+					s.setIme(ime);
+					s.setPrezime(prezime);
+					s.setAdresaStanovanja(adresaStanovanja);
+					s.setDatumRodjenja(datumRodjenja);
+					s.setEmail(email);
+					s.setGodinaUpisa(godinaUpisa);
+					s.setStatus(status);
+					s.setTelefon(telefon);
+					s.setTrenutnaGodina(trenutnaGodina);
+					s.setBrIndeksa(brIndeksa);
+				}
+			}
+		}
 }

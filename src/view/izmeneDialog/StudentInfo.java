@@ -1,20 +1,18 @@
-package view.framesAndDialogs;
+package view.izmeneDialog;
 
 import java.awt.Color;
-import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -22,7 +20,6 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -31,7 +28,6 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 import controller.ActionChangeTField;
-import controller.buttonAction.ButtonAction;
 import controller.provere.ProveraAdrese;
 import controller.provere.ProveraDatuma;
 import controller.provere.ProveraEmaila;
@@ -43,15 +39,29 @@ import controller.student.StudentController;
 import model.Student;
 import model.baze.StudentBaza;
 import model.nabrojiviTipovi.Status;
+import view.framesAndDialogs.DialogAddStudent;
+import view.tabbedPanes.PrikazStudenta;
 
-//https://www.experts-exchange.com/questions/21314578/check-if-multiple-textfields-are-empty.html
-
-public class DialogAddStudent extends JDialog {
+public class StudentInfo extends JPanel {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 4412711478828503212L;
+	private static final long serialVersionUID = 2210595203182573372L;
+
+	private static StudentInfo instance = null;
+
+	public static StudentInfo getInstance() {
+
+		if (instance == null) {
+
+			instance = new StudentInfo();
+
+		}
+
+		return instance;
+
+	}
 
 	private boolean enable = false;
 	private boolean indExists = false;
@@ -59,131 +69,118 @@ public class DialogAddStudent extends JDialog {
 	private boolean tooYoung1 = false;
 	private boolean invalidYear = false;
 	private boolean validYearDR = false;
-
 	private int godRodj = -1;
 	private int godUpis = -1;
 	private boolean shown = false;
 
-	public DialogAddStudent(Container cont) {
+	public StudentInfo() {
 
-		Toolkit kit = Toolkit.getDefaultToolkit();
-		Dimension screenSize = kit.getScreenSize();
-		int height = (int) (screenSize.height * 0.75 * 0.8);
-		int width = (int) (screenSize.width * 0.75 * 0.4);
-
-		/*---Pomocne promenljive za provere---*/
 		String[] text = { "", "", "", "", "", "", "", "" };
-		boolean[] valid = { false, false, false, false, false, false, false, false };
-		List<Student> students = StudentBaza.getInstance().getStudents();
+		boolean[] valid = { true, true, true, true, true, true, true, true };
 
-		/*-----------------------------------*/
+		BoxLayout b = new BoxLayout(this, BoxLayout.Y_AXIS);
 
-		setTitle("Dodavanje studenta");
-		setSize(width, height);
-		setLocationRelativeTo(cont);
-		setModal(true);
-		setResizable(false);
-		Dimension dim = new Dimension(150, 20);
+		Dimension dim = new Dimension(165, 20);
 
+		setLayout(b);
 		JPanel panelButton = new JPanel();
 		BoxLayout button = new BoxLayout(panelButton, BoxLayout.X_AXIS);
 		panelButton.setLayout(button);
 		JButton buttonPotvrdi = new JButton("Potvrdi");
 		JButton buttonPonisti = new JButton("Poništi");
-		ButtonAction.cancelAction(buttonPonisti, this);
-		buttonPotvrdi.setEnabled(false);
 
-		JPanel panelMain = new JPanel();
-		BoxLayout b = new BoxLayout(panelMain, BoxLayout.Y_AXIS);
-		panelMain.setLayout(b);
+		buttonPotvrdi.setEnabled(false);
+		Student s = StudentBaza.getInstance().getRow(PrikazStudenta.getInstance().getSelectedRow());
 
 		JPanel panelName = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		JLabel labelName = new JLabel("Ime* ");
-		labelName.setForeground(Color.red);
 		JTextField tFName = new JTextField();
+		tFName.setText(s.getIme());
 		labelName.setPreferredSize(dim);
 		tFName.setPreferredSize(dim);
-		panelName.add(Box.createHorizontalStrut(65));
+		panelName.add(Box.createHorizontalStrut(165));
 		panelName.add(labelName);
 		panelName.add(tFName);
-		panelMain.add(panelName);
+		add(panelName);
 
 		JPanel panelPrezime = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		JLabel labelPrezime = new JLabel("Prezime* ");
 		JTextField tFPrezime = new JTextField();
-		labelPrezime.setForeground(Color.red);
+		tFPrezime.setText(s.getPrezime());
 		labelPrezime.setPreferredSize(dim);
 		tFPrezime.setPreferredSize(dim);
-		panelPrezime.add(Box.createHorizontalStrut(65));
+		panelPrezime.add(Box.createHorizontalStrut(165));
 		panelPrezime.add(labelPrezime);
 		panelPrezime.add(tFPrezime);
-		panelMain.add(panelPrezime);
+		add(panelPrezime);
 
+		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		String strDate = dateFormat.format(s.getDatumRodjenja());
 		JPanel panelDatumR = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		JLabel labelDatumR = new JLabel("Datum rođenja* ");
-		labelDatumR.setForeground(Color.red);
 		JTextField tfDatumR = new JTextField();
+		tfDatumR.setText(strDate);
 		labelDatumR.setPreferredSize(dim);
 		tfDatumR.setPreferredSize(dim);
-		panelDatumR.add(Box.createHorizontalStrut(65));
+		panelDatumR.add(Box.createHorizontalStrut(165));
 		panelDatumR.add(labelDatumR);
 		panelDatumR.add(tfDatumR);
-		panelMain.add(panelDatumR);
+		add(panelDatumR);
 
 		JPanel panelAdr = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		JLabel labelAdr = new JLabel("Adresa stanovanja* ");
-		labelAdr.setForeground(Color.red);
 		JTextField tFAdr = new JTextField();
+		tFAdr.setText(s.getAdresaStanovanja());
 		labelAdr.setPreferredSize(dim);
 		tFAdr.setPreferredSize(dim);
-		panelAdr.add(Box.createHorizontalStrut(65));
+		panelAdr.add(Box.createHorizontalStrut(165));
 		panelAdr.add(labelAdr);
 		panelAdr.add(tFAdr);
-		panelMain.add(panelAdr);
+		add(panelAdr);
 
 		JPanel panelBr = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		JLabel labelBr = new JLabel("Broj telefona* ");
 		JTextField tFBr = new JTextField();
-		labelBr.setForeground(Color.red);
+		tFBr.setText(s.getTelefon());
 		labelBr.setPreferredSize(dim);
 		tFBr.setPreferredSize(dim);
-		panelBr.add(Box.createHorizontalStrut(65));
+		panelBr.add(Box.createHorizontalStrut(165));
 		panelBr.add(labelBr);
 		panelBr.add(tFBr);
-		panelMain.add(panelBr);
+		add(panelBr);
 
 		JPanel panelEmail = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		JLabel labelEmail = new JLabel("E-mail adresa* ");
-		labelEmail.setForeground(Color.red);
 		JTextField tFEmail = new JTextField();
+		tFEmail.setText(s.getEmail());
 		labelEmail.setPreferredSize(dim);
 		tFEmail.setPreferredSize(dim);
-		panelEmail.add(Box.createHorizontalStrut(65));
+		panelEmail.add(Box.createHorizontalStrut(165));
 		panelEmail.add(labelEmail);
 		panelEmail.add(tFEmail);
-		panelMain.add(panelEmail);
+		add(panelEmail);
 
 		JPanel panelBrI = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		JLabel labelBrI = new JLabel("Broj indeksa* ");
-		labelBrI.setForeground(Color.red);
 		JTextField tFBrI = new JTextField();
+		tFBrI.setText(s.getBrIndeksa());
 		labelBrI.setPreferredSize(dim);
 		tFBrI.setPreferredSize(dim);
-		panelBrI.add(Box.createHorizontalStrut(65));
+		panelBrI.add(Box.createHorizontalStrut(165));
 		panelBrI.add(labelBrI);
 		panelBrI.add(tFBrI);
-		panelMain.add(panelBrI);
+		add(panelBrI);
 
 		JPanel panelGodU = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		JLabel labelGodU = new JLabel("Godina upisa* ");
-		labelGodU.setForeground(Color.red);
 		JTextField tFGodU = new JTextField();
+		tFGodU.setText(String.valueOf(s.getGodinaUpisa()));
 		labelGodU.setPreferredSize(dim);
 		tFGodU.setPreferredSize(dim);
-		panelGodU.add(Box.createHorizontalStrut(65));
+		panelGodU.add(Box.createHorizontalStrut(165));
 		panelGodU.add(labelGodU);
 		panelGodU.add(tFGodU);
-		panelMain.add(panelGodU);
+		add(panelGodU);
 
 		// https*//docs.oracle.com/javase/tutorial/uiswing/components/combobox.html
 		String[] stringTGodS = { "I (prva)", "II (druga)", "III (treća)", "IV (četvrta)" };
@@ -193,12 +190,13 @@ public class DialogAddStudent extends JDialog {
 		@SuppressWarnings({ "rawtypes", "unchecked" })
 		JComboBox cBTGodS = new JComboBox(stringTGodS);
 		cBTGodS.setBackground(new Color(250, 250, 250));
+		cBTGodS.setSelectedItem(s.getTrenutnaGodinaAsString());
 		labelTGodS.setPreferredSize(dim);
 		cBTGodS.setPreferredSize(dim);
-		panelTGodS.add(Box.createHorizontalStrut(65));
+		panelTGodS.add(Box.createHorizontalStrut(165));
 		panelTGodS.add(labelTGodS);
 		panelTGodS.add(cBTGodS);
-		panelMain.add(panelTGodS);
+		add(panelTGodS);
 
 		String[] stringFin = { "Budžet", "Samofinansiranje" };
 		JPanel panelFin = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -207,16 +205,17 @@ public class DialogAddStudent extends JDialog {
 		@SuppressWarnings({ "rawtypes", "unchecked" })
 		JComboBox cBFin = new JComboBox(stringFin);
 		cBFin.setBackground(new Color(250, 250, 250));
+		cBFin.setSelectedItem(s.getStatusAsString());
 		labelFin.setPreferredSize(dim);
 		cBFin.setPreferredSize(dim);
-		panelFin.add(Box.createHorizontalStrut(65));
+		panelFin.add(Box.createHorizontalStrut(165));
 		panelFin.add(labelFin);
 		panelFin.add(cBFin);
-		panelMain.add(panelFin);
+		add(panelFin);
 		panelButton.add(buttonPotvrdi);
 		panelButton.add(Box.createHorizontalStrut(35));
 		panelButton.add(buttonPonisti);
-		panelMain.add(panelButton);
+		add(panelButton);
 
 		tFName.addFocusListener(new FocusListener() {
 
@@ -242,7 +241,7 @@ public class DialogAddStudent extends JDialog {
 					text[0] = "";
 					// enable = false;
 
-					JOptionPane.showMessageDialog(DialogAddStudent.this,
+					JOptionPane.showMessageDialog(StudentInfo.this,
 							"Pogrešno uneto ime! (Primer ispravnog unosa: Petar)", "Greška: ",
 							JOptionPane.ERROR_MESSAGE);
 
@@ -309,7 +308,7 @@ public class DialogAddStudent extends JDialog {
 					tFPrezime.setText("");
 					text[1] = "";
 					enable = false;
-					JOptionPane.showMessageDialog(DialogAddStudent.this,
+					JOptionPane.showMessageDialog(StudentInfo.this,
 							"Pogrešno uneto prezime! (Primer ispravnog unosa: Petrović)", "Greška: ",
 							JOptionPane.ERROR_MESSAGE);
 				}
@@ -396,13 +395,13 @@ public class DialogAddStudent extends JDialog {
 							text[2] = "";
 							godRodj = -1;
 
-							JOptionPane.showMessageDialog(DialogAddStudent.this, "Osoba mora imati više od 18 godina!",
+							JOptionPane.showMessageDialog(StudentInfo.this, "Osoba mora imati više od 18 godina!",
 									"Greška: ", JOptionPane.ERROR_MESSAGE);
 						} else if (godUpis != -1) {
 							if (godRodj >= godUpis) {
 								invalidYear = true;
 								shown = true;
-								JOptionPane.showMessageDialog(DialogAddStudent.this,
+								JOptionPane.showMessageDialog(StudentInfo.this,
 										"Godina upisa ne može biti manja ili jednaka od godine rođenja!\nProverite godinu upisa ili godinu rođenja!!",
 										"Greška: ", JOptionPane.ERROR_MESSAGE);
 
@@ -411,7 +410,7 @@ public class DialogAddStudent extends JDialog {
 								invalidYear = true;
 								shown = true;
 								int pom = godRodj + 18;
-								JOptionPane.showMessageDialog(DialogAddStudent.this,
+								JOptionPane.showMessageDialog(StudentInfo.this,
 										"Godina upisa mora biti minimalno " + pom
 												+ "!\nProverite godinu upisa ili godinu rođenja!",
 										"Greška: ", JOptionPane.ERROR_MESSAGE);
@@ -426,7 +425,7 @@ public class DialogAddStudent extends JDialog {
 						text[2] = "";
 						godRodj = -1;
 
-						JOptionPane.showMessageDialog(DialogAddStudent.this, "Datum nije validan", "Greška: ",
+						JOptionPane.showMessageDialog(StudentInfo.this, "Datum nije validan", "Greška: ",
 								JOptionPane.ERROR_MESSAGE);
 					}
 				}
@@ -437,8 +436,8 @@ public class DialogAddStudent extends JDialog {
 					tooYoung = true;
 					enable = false;
 
-					JOptionPane.showMessageDialog(DialogAddStudent.this,
-							"Pogrešno unet datum! Ispravan unos : DD/MM/YYYY", "Greška: ", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(StudentInfo.this, "Pogrešno unet datum! Ispravan unos : DD/MM/YYYY",
+							"Greška: ", JOptionPane.ERROR_MESSAGE);
 
 				} else {
 
@@ -544,7 +543,7 @@ public class DialogAddStudent extends JDialog {
 					text[3] = "";
 					enable = false;
 
-					JOptionPane.showMessageDialog(DialogAddStudent.this,
+					JOptionPane.showMessageDialog(StudentInfo.this,
 							"Pogrešno uneta adresa! Ispravan unos: ulica i broj, mesto", "Greška: ",
 							JOptionPane.ERROR_MESSAGE);
 
@@ -607,7 +606,7 @@ public class DialogAddStudent extends JDialog {
 					text[4] = "";
 					enable = false;
 
-					JOptionPane.showMessageDialog(DialogAddStudent.this,
+					JOptionPane.showMessageDialog(StudentInfo.this,
 							"Pogrešno unet broj telefona! (Primer: 123/123-123)", "Greška: ",
 							JOptionPane.ERROR_MESSAGE);
 
@@ -670,7 +669,7 @@ public class DialogAddStudent extends JDialog {
 					text[5] = "";
 					enable = false;
 
-					JOptionPane.showMessageDialog(DialogAddStudent.this, "Pogrešno uneta e-mail adresa!", "Greška: ",
+					JOptionPane.showMessageDialog(StudentInfo.this, "Pogrešno uneta e-mail adresa!", "Greška: ",
 							JOptionPane.ERROR_MESSAGE);
 
 				}
@@ -729,7 +728,7 @@ public class DialogAddStudent extends JDialog {
 					tFBrI.setText("");
 					text[6] = "";
 					valid[6] = false;
-					JOptionPane.showMessageDialog(DialogAddStudent.this, "Broj indeksa postoji!", "Greška: ",
+					JOptionPane.showMessageDialog(StudentInfo.this, "Broj indeksa postoji!", "Greška: ",
 							JOptionPane.ERROR_MESSAGE);
 				}
 
@@ -739,7 +738,7 @@ public class DialogAddStudent extends JDialog {
 					enable = false;
 					indExists = true;
 
-					JOptionPane.showMessageDialog(DialogAddStudent.this, "Pogrešno unet broj indeksa!", "Greška: ",
+					JOptionPane.showMessageDialog(StudentInfo.this, "Pogrešno unet broj indeksa!", "Greška: ",
 							JOptionPane.ERROR_MESSAGE);
 				}
 				tFBrI.setText(tFBrI.getText().toUpperCase());
@@ -771,7 +770,10 @@ public class DialogAddStudent extends JDialog {
 				valid[6] = ProveraIndeksa.proveriIndeks(tFBrI.getText());
 
 				if (valid[6]) {
-					indExists = ProveraIndeksa.checkExists(students, tFBrI.getText().trim().toUpperCase());
+					if (!tFBrI.getText().trim().toUpperCase().equals(StudentBaza.getInstance()
+							.getRow(PrikazStudenta.getInstance().getSelectedRow()).getBrIndeksa()))
+						indExists = ProveraIndeksa.checkExists(StudentBaza.getInstance().getStudents(),
+								tFBrI.getText().trim().toUpperCase());
 				}
 
 				changeLabel(valid[6] && !indExists, "Broj indeksa*", "Broj indeksa", labelBrI);
@@ -821,7 +823,7 @@ public class DialogAddStudent extends JDialog {
 						godUpis = -1;
 						valid[7] = false;
 
-						JOptionPane.showMessageDialog(DialogAddStudent.this,
+						JOptionPane.showMessageDialog(StudentInfo.this,
 								"Godina upisa ne može biti veća od trenutne godine!", "Greška: ",
 								JOptionPane.ERROR_MESSAGE);
 
@@ -830,7 +832,7 @@ public class DialogAddStudent extends JDialog {
 
 							invalidYear = true;
 							shown = true;
-							JOptionPane.showMessageDialog(DialogAddStudent.this,
+							JOptionPane.showMessageDialog(StudentInfo.this,
 									"Godina upisa ne može biti manja ili jednaka od godine rođenja!\nProverite godinu upisa ili godinu rođenja!",
 									"Greška: ", JOptionPane.ERROR_MESSAGE);
 
@@ -839,7 +841,7 @@ public class DialogAddStudent extends JDialog {
 							invalidYear = true;
 							shown = true;
 							int pom = godRodj + 18;
-							JOptionPane.showMessageDialog(DialogAddStudent.this,
+							JOptionPane.showMessageDialog(StudentInfo.this,
 									"Godina upisa mora biti minimalno " + pom + "!", "Greška: ",
 									JOptionPane.ERROR_MESSAGE);
 
@@ -854,8 +856,8 @@ public class DialogAddStudent extends JDialog {
 					godUpis = -1;
 					enable = false;
 					invalidYear = true;
-					JOptionPane.showMessageDialog(DialogAddStudent.this,
-							"Pogrešno uneta godina upisa! Ispravan unos: YYYY", "Greška: ", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(StudentInfo.this, "Pogrešno uneta godina upisa! Ispravan unos: YYYY",
+							"Greška: ", JOptionPane.ERROR_MESSAGE);
 
 				} else {
 
@@ -918,8 +920,7 @@ public class DialogAddStudent extends JDialog {
 					}
 				}
 				changeLabel(valid[7], "Godina upisa*", "Godina upisa", labelGodU);
-				changeLabel(valid[2] && !tooYoung && !shown, "Datum rođenja*", "Datum rođenja",
-						labelDatumR);
+				changeLabel(valid[2] && !tooYoung && !shown, "Datum rođenja*", "Datum rođenja", labelDatumR);
 				buttonPotvrdi.setEnabled(checkValid(valid) && !invalidYear && !tooYoung && !shown);
 			}
 
@@ -946,50 +947,51 @@ public class DialogAddStudent extends JDialog {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (!indExists && !tooYoung && !invalidYear) {
-					String status = cBFin.getSelectedItem().toString();
-					Status s = status.equals("Budžet") ? Status.B : Status.S;
-					String trGod = cBTGodS.getSelectedItem().toString();
-					int trenutnaGodina = 1;
-					switch (trGod) {
-					case "I (prva)":
-						trenutnaGodina = 1;
-						break;
-					case "II (druga)":
-						trenutnaGodina = 2;
-						break;
-					case "III (treća)":
-						trenutnaGodina = 3;
-						break;
-					case "IV (četvrta)":
-						trenutnaGodina = 4;
-						break;
-					}
+				Student s = StudentBaza.getInstance().getRow(PrikazStudenta.getInstance().getSelectedRow());
 
-					Date date1 = null;
-					try {
-						date1 = new SimpleDateFormat("dd/MM/yyyy").parse(tfDatumR.getText());
-					} catch (ParseException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-
-					Student st = new Student(tFPrezime.getText(), tFName.getText(), date1, tFAdr.getText(),
-							tFBr.getText(), tFEmail.getText(), tFBrI.getText().toUpperCase(), godUpis, trenutnaGodina,
-							s, 0, null, null);
-					
-					StudentController sc = new StudentController(st);
-					sc.dodajStudenta();
-
-					JOptionPane.showMessageDialog(DialogAddStudent.this, "Unos novog studenta je uspešno izvršen!");
-					dispose();
+				String status = cBFin.getSelectedItem().toString();
+				Status st = status.equals("Budžet") ? Status.B : Status.S;
+				String trGod = cBTGodS.getSelectedItem().toString();
+				int trenutnaGodina = 1;
+				switch (trGod) {
+				case "I (prva)":
+					trenutnaGodina = 1;
+					break;
+				case "II (druga)":
+					trenutnaGodina = 2;
+					break;
+				case "III (treća)":
+					trenutnaGodina = 3;
+					break;
+				case "IV (četvrta)":
+					trenutnaGodina = 4;
+					break;
 				}
 
-			}
-		});
+				Date date1 = null;
+				try {
+					date1 = new SimpleDateFormat("dd/MM/yyyy").parse(tfDatumR.getText());
+				} catch (ParseException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				s.setIme(tFName.getText());
+				s.setPrezime(tFPrezime.getText());
+				s.setDatumRodjenja(date1);
+				s.setAdresaStanovanja(tFAdr.getText());
+				s.setTelefon(tFBr.getText());
+				s.setEmail(tFEmail.getText());
+				s.setBrIndeksa(tFBrI.getText().toUpperCase());
+				s.setGodinaUpisa(Integer.parseInt((tFGodU.getText())));
+				s.setTrenutnaGodina(trenutnaGodina);
+				s.setStatus(st);
+				StudentController.getInstance().izmeniStudenta(s);
 
-		add(panelMain);
-		setVisible(true);
+				JOptionPane.showMessageDialog(StudentInfo.this, "Izmena studenta je uspešno izvršena!");
+
+			}
+
+		});
 
 	}
 
@@ -1031,5 +1033,4 @@ public class DialogAddStudent extends JDialog {
 
 		return retVal;
 	}
-
 }
