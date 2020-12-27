@@ -24,19 +24,19 @@ public class Toolbar extends JToolBar{
 
 	private int rbrT=0;
 	private Container co;
-	private JTable tabela = null;
+	private int selectedRow = -1;
 	private AbstractActionNew anew = new AbstractActionNew(rbrT, co);
 	private AbstractActionEdit aedit = new AbstractActionEdit();
-	private AbstractActionDelete adelete = new AbstractActionDelete(rbrT, co, tabela);
+	private AbstractActionDelete adelete = new AbstractActionDelete(rbrT, co, selectedRow);
 	
 	
-	public Toolbar(int rbr, Container c, JTable tabela) {
+	public Toolbar(int rbr, Container c) {
 		
 		super(SwingConstants.HORIZONTAL);
 		setRollover(true);
 		setFloatable(false);
 		
-		updateRbr(rbr, tabela);
+		updateRbr(rbr);
 		
 		addSeparator();
 		
@@ -50,7 +50,7 @@ public class Toolbar extends JToolBar{
 		
 		addSeparator();
 		
-		adelete = new AbstractActionDelete(rbrT, co, tabela);
+		adelete = new AbstractActionDelete(rbrT, co, selectedRow);
 		add(adelete);
 		
 		add(Box.createHorizontalGlue());
@@ -103,12 +103,11 @@ public class Toolbar extends JToolBar{
 		});
 	}
 	
-	public void updateRbr(int rbr, JTable tabela) {
+	public void updateRbr(int rbr) {
 		
 		this.rbrT = rbr;
 		this.anew.updateRbr(rbr);
 		this.adelete.updateRbr(rbr);
-		this.tabela = tabela;
 	}
 	
 }

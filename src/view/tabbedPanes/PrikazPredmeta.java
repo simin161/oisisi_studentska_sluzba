@@ -58,26 +58,11 @@ public class PrikazPredmeta extends JPanel{
 		
 		this.updatePrikaz(null, -1);
 		
-		tabelaPredmet.addPropertyChangeListener(new PropertyChangeListener() {
-
-			@Override
-			public void propertyChange(PropertyChangeEvent evt) {
-				// TODO Auto-generated method stub
-				
-				
-				
-			}
-			
-			
-			
-			
-		});
-		
 	}
 	
-	public JTable getTable() {
+	public int getSelectedRow() {
 		
-		return tabelaPredmet;
+		return tabelaPredmet.getSelectedRow();
 		
 	}
 }

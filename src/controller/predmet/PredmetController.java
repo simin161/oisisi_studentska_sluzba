@@ -9,6 +9,25 @@ public class PredmetController {
 	
 	private Predmet predmet;
 
+	private static PredmetController instance = null;
+	
+	
+	public static PredmetController getInstance() {
+		
+		if(instance == null) {
+			
+			instance = new PredmetController();
+		}
+		
+		return instance;
+		
+	}
+	
+	public PredmetController() {
+		
+		
+	}
+	
 	public PredmetController(Predmet predmet) {
 
 		this.predmet = predmet;

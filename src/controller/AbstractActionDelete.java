@@ -14,20 +14,22 @@ import javax.swing.JTable;
 import javax.swing.KeyStroke;
 import javax.swing.table.DefaultTableModel;
 
+import controller.predmet.PredmetController;
+
 public class AbstractActionDelete extends AbstractAction{
 
 	private static final long serialVersionUID = 7464546556386918717L;
 
 	private int rbrTaba;
 	private Container c;
-	private JTable tabela;
+	private int row= -1;
 	
 	@SuppressWarnings("deprecation")
-	public AbstractActionDelete(int rbr, Container c, JTable tabela) {
+	public AbstractActionDelete(int rbr, Container c, int selectedRow) {
 		
 		this.rbrTaba = rbr;
 		this.c = c;
-		this.tabela = tabela;
+		this.row = selectedRow;
 		
 		putValue(NAME, "Delete");
 		putValue(MNEMONIC_KEY, KeyEvent.VK_D);
@@ -53,11 +55,9 @@ public class AbstractActionDelete extends AbstractAction{
 		else if(this.rbrTaba==2) {
 			
 			//if()  provera da li je selektovan red? 
-			
-			System.out.println(tabela.getSelectedRow());
-			
-			if(tabela.getSelectedRow()!=-1) {
 				
+			System.out.println(row);
+			if(row != -1) {
 				
 				String []opcije = new String[2];
 				
@@ -68,16 +68,15 @@ public class AbstractActionDelete extends AbstractAction{
 			
 				if(i==0) {
 					
-					//brisanje predmeta
-					
-					DefaultTableModel model = (DefaultTableModel) tabela.getModel();
-					model.removeRow(tabela.getSelectedRow());
-					
+				
+					PredmetController.getInstance().izbrisiPredmet(row);
 					
 				}
 				
-				
 			}
+				
+				
+			
 			
 			
 		
@@ -93,7 +92,7 @@ public class AbstractActionDelete extends AbstractAction{
 	public void updateRbr(int rbr) {
 		
 		this.rbrTaba = rbr;
-		
+
 	}
 	
 }

@@ -48,7 +48,7 @@ public class GlavniProzor extends JFrame{
 		
 		/* --- Toolbar --- */
 		
-		Toolbar toolbar = new Toolbar(rbrTaba, this, PrikazStudenta.getInstance().getTable());
+		Toolbar toolbar = new Toolbar(rbrTaba, this);
 		panelToolbar.add(toolbar);
 		
 		JPanel panelMain = new JPanel();
@@ -87,9 +87,9 @@ public class GlavniProzor extends JFrame{
 				
 				switch(rbrTaba) {
 				
-					case 0 : toolbar.updateRbr(rbrTaba, PrikazStudenta.getInstance().getTable()); break;
-					case 1 : toolbar.updateRbr(rbrTaba, PrikazProfesora.getInstance().getTable()); break;
-					case 2 : toolbar.updateRbr(rbrTaba, PrikazPredmeta.getInstance().getTable()); break;
+					case 0 : toolbar.updateRbr(rbrTaba); break;
+					case 1 : toolbar.updateRbr(rbrTaba); break;
+					case 2 : toolbar.updateRbr(rbrTaba); break;
 					default :
 					
 				}
