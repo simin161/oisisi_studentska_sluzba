@@ -23,6 +23,7 @@ public class GlavniProzor extends JFrame{
 	private static final long serialVersionUID = -8763285092502046194L;
 
 	private int rbrTaba=0;
+	private int selectedRow = -1;
 	
 	public GlavniProzor()
 	{
@@ -85,16 +86,12 @@ public class GlavniProzor extends JFrame{
 				
 				rbrTaba = tabbedPane.getSelectedIndex();
 				
-				switch(rbrTaba) {
-				
-					case 0 : toolbar.updateRbr(rbrTaba); break;
-					case 1 : toolbar.updateRbr(rbrTaba); break;
-					case 2 : toolbar.updateRbr(rbrTaba); break;
-					default :
-					
-				}
-				
+				toolbar.updateRbr(rbrTaba);
 				menuBar.updateRbr(rbrTaba);
+				
+				selectedRow = PrikazPredmeta.getInstance().getSelectedRow();
+				System.out.println(selectedRow);
+				toolbar.updateRow(selectedRow);
 			}
 			
 		});

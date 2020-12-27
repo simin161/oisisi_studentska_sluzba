@@ -74,12 +74,7 @@ public class AbstractActionDelete extends AbstractAction{
 				}
 				
 			}
-				
-				
-			
-			
-			
-		
+
 		}
 		else {
 			
@@ -93,6 +88,12 @@ public class AbstractActionDelete extends AbstractAction{
 		
 		this.rbrTaba = rbr;
 
+	}
+	
+	public void updateRow(int row) {
+		
+		this.row = row;
+		
 	}
 	
 }

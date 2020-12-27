@@ -110,4 +110,10 @@ public class Toolbar extends JToolBar{
 		this.adelete.updateRbr(rbr);
 	}
 	
+	public void updateRow(int row) {
+		
+		this.selectedRow = row;
+		this.adelete.updateRow(row);
+	}
+	
 }
