@@ -1,16 +1,20 @@
 package view.izmeneDialog;
 
 import java.awt.FlowLayout;
-import java.text.DecimalFormat;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import model.baze.OcenaBaza;
+import model.baze.StudentBaza;
 import view.tabbedPanes.PrikazOcene;
+import view.tabbedPanes.PrikazStudenta;
 
 public class StudentPolozeni extends JPanel {
 
@@ -18,6 +22,9 @@ public class StudentPolozeni extends JPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = 8835038055857711937L;
+
+	private PrikazOcene prikaz;
+	private OcenaBaza o;
 
 	public StudentPolozeni() {
 
@@ -31,10 +38,9 @@ public class StudentPolozeni extends JPanel {
 		add(panelB);
 		add(Box.createVerticalStrut(10));
 
-		PrikazOcene prikaz = new PrikazOcene();
-		add(prikaz);
+		prikaz = new PrikazOcene();
 
-		OcenaBaza o = new OcenaBaza();
+		o = new OcenaBaza();
 
 		JPanel panelPr = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		JLabel lblPr = new JLabel("Prosek: " + o.izracunajProsek());
@@ -44,6 +50,33 @@ public class StudentPolozeni extends JPanel {
 		JLabel lblEspb = new JLabel("ESPB: " + o.izracunajEspb());
 		panelEspb.add(lblEspb);
 
+		buttonPonisti.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				if (prikaz.getSelectedRow() != -1) {
+					String[] opcije = { "Da", "Ne" };
+
+					int i = JOptionPane.showOptionDialog(prikaz.getParent(),
+							"Da li ste sigurni da želite da poništite ocenu?", "Poništavanje ocene",
+							JOptionPane.YES_NO_OPTION, JOptionPane.DEFAULT_OPTION, null, opcije, opcije[0]);
+					if (i == 0) {
+						o.ponistiOcenu(o.getRow(prikaz.getSelectedRow()).getPredmet().getSifra());
+						lblPr.setText("Prosek: " + o.izracunajProsek());
+						lblEspb.setText("ESPB: " + o.izracunajEspb());
+						prikaz.update("UKLONJEN", -1);
+						PrikazStudenta.getInstance().update("", 0);
+					}
+				} else {
+					JOptionPane.showMessageDialog(prikaz.getParent(), "Označite ocenu koju želite da poništite.",
+							"Upozorenje", JOptionPane.WARNING_MESSAGE);
+				}
+			}
+
+		});
+
+		add(prikaz);
 		add(panelPr);
 		add(panelEspb);
 	}

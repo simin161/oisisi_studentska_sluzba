@@ -75,6 +75,7 @@ public class StudentInfo extends JPanel {
 
 		buttonPotvrdi.setEnabled(false);
 		Student s = StudentBaza.getInstance().getRow(PrikazStudenta.getInstance().getSelectedRow());
+		
 		String oldId = s.getBrIndeksa();
 		JPanel panelName = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		JLabel labelName = new JLabel("Ime* ");

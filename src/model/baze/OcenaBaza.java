@@ -6,12 +6,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.Ocena;
+import model.Predmet;
 import view.tabbedPanes.PrikazStudenta;
 
 public class OcenaBaza {
-	
 
-	private List<Ocena>  ocena;
+	private List<Ocena> ocena;
+	private List<Predmet> predmet;
 	private List<String> header;
 
 	public OcenaBaza() {
@@ -28,6 +29,7 @@ public class OcenaBaza {
 
 	private void initializeOcena() {
 		this.ocena = StudentBaza.getInstance().getRow(PrikazStudenta.getInstance().getSelectedRow()).getPolozeno();
+		this.predmet = StudentBaza.getInstance().getRow(PrikazStudenta.getInstance().getSelectedRow()).getNepolozeno();
 
 	}
 
@@ -61,9 +63,9 @@ public class OcenaBaza {
 	public String getValueAt(int row, int column) {
 
 		Ocena o = this.ocena.get(row);
-		 DateFormat date = new SimpleDateFormat("dd/MM/yyyy");  
-         String strDate = date.format(o.getDatumPolaganja());  
- 
+		DateFormat date = new SimpleDateFormat("dd/MM/yyyy");
+		String strDate = date.format(o.getDatumPolaganja());
+
 		switch (column) {
 
 		case 0:
@@ -82,33 +84,55 @@ public class OcenaBaza {
 		}
 
 	}
-	
+
 	public double izracunajProsek() {
 
-		if(ocena == null) {
-			return 0;
+		double avg;
+		if (ocena == null || ocena.size() == 0) {
+			avg = 0;
+		} else {
+
+			int i = 0;
+			double sum = 0;
+			for (Ocena o : ocena) {
+				sum += o.getOcena();
+				++i;
+			}
+			avg = sum / (double) i;
 		}
-		
-		int i = 0;
-		double sum = 0;
-		for(Ocena o : ocena) {
-			sum += o.getOcena();
-			++i;
-		}
-		
-		return sum/(double)i;
+
+		StudentBaza.getInstance().getRow(PrikazStudenta.getInstance().getSelectedRow()).setProsecnaOcena(avg);
+		return avg;
+
 	}
-	
+
 	public int izracunajEspb() {
-		if(ocena == null) {
+		if (ocena == null || ocena.size() == 0) {
 			return 0;
 		}
-		
+
 		int sum = 0;
-		for(Ocena o: ocena) {
+		for (Ocena o : ocena) {
 			sum += o.getPredmet().getEspb();
 		}
-		
+
 		return sum;
+	}
+
+	public void ponistiOcenu(String id) {
+		if (predmet == null) {
+			predmet = new ArrayList<Predmet>();
+		}
+		for (Ocena o : ocena) {
+			if (o.getPredmet().getSifra().equals(id)) {
+				predmet.add(o.getPredmet());
+				ocena.remove(o);
+				break;
+			}
+		}
+
+		StudentBaza.getInstance().getRow(PrikazStudenta.getInstance().getSelectedRow()).setPolozeno(ocena);
+		StudentBaza.getInstance().getRow(PrikazStudenta.getInstance().getSelectedRow()).setNepolozeno(predmet);
+
 	}
 }

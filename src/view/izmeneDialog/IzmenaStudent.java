@@ -14,6 +14,9 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.border.LineBorder;
 
+import model.baze.StudentBaza;
+import view.tabbedPanes.PrikazStudenta;
+
 public class IzmenaStudent extends JDialog {
 
 	/**
@@ -27,7 +30,6 @@ public class IzmenaStudent extends JDialog {
 		Dimension screenSize = kit.getScreenSize();
 		int screenHeight = (int) (screenSize.height * 0.75 * 0.9);
 		int screenWidth = (int) (screenSize.width * 0.75 * 0.6);
-
 		setTitle("Izmena studenta");
 		setSize(screenWidth, screenHeight);
 		setLocationRelativeTo(c);
