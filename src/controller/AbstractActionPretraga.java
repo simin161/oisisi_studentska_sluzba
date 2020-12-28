@@ -16,6 +16,9 @@ public class AbstractActionPretraga extends AbstractAction{
 
 	private static final long serialVersionUID = 5418007630716582931L;
 
+	private int rbrTaba= -1;
+	private String kriterijum="";
+	
 	@SuppressWarnings("deprecation")
 	public AbstractActionPretraga() {
 		
@@ -30,10 +33,15 @@ public class AbstractActionPretraga extends AbstractAction{
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
+			
+			Pretraga.pretrazi(this.kriterijum, this.rbrTaba);
 		
-		Pretraga.getInstance();
+	}
+	
+	public void update(String kriterijum, int rbr) {
 		
+		this.kriterijum= kriterijum;
+		this.rbrTaba = rbr;
 		
 	}
 

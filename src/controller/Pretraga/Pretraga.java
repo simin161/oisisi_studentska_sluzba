@@ -1,23 +1,29 @@
 package controller.Pretraga;
 
-public class Pretraga {
+import view.tabbedPanes.PrikazProfesora;
 
-	private static Pretraga instance = null;
+public class Pretraga {
 	
-	public static Pretraga getInstance() {
+	public static void pretrazi(String kriterijum, int tab) {
 		
-		if(instance == null) {
+		if (tab == 0) {
+			//student
 			
-			instance = new Pretraga();
+			
 			
 		}
-		
-		return instance;
-	}
-	
-	public void pretrazi(String kriterijum) {
-		
-		
+		else if (tab == 1) {
+			//profesor
+			
+			PrikazProfesora.getInstance().pretraziTabelu(kriterijum);
+			
+		}
+		else {
+			//predmet
+			
+			
+			
+		}
 		
 	}
 }

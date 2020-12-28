@@ -15,7 +15,7 @@ import controller.AbstractActionDelete;
 import controller.AbstractActionEdit;
 import controller.AbstractActionNew;
 import controller.AbstractActionPretraga;
-import controller.Pretraga.Pretraga;
+import view.tabbedPanes.PrikazProfesora;
 
 public class Toolbar extends JToolBar{
 
@@ -26,7 +26,8 @@ public class Toolbar extends JToolBar{
 	private AbstractActionNew anew = new AbstractActionNew(rbrT, co);
 	private AbstractActionEdit aedit = new AbstractActionEdit(rbrT, co);
 	private AbstractActionDelete adelete = new AbstractActionDelete(rbrT, co);
-	
+	private String kriterijum="";
+	private AbstractActionPretraga apretraga = new AbstractActionPretraga();
 	
 	public Toolbar(int rbr, Container c) {
 		
@@ -62,7 +63,8 @@ public class Toolbar extends JToolBar{
 		
 		addSeparator();
 		
-		AbstractActionPretraga apretraga = new AbstractActionPretraga();
+		apretraga = new AbstractActionPretraga();	
+		
 		add(apretraga);
 		
 		addSeparator();
@@ -72,33 +74,57 @@ public class Toolbar extends JToolBar{
 
 			@Override
 			public void insertUpdate(DocumentEvent e) {
-				// TODO Auto-generated method stub
 				
-				pretrazi();
-				
+				update();
 				
 			}
 
 			@Override
 			public void removeUpdate(DocumentEvent e) {
-				// TODO Auto-generated method stub
 				
-				pretrazi();
+				update();
 				
 			}
 
 			@Override
 			public void changedUpdate(DocumentEvent e) {
-				// TODO Auto-generated method stub
-				
-				pretrazi();
 				
 			}
 			
-			private void pretrazi(){
+			private void update() {
 				
-				Pretraga.getInstance().pretrazi("");
+				kriterijum = txtPretraga.getText();
+				apretraga.update(kriterijum, rbrT);
+			}
+			
+		});
+		
+		
+		txtPretraga.getDocument().addDocumentListener(new DocumentListener() {
+
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				reset();
+			}
+
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				reset();
+			}
+
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				reset();
+			}
+			
+			
+			private void reset(){
 				
+				if(txtPretraga.getText().trim().length() == 0) {
+					
+					PrikazProfesora.getInstance().prikaziTabelu();
+					
+				}	
 			}
 		});
 	}

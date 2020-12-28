@@ -3,10 +3,15 @@
 package view.tabbedPanes;
 
 import java.awt.BorderLayout;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.RowFilter;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 import view.tables.AbstractTableModelProfesori;
 import view.tables.ProfesorTable;
@@ -47,7 +52,7 @@ public class PrikazProfesora extends JPanel{
 		
 	}
 	
-	private void prikaziTabelu() {
+	public void prikaziTabelu() {
 		
 		tabelaProfesora = new ProfesorTable();
 		JScrollPane sPane = new JScrollPane(tabelaProfesora);
@@ -60,8 +65,38 @@ public class PrikazProfesora extends JPanel{
 	
 	public int getSelectedRow() {
 		
-		
 		return tabelaProfesora.getSelectedRow();
+	
+	}
+	
+	@SuppressWarnings("unchecked")
+	public void pretraziTabelu(String kriterijum) {
+		
+		if(kriterijum.trim().length()!=0) {
+			
+			String []parts = kriterijum.split(" ");
+			
+			if(parts.length == 1) {
+				
+				TableRowSorter<TableModel> rowSorter = new TableRowSorter<>(tabelaProfesora.getModel());
+				tabelaProfesora.setRowSorter(rowSorter);
+				rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + parts[0], 1));
+				
+			}
+			else if(parts.length == 2) {
+				
+				List<RowFilter<Object, Object>> filteri = new ArrayList<RowFilter<Object, Object>>(2);
+				filteri.add(RowFilter.regexFilter("(?i)" + parts[0], 1));
+				filteri.add(RowFilter.regexFilter("(?i)" + parts[1], 0));
+				
+				@SuppressWarnings("rawtypes")
+				RowFilter filter = RowFilter.andFilter(filteri);
+				
+				TableRowSorter<TableModel> rowSorter = new TableRowSorter<>(tabelaProfesora.getModel());
+				tabelaProfesora.setRowSorter(rowSorter);
+				rowSorter.setRowFilter(filter);
+			}
+		}
 	}
 	
 }
