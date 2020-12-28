@@ -24,7 +24,7 @@ public class IzmenaStudent extends JDialog {
 		 */
 	private static final long serialVersionUID = -5350992107196510274L;
 	
-	public IzmenaStudent(Container c) {
+	public IzmenaStudent(Container c, int r) {
 
 		Toolkit kit = Toolkit.getDefaultToolkit();
 		Dimension screenSize = kit.getScreenSize();
@@ -44,7 +44,7 @@ public class IzmenaStudent extends JDialog {
 
 		JTabbedPane tabbedPane = new JTabbedPane();
 		tabbedPane.setBorder(new LineBorder(new Color(0, 0, 0)));
-		StudentInfo sInfo = new StudentInfo();
+		StudentInfo sInfo = new StudentInfo(r);
 		StudentPolozeni sPol = new StudentPolozeni();
 		tabbedPane.add("Informacije", sInfo);
 		tabbedPane.add("Položeni", sPol);

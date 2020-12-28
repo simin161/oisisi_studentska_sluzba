@@ -58,7 +58,7 @@ public class StudentInfo extends JPanel {
 	private int godUpis = -1;
 	private boolean shown = false;
 
-	public StudentInfo() {
+	public StudentInfo(int r) {
 
 		boolean[] valid = { true, true, true, true, true, true, true, true };
 
@@ -74,7 +74,7 @@ public class StudentInfo extends JPanel {
 		JButton buttonPonisti = new JButton("Poništi");
 
 		buttonPotvrdi.setEnabled(false);
-		Student s = StudentBaza.getInstance().getRow(PrikazStudenta.getInstance().getSelectedRow());
+		Student s = StudentBaza.getInstance().getRow(r);
 		
 		String oldId = s.getBrIndeksa();
 		JPanel panelName = new JPanel(new FlowLayout(FlowLayout.LEFT));
