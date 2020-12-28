@@ -15,6 +15,7 @@ import controller.AbstractActionDelete;
 import controller.AbstractActionEdit;
 import controller.AbstractActionNew;
 import controller.AbstractActionPretraga;
+import view.tabbedPanes.PrikazPredmeta;
 import view.tabbedPanes.PrikazProfesora;
 
 public class Toolbar extends JToolBar{
@@ -122,8 +123,21 @@ public class Toolbar extends JToolBar{
 				
 				if(txtPretraga.getText().trim().length() == 0) {
 					
-					PrikazProfesora.getInstance().prikaziTabelu();
+					if(rbrT == 0) {
+						
+						//refresh za studenta
+						
+					}
+					else if(rbrT == 1) {
+						
+						PrikazProfesora.getInstance().prikaziTabelu();
 					
+					}
+					else {
+						
+						PrikazPredmeta.getInstance().prikaziTabelu();
+						
+					}
 				}	
 			}
 		});

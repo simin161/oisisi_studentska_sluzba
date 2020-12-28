@@ -7,6 +7,9 @@ import java.awt.BorderLayout;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.RowFilter;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 import view.tables.AbstractTableModelPredmeti;
 import view.tables.PredmetTable;
@@ -47,7 +50,7 @@ public class PrikazPredmeta extends JPanel{
 		
 	}
 	
-	private void prikaziTabelu() {
+	public void prikaziTabelu() {
 		
 		tabelaPredmet= new PredmetTable();
 		JScrollPane sPane = new JScrollPane(tabelaPredmet);
@@ -61,6 +64,14 @@ public class PrikazPredmeta extends JPanel{
 	public int getSelectedRow() {
 		
 		return tabelaPredmet.getSelectedRow();
+		
+	}
+	
+	public void pretraziTabelu(String kriterijum) {
+		
+		TableRowSorter<TableModel> rowSorter = new TableRowSorter<>(tabelaPredmet.getModel());
+		tabelaPredmet.setRowSorter(rowSorter);
+		rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + kriterijum, 1));
 		
 	}
 }

@@ -1,5 +1,6 @@
 package controller.Pretraga;
 
+import view.tabbedPanes.PrikazPredmeta;
 import view.tabbedPanes.PrikazProfesora;
 
 public class Pretraga {
@@ -21,7 +22,7 @@ public class Pretraga {
 		else {
 			//predmet
 			
-			
+			PrikazPredmeta.getInstance().pretraziTabelu(kriterijum);
 			
 		}
 		
