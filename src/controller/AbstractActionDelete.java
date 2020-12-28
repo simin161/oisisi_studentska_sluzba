@@ -62,6 +62,11 @@ public class AbstractActionDelete extends AbstractAction {
 				}
 
 			}
+			else {
+				
+				JOptionPane.showMessageDialog(c, "Označite studenta za brisanje.", "Upozorenje", JOptionPane.WARNING_MESSAGE);
+				
+			}
 		} else if (this.rbrTaba == 1) {
 
 			int row = PrikazProfesora.getInstance().getSelectedRow();
