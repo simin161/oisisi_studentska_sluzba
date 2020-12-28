@@ -115,6 +115,11 @@ public class PrikazProfesora extends JPanel{
 				rowSorter.setRowFilter(filter);
 			}
 		}
+		else {
+			
+			tabelaProfesora.setRowSorter(null);
+			
+		}
 	}
 	
 }
