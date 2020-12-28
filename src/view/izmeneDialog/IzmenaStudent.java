@@ -42,8 +42,9 @@ public class IzmenaStudent extends JDialog {
 
 		JTabbedPane tabbedPane = new JTabbedPane();
 		tabbedPane.setBorder(new LineBorder(new Color(0, 0, 0)));
-
-		tabbedPane.add("Informacije", StudentInfo.getInstance());
+		StudentInfo sInfo = new StudentInfo();
+		
+		tabbedPane.add("Informacije", sInfo);
 		tabbedPane.add("Položeni", new JLabel("TODO: dodati prikaz polozenih"));
 		tabbedPane.add("Nepoloženi", new JLabel("TODO: dodati prikaz nepolozenih"));
 		panelMain.add(tabbedPane, BorderLayout.CENTER);

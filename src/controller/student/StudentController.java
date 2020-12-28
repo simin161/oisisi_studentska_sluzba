@@ -63,14 +63,14 @@ public class StudentController {
 		return StudentBaza.getInstance().getRow(row);
 	}
 
-	public void izmeniStudenta(Student s) {
+	public void izmeniStudenta(Student s, String oldId) {
 		/*if (rowSelectedIndex < 0) {
 			return;
 		}*/
 		
 		//Student s = StudentBaza.getInstance().getRow(rowSelectedIndex);
 		StudentBaza.getInstance().izmeniStudenta(s.getPrezime(), s.getIme(), s.getDatumRodjenja(), s.getAdresaStanovanja(), s.getTelefon(),
-			s.getEmail(), s.getBrIndeksa(), s.getGodinaUpisa(), s.getTrenutnaGodina(), s.getStatus());
+			s.getEmail(), s.getBrIndeksa(), s.getGodinaUpisa(), s.getTrenutnaGodina(), s.getStatus(), oldId);
 		
 		PrikazStudenta.getInstance().update(null, -1);
 	}

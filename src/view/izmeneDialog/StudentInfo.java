@@ -3,6 +3,7 @@ package view.izmeneDialog;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
@@ -24,6 +25,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
@@ -39,7 +41,6 @@ import controller.student.StudentController;
 import model.Student;
 import model.baze.StudentBaza;
 import model.nabrojiviTipovi.Status;
-import view.framesAndDialogs.DialogAddStudent;
 import view.tabbedPanes.PrikazStudenta;
 
 public class StudentInfo extends JPanel {
@@ -49,24 +50,8 @@ public class StudentInfo extends JPanel {
 	 */
 	private static final long serialVersionUID = 2210595203182573372L;
 
-	private static StudentInfo instance = null;
-
-	public static StudentInfo getInstance() {
-
-		if (instance == null) {
-
-			instance = new StudentInfo();
-
-		}
-
-		return instance;
-
-	}
-
-	private boolean enable = false;
 	private boolean indExists = false;
 	private boolean tooYoung = false;
-	private boolean tooYoung1 = false;
 	private boolean invalidYear = false;
 	private boolean validYearDR = false;
 	private int godRodj = -1;
@@ -75,7 +60,6 @@ public class StudentInfo extends JPanel {
 
 	public StudentInfo() {
 
-		String[] text = { "", "", "", "", "", "", "", "" };
 		boolean[] valid = { true, true, true, true, true, true, true, true };
 
 		BoxLayout b = new BoxLayout(this, BoxLayout.Y_AXIS);
@@ -91,7 +75,7 @@ public class StudentInfo extends JPanel {
 
 		buttonPotvrdi.setEnabled(false);
 		Student s = StudentBaza.getInstance().getRow(PrikazStudenta.getInstance().getSelectedRow());
-
+		String oldId = s.getBrIndeksa();
 		JPanel panelName = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		JLabel labelName = new JLabel("Ime* ");
 		JTextField tFName = new JTextField();
@@ -216,6 +200,10 @@ public class StudentInfo extends JPanel {
 		panelButton.add(Box.createHorizontalStrut(35));
 		panelButton.add(buttonPonisti);
 		add(panelButton);
+		
+		String[] datum = tfDatumR.getText().trim().split("/");
+		godRodj = Integer.parseInt(datum[2]);
+		godUpis = Integer.parseInt(tFGodU.getText().trim());
 
 		tFName.addFocusListener(new FocusListener() {
 
@@ -227,26 +215,22 @@ public class StudentInfo extends JPanel {
 
 			@Override
 			public void focusLost(FocusEvent e) {
-				text[0] = tFName.getText().trim();
 
-				if (!text[0].equals("")) {
+				if (!tFName.getText().trim().equals("")) {
 					valid[0] = ProveraImena.proveriIme(tFName.getText());
 				} else {
 					valid[0] = false;
 					tFName.setText("");
 				}
 
-				if (!valid[0] && !text[0].equals("")) {
+				if (!valid[0] && !tFName.getText().trim().equals("")) {
 					tFName.setText("");
-					text[0] = "";
-					// enable = false;
 
 					JOptionPane.showMessageDialog(StudentInfo.this,
 							"Pogrešno uneto ime! (Primer ispravnog unosa: Petar)", "Greška: ",
 							JOptionPane.ERROR_MESSAGE);
 
 				}
-				tFName.setText(setString(tFName.getText()));
 
 			}
 
@@ -293,21 +277,16 @@ public class StudentInfo extends JPanel {
 
 			@Override
 			public void focusLost(FocusEvent e) {
-				text[1] = tFPrezime.getText().trim();
 
-				if (!text[1].equals(""))
+				if (!tFPrezime.getText().trim().equals(""))
 					valid[1] = ProveraPrezimena.proveriPrezime(tFPrezime.getText());
 				else {
 					valid[1] = false;
 					tFPrezime.setText("");
 				}
 
-				tFPrezime.setText(setString(tFPrezime.getText()));
-
-				if (!valid[1] && !text[1].equals("")) {
+				if (!valid[1] && !tFPrezime.getText().trim().equals("")) {
 					tFPrezime.setText("");
-					text[1] = "";
-					enable = false;
 					JOptionPane.showMessageDialog(StudentInfo.this,
 							"Pogrešno uneto prezime! (Primer ispravnog unosa: Petrović)", "Greška: ",
 							JOptionPane.ERROR_MESSAGE);
@@ -350,7 +329,6 @@ public class StudentInfo extends JPanel {
 			public void focusGained(FocusEvent e) {
 				if (shown) {
 					tfDatumR.setText("");
-					text[2] = "";
 					valid[2] = false;
 					shown = false;
 					godRodj = -1;
@@ -365,9 +343,8 @@ public class StudentInfo extends JPanel {
 
 			@Override
 			public void focusLost(FocusEvent e) {
-				text[2] = tfDatumR.getText().trim();
 
-				if (!text[2].equals("")) {
+				if (!tfDatumR.getText().trim().equals("")) {
 					valid[2] = ProveraDatuma.proveriDatum(tfDatumR.getText());
 				} else {
 					tfDatumR.setText("");
@@ -378,9 +355,9 @@ public class StudentInfo extends JPanel {
 				godRodj = -1;
 
 				if (valid[2]) {
-					if (ProveraGodine.proveri(text[2], 0)) {
+					if (ProveraGodine.proveri(tfDatumR.getText().trim(), 0)) {
 
-						String[] datum = text[2].split("/");
+						String[] datum = tfDatumR.getText().trim().split("/");
 						godRodj = Integer.parseInt(datum[2]);
 
 						DateTimeFormatter dtf = DateTimeFormatter.ofPattern("YYYY");
@@ -392,7 +369,6 @@ public class StudentInfo extends JPanel {
 						if (trGod - godRodj < 18) {
 							tooYoung = true;
 							tfDatumR.setText("");
-							text[2] = "";
 							godRodj = -1;
 
 							JOptionPane.showMessageDialog(StudentInfo.this, "Osoba mora imati više od 18 godina!",
@@ -422,7 +398,6 @@ public class StudentInfo extends JPanel {
 						valid[2] = false;
 						tooYoung = true;
 						tfDatumR.setText("");
-						text[2] = "";
 						godRodj = -1;
 
 						JOptionPane.showMessageDialog(StudentInfo.this, "Datum nije validan", "Greška: ",
@@ -430,21 +405,14 @@ public class StudentInfo extends JPanel {
 					}
 				}
 
-				if (!valid[2] && !text[2].equals("")) {
+				if (!valid[2] && !tfDatumR.getText().trim().equals("")) {
 					tfDatumR.setText("");
-					text[2] = "";
 					tooYoung = true;
-					enable = false;
 
 					JOptionPane.showMessageDialog(StudentInfo.this, "Pogrešno unet datum! Ispravan unos : DD/MM/YYYY",
 							"Greška: ", JOptionPane.ERROR_MESSAGE);
 
-				} else {
-
-					setEnable(text, valid);
 				}
-
-				buttonPotvrdi.setEnabled(enable && !indExists && !tooYoung && !invalidYear);
 			}
 
 		});
@@ -471,17 +439,15 @@ public class StudentInfo extends JPanel {
 
 			private void check() {
 				valid[2] = ProveraDatuma.proveriDatum(tfDatumR.getText());
-				text[2] = tfDatumR.getText().trim();
 				validYearDR = false;
 				tooYoung = false;
-				tooYoung1 = false;
 				invalidYear = false;
-
+				boolean tooYoung1 = false;
 				if (valid[2]) {
-					validYearDR = ProveraGodine.proveri(text[2], 0);
+					validYearDR = ProveraGodine.proveri(tfDatumR.getText().trim(), 0);
 					if (validYearDR) {
 
-						String[] datum = text[2].split("/");
+						String[] datum = tfDatumR.getText().trim().split("/");
 						godRodj = Integer.parseInt(datum[2]);
 
 						DateTimeFormatter dtf = DateTimeFormatter.ofPattern("YYYY");
@@ -498,8 +464,8 @@ public class StudentInfo extends JPanel {
 								invalidYear = true;
 								valid[2] = false;
 							} else if (godUpis - godRodj < 18) {
-								tooYoung1 = true;
 								invalidYear = true;
+								tooYoung1 = true;
 								valid[2] = false;
 							}
 						}
@@ -509,10 +475,9 @@ public class StudentInfo extends JPanel {
 						tooYoung = true;
 					}
 				}
-
-				changeLabel(valid[2], "Datum rođenja*", "Datum rođenja", labelDatumR);
-				changeLabel(valid[7] && !invalidYear && !tooYoung1 && !shown, "Godina upisa*", "Godina upisa",
+				changeLabel(valid[7] && !invalidYear && !tooYoung1 && !shown, "Godina upisa*", "Godina upisa*",
 						labelGodU);
+				changeLabel(valid[2], "Datum rođenja*", "Datum rođenja", labelDatumR);
 				buttonPotvrdi.setEnabled(checkValid(valid) && !invalidYear && !tooYoung && !shown);
 
 			}
@@ -529,19 +494,16 @@ public class StudentInfo extends JPanel {
 
 			@Override
 			public void focusLost(FocusEvent e) {
-				text[3] = tFAdr.getText().trim();
 
-				if (!text[3].equals(""))
+				if (!tFAdr.getText().trim().equals(""))
 					valid[3] = ProveraAdrese.proveriAdresu(tFAdr.getText());
 				else {
 					valid[3] = false;
 					tFAdr.setText("");
 				}
 
-				if (!valid[3] && !text[3].equals("")) {
+				if (!valid[3] && !tFAdr.getText().trim().equals("")) {
 					tFAdr.setText("");
-					text[3] = "";
-					enable = false;
 
 					JOptionPane.showMessageDialog(StudentInfo.this,
 							"Pogrešno uneta adresa! Ispravan unos: ulica i broj, mesto", "Greška: ",
@@ -590,22 +552,19 @@ public class StudentInfo extends JPanel {
 
 			@Override
 			public void focusLost(FocusEvent e) {
-				text[4] = tFBr.getText().trim();
 				Pattern pattern = Pattern.compile("[0-9]{3}/[0-9]{3,5}-[0-9]{3,5}");
 				Matcher matcher = pattern.matcher(tFBr.getText());
 
-				if (!text[4].equals("")) {
+				if (!tFBr.getText().trim().equals("")) {
 					valid[4] = matcher.matches();
 				} else {
 					tFBr.setText("");
 					valid[4] = false;
 				}
 
-				if (!valid[4] && !text[4].equals("")) {
+				if (!valid[4] && !tFBr.getText().trim().equals("")) {
 					tFBr.setText("");
-					text[4] = "";
-					enable = false;
-
+					
 					JOptionPane.showMessageDialog(StudentInfo.this,
 							"Pogrešno unet broj telefona! (Primer: 123/123-123)", "Greška: ",
 							JOptionPane.ERROR_MESSAGE);
@@ -655,19 +614,16 @@ public class StudentInfo extends JPanel {
 
 			@Override
 			public void focusLost(FocusEvent e) {
-				text[5] = tFEmail.getText().trim();
 
-				if (!text[5].equals(""))
+				if (!tFEmail.getText().trim().equals(""))
 					valid[5] = ProveraEmaila.proveriEmail(tFEmail.getText());
 				else {
 					valid[5] = false;
 					tFEmail.setText("");
 				}
 
-				if (!valid[5] && !text[5].equals("")) {
+				if (!valid[5] && !tFEmail.getText().trim().equals("")) {
 					tFEmail.setText("");
-					text[5] = "";
-					enable = false;
 
 					JOptionPane.showMessageDialog(StudentInfo.this, "Pogrešno uneta e-mail adresa!", "Greška: ",
 							JOptionPane.ERROR_MESSAGE);
@@ -715,9 +671,8 @@ public class StudentInfo extends JPanel {
 
 			@Override
 			public void focusLost(FocusEvent e) {
-				text[6] = tFBrI.getText().trim();
-
-				if (!text[6].equals("")) {
+				
+				if (!tFBrI.getText().trim().equals("")) {
 					valid[6] = ProveraIndeksa.proveriIndeks(tFBrI.getText());
 				} else {
 					valid[6] = false;
@@ -726,22 +681,18 @@ public class StudentInfo extends JPanel {
 
 				if (indExists) {
 					tFBrI.setText("");
-					text[6] = "";
 					valid[6] = false;
 					JOptionPane.showMessageDialog(StudentInfo.this, "Broj indeksa postoji!", "Greška: ",
 							JOptionPane.ERROR_MESSAGE);
 				}
 
-				if (!valid[6] && !text[6].equals("")) {
+				if (!valid[6] && !tFBrI.getText().trim().equals("")) {
 					tFBrI.setText("");
-					text[6] = "";
-					enable = false;
 					indExists = true;
 
 					JOptionPane.showMessageDialog(StudentInfo.this, "Pogrešno unet broj indeksa!", "Greška: ",
 							JOptionPane.ERROR_MESSAGE);
 				}
-				tFBrI.setText(tFBrI.getText().toUpperCase());
 			}
 
 		});
@@ -788,7 +739,6 @@ public class StudentInfo extends JPanel {
 			public void focusGained(FocusEvent e) {
 				if (shown) {
 					tFGodU.setText("");
-					text[7] = "";
 					shown = false;
 					godUpis = -1;
 				}
@@ -797,11 +747,10 @@ public class StudentInfo extends JPanel {
 
 			@Override
 			public void focusLost(FocusEvent e) {
-				text[7] = tFGodU.getText().trim();
 				Pattern pattern = Pattern.compile("[0-9]{4,4}"); // NAPOMENA: godina jos dugo nece imati vise od 4 cifre
 				Matcher matcher = pattern.matcher(tFGodU.getText());
 
-				if (!text[7].equals("")) {
+				if (!tFGodU.getText().trim().equals("")) {
 					valid[7] = matcher.matches();
 				} else {
 					valid[7] = false;
@@ -809,7 +758,7 @@ public class StudentInfo extends JPanel {
 				}
 
 				if (valid[7]) {
-					godUpis = Integer.parseInt(text[7]);
+					godUpis = Integer.parseInt(tFGodU.getText().trim());
 					invalidYear = false;
 					DateTimeFormatter dtf = DateTimeFormatter.ofPattern("YYYY");
 					LocalDateTime now = LocalDateTime.now();
@@ -818,7 +767,6 @@ public class StudentInfo extends JPanel {
 
 					if (godUpis > trGod) {
 						tFGodU.setText("");
-						text[7] = "";
 						invalidYear = true;
 						godUpis = -1;
 						valid[7] = false;
@@ -850,18 +798,13 @@ public class StudentInfo extends JPanel {
 
 				}
 
-				if (!valid[7] && !text[7].equals("")) {
+				if (!valid[7] && !tFGodU.getText().trim().equals("")) {
 					tFGodU.setText("");
-					text[7] = "";
 					godUpis = -1;
-					enable = false;
 					invalidYear = true;
 					JOptionPane.showMessageDialog(StudentInfo.this, "Pogrešno uneta godina upisa! Ispravan unos: YYYY",
 							"Greška: ", JOptionPane.ERROR_MESSAGE);
 
-				} else {
-
-					setEnable(text, valid);
 				}
 			}
 
@@ -900,6 +843,7 @@ public class StudentInfo extends JPanel {
 				int trGod = Integer.parseInt(trenutnaGod);
 				if (valid[7]) {
 					godUpis = Integer.parseInt(tFGodU.getText().trim());
+
 					if (godUpis > trGod) {
 						invalidYear = true;
 						godUpis = -1;
@@ -920,7 +864,8 @@ public class StudentInfo extends JPanel {
 					}
 				}
 				changeLabel(valid[7], "Godina upisa*", "Godina upisa", labelGodU);
-				changeLabel(valid[2] && !tooYoung && !shown, "Datum rođenja*", "Datum rođenja", labelDatumR);
+				changeLabel(valid[2] && !tooYoung && !shown, "Datum rođenja*", "Datum rođenja*",
+						labelDatumR);
 				buttonPotvrdi.setEnabled(checkValid(valid) && !invalidYear && !tooYoung && !shown);
 			}
 
@@ -942,11 +887,26 @@ public class StudentInfo extends JPanel {
 			}
 
 		});
+		
+		buttonPonisti.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				Window w = SwingUtilities.getWindowAncestor(StudentInfo.this);
+				w.dispose();
+			
+			}
+		});
 
 		buttonPotvrdi.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				tFName.setText(setString(tFName.getText()));
+				tFPrezime.setText(setString(tFPrezime.getText()));
+				tFBrI.setText(tFBrI.getText().toUpperCase());
+
 				Student s = StudentBaza.getInstance().getRow(PrikazStudenta.getInstance().getSelectedRow());
 
 				String status = cBFin.getSelectedItem().toString();
@@ -985,9 +945,11 @@ public class StudentInfo extends JPanel {
 				s.setGodinaUpisa(Integer.parseInt((tFGodU.getText())));
 				s.setTrenutnaGodina(trenutnaGodina);
 				s.setStatus(st);
-				StudentController.getInstance().izmeniStudenta(s);
+				StudentController.getInstance().izmeniStudenta(s, oldId);
 
 				JOptionPane.showMessageDialog(StudentInfo.this, "Izmena studenta je uspešno izvršena!");
+				Window w = SwingUtilities.getWindowAncestor(StudentInfo.this);
+				w.dispose();
 
 			}
 
@@ -1009,16 +971,6 @@ public class StudentInfo extends JPanel {
 		} else {
 			lbl.setText(f);
 			lbl.setForeground(Color.red);
-		}
-	}
-
-	private void setEnable(String[] text, boolean[] valid) {
-		enable = true;
-		for (int i = 0; i < 8; ++i) {
-			if (text[i].equals("") || !valid[i]) {
-				enable = false;
-				break;
-			}
 		}
 	}
 
