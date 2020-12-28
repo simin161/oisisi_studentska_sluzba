@@ -3,16 +3,21 @@
 package view.tabbedPanes;
 
 import java.awt.BorderLayout;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.RowFilter;
+import javax.swing.RowSorter;
+import javax.swing.SortOrder;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
 import view.tables.AbstractTableModelPredmeti;
 import view.tables.PredmetTable;
+
 
 public class PrikazPredmeta extends JPanel{
 	
@@ -53,6 +58,24 @@ public class PrikazPredmeta extends JPanel{
 	public void prikaziTabelu() {
 		
 		tabelaPredmet= new PredmetTable();
+		TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(tabelaPredmet.getModel());
+		
+		tabelaPredmet.setRowSorter(sorter);
+		
+		List<RowSorter.SortKey> sortKeys = new ArrayList<>(10);
+		sortKeys.add(new RowSorter.SortKey(0, SortOrder.ASCENDING));
+		sortKeys.add(new RowSorter.SortKey(0, SortOrder.DESCENDING));
+		sortKeys.add(new RowSorter.SortKey(1, SortOrder.ASCENDING));
+		sortKeys.add(new RowSorter.SortKey(1, SortOrder.DESCENDING));
+		sortKeys.add(new RowSorter.SortKey(2, SortOrder.ASCENDING));
+		sortKeys.add(new RowSorter.SortKey(2, SortOrder.DESCENDING));
+		sortKeys.add(new RowSorter.SortKey(3, SortOrder.ASCENDING));
+		sortKeys.add(new RowSorter.SortKey(3, SortOrder.DESCENDING));
+		sortKeys.add(new RowSorter.SortKey(4, SortOrder.ASCENDING));
+		sortKeys.add(new RowSorter.SortKey(4, SortOrder.DESCENDING));
+		
+		sorter.setSortKeys(sortKeys);
+		
 		JScrollPane sPane = new JScrollPane(tabelaPredmet);
 
 		add(sPane, BorderLayout.CENTER);
