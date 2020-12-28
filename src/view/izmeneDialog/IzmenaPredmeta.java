@@ -138,7 +138,7 @@ public class IzmenaPredmeta extends JDialog {
 		panelSem.add(cbSem);
 		panelMain.add(panelSem);
 
-		/*---TODO: uklanjanje profesora---*/
+		/*---TODO: uklanjanje/dodavanje profesora---*/
 		JPanel panelProf = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		JLabel lbl = new JLabel("TODO: uklanjanje/dodavanje profesora");
 		JTextField txtProf = new JTextField();

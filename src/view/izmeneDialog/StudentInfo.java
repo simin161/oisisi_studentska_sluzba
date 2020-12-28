@@ -888,6 +888,24 @@ public class StudentInfo extends JPanel {
 
 		});
 		
+		cBTGodS.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				buttonPotvrdi.setEnabled(checkValid(valid) && !shown);
+				
+			}
+			
+		});
+		
+		cBFin.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				buttonPotvrdi.setEnabled(checkValid(valid) && !shown);
+				
+			}
+		});
+		
 		buttonPonisti.addActionListener(new ActionListener() {
 
 			@Override
