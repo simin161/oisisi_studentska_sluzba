@@ -3,15 +3,11 @@
 package view.tabbedPanes;
 
 import java.awt.BorderLayout;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.RowFilter;
-import javax.swing.RowSorter;
-import javax.swing.SortOrder;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
@@ -24,6 +20,8 @@ public class PrikazPredmeta extends JPanel{
 	private static final long serialVersionUID = 4624960353287578931L;
 
 	private static PrikazPredmeta instance = null;
+	
+	private TableRowSorter<TableModel> rowSorter = null;
 	
 	public static PrikazPredmeta getInstance() {
 		
@@ -49,6 +47,9 @@ public class PrikazPredmeta extends JPanel{
 		
 		setLayout(new BorderLayout());
 		prikaziTabelu();
+		
+		rowSorter = new TableRowSorter<>(tabelaPredmet.getModel());
+		tabelaPredmet.setRowSorter(rowSorter);
 		
 	}
 	
@@ -83,14 +84,14 @@ public class PrikazPredmeta extends JPanel{
 		
 		if(kriterijum.trim().length()!= 0) {
 			
-			TableRowSorter<TableModel> rowSorter = new TableRowSorter<>(tabelaPredmet.getModel());
 			rowSorter.setRowFilter(RowFilter.regexFilter(kriterijum, 1));
 			tabelaPredmet.setRowSorter(rowSorter);
 			
 		}
 		else
 		{
-			tabelaPredmet.setRowSorter(null);
+			rowSorter.setRowFilter(null);
+			tabelaPredmet.setRowSorter(rowSorter);
 		}
 	}
 }
