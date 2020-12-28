@@ -12,7 +12,6 @@ import javax.swing.JTable;
 import javax.swing.RowFilter;
 import javax.swing.RowSorter;
 import javax.swing.SortOrder;
-import javax.swing.RowSorter.SortKey;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 

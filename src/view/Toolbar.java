@@ -130,13 +130,12 @@ public class Toolbar extends JToolBar{
 					}
 					else if(rbrT == 1) {
 						
-						PrikazProfesora.getInstance().prikaziTabelu();
+						PrikazProfesora.getInstance().pretraziTabelu("");
 					
 					}
 					else {
 						
-						PrikazPredmeta.getInstance().prikaziTabelu();
-						
+						PrikazPredmeta.getInstance().pretraziTabelu("");
 					}
 				}	
 			}

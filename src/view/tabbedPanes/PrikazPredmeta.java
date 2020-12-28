@@ -92,9 +92,15 @@ public class PrikazPredmeta extends JPanel{
 	
 	public void pretraziTabelu(String kriterijum) {
 		
-		TableRowSorter<TableModel> rowSorter = new TableRowSorter<>(tabelaPredmet.getModel());
-		tabelaPredmet.setRowSorter(rowSorter);
-		rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + kriterijum, 1));
-		
+		if(kriterijum.trim().length()!= 0) {
+			
+			TableRowSorter<TableModel> rowSorter = new TableRowSorter<>(tabelaPredmet.getModel());
+			rowSorter.setRowFilter(RowFilter.regexFilter(kriterijum, 1));
+			tabelaPredmet.setRowSorter(rowSorter);
+		}
+		else
+		{
+			tabelaPredmet.setRowSorter(null);
+		}
 	}
 }
