@@ -317,6 +317,8 @@ public class ProfesorInformacije extends JPanel {
 		cboxTitula.setSelectedItem(profesor.getTitula().toString());
 		cboxZvanje.setSelectedItem(profesor.getZvanje().toString());
 		
+		System.out.println(profesor.getPrezime());
+		
 		txtIme.getDocument().addDocumentListener(new DocumentListener() {
 
 			@Override

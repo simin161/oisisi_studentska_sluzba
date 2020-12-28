@@ -96,8 +96,9 @@ public class AbstractActionDelete extends AbstractAction {
 			// if() provera da li je selektovan red?
 
 			int row = PrikazPredmeta.getInstance().getSelectedRow();
-
-			if (row != -1) {
+			int selRow = PrikazPredmeta.getInstance().getTable().convertRowIndexToModel(row);
+			
+			if (selRow != -1) {
 
 				String[] opcije = new String[2];
 
@@ -110,7 +111,7 @@ public class AbstractActionDelete extends AbstractAction {
 
 				if (i == 0) {
 
-					PredmetController.getInstance().izbrisiPredmet(row);
+					PredmetController.getInstance().izbrisiPredmet(selRow);
 
 				}
 
