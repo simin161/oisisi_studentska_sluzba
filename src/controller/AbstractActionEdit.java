@@ -12,8 +12,10 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 
+import view.izmeneDialog.IzmenaPredmeta;
 import view.izmeneDialog.IzmenaProfesora;
 import view.izmeneDialog.IzmenaStudent;
+import view.tabbedPanes.PrikazPredmeta;
 import view.tabbedPanes.PrikazProfesora;
 import view.tabbedPanes.PrikazStudenta;
 
@@ -67,7 +69,12 @@ public class AbstractActionEdit extends AbstractAction {
 
 		} else if (this.rbrTaba == 2) {
 
-			// predmeti
+			if (PrikazPredmeta.getInstance().getSelectedRow() != -1) {
+				IzmenaPredmeta izmenaP = new IzmenaPredmeta(this.c);
+				izmenaP.setVisible(true);
+			} else {
+				JOptionPane.showMessageDialog(c, "Označite predmet za izmenu.", "Upozorenje", JOptionPane.WARNING_MESSAGE);
+			}
 
 		} else {
 

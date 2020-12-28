@@ -92,6 +92,27 @@ public class Predmet {
 		this.nisuPolozili = nisuPolozili;
 	}
 	
+	public String getSemestarAsString() {
+		switch(semestar)
+		{
+		case Letnji : return "Letnji";
+		case Zimski : return "Zimski";
+		default : return "";
+		}
+	}
+	
+	public String getGodinaAsString() {
+		switch(godina) {
+
+		case 1: return "I (prva)";
+		case 2: return "II (druga)";
+		case 3: return "III (treća)";
+		case 4: return "IV (četvrta)";
+		case 5: return "V (peta/master)";
+		case 6: return "VI (šesta/master)";
+		default: return "";
+		}
+	}
 	
 	
 }

@@ -27,6 +27,7 @@ public class MenuBar extends JMenuBar {
 	private int rbr = 0;
 	private AbstractActionNew actionNew;
 	private AbstractActionDelete actionDelete;
+	private AbstractActionEdit actionEdit;
 
 	@SuppressWarnings("deprecation")
 	public MenuBar(int width, int height, Container cont) {
@@ -65,8 +66,8 @@ public class MenuBar extends JMenuBar {
 		JMenuItem menuItemEdit = new JMenuItem("Edit", new ImageIcon("images" + File.separator + "edit3.png"));
 		menuItemEdit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, InputEvent.CTRL_MASK));
 		menuItemEdit.setMnemonic('E');
-		//AbstractActionEdit actionEdit = new AbstractActionEdit();
-		//menuItemEdit.addActionListener(actionEdit);
+		actionEdit = new AbstractActionEdit(rbr, cont);
+		menuItemEdit.addActionListener(actionEdit);
 		menuEdit.add(menuItemEdit);
 
 		menuEdit.addSeparator();
@@ -103,5 +104,6 @@ public class MenuBar extends JMenuBar {
 		this.rbr = rbr;
 		this.actionNew.updateRbr(rbr);
 		this.actionDelete.updateRbr(rbr);
+		this.actionEdit.updateRbr(rbr);
 	}
 }

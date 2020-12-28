@@ -128,7 +128,7 @@ public class StudentBaza {
 	public void izmeniStudenta(String prezime, String ime, Date datumRodjenja, String adresaStanovanja, String telefon,
 			String email, String brIndeksa, int godinaUpisa, int trenutnaGodina, Status status, String oldId) {
 			for (Student s : students) {
-				if (brIndeksa.equals(oldId)) {
+				if (oldId.equals(s.getBrIndeksa())) {
 					s.setIme(ime);
 					s.setPrezime(prezime);
 					s.setAdresaStanovanja(adresaStanovanja);
