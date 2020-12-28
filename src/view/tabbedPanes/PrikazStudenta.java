@@ -2,10 +2,15 @@
 package view.tabbedPanes;
 
 import java.awt.BorderLayout;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.RowFilter;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 import view.tables.AbstractTableModelStudents;
 import view.tables.StudentTable;
@@ -63,5 +68,55 @@ public class PrikazStudenta extends JPanel {
 	
 	public int getSelectedRow() {
 		return tableStudent.getSelectedRow();
+	}
+	
+	@SuppressWarnings("unchecked")
+	public void pretraziTabelu(String kriterijum) {
+
+
+		if(kriterijum.trim().length()!=0) {
+			
+			String []parts = kriterijum.split(" ");
+			
+			if(parts.length == 1) {
+				
+				TableRowSorter<TableModel> rowSorter = new TableRowSorter<>(tableStudent.getModel());
+				tableStudent.setRowSorter(rowSorter);
+				rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + parts[0], 2));
+			}
+			else if(parts.length == 2) {
+				
+				List<RowFilter<Object, Object>> filteri = new ArrayList<RowFilter<Object, Object>>(2);
+				filteri.add(RowFilter.regexFilter("(?i)" + parts[0], 2));
+				filteri.add(RowFilter.regexFilter("(?i)" + parts[1], 1));
+				
+				@SuppressWarnings("rawtypes")
+				RowFilter filter = RowFilter.andFilter(filteri);
+				
+				TableRowSorter<TableModel> rowSorter = new TableRowSorter<>(tableStudent.getModel());
+				tableStudent.setRowSorter(rowSorter);
+				rowSorter.setRowFilter(filter);
+
+			}else if(parts.length == 3) {
+				List<RowFilter<Object, Object>> filteri = new ArrayList<RowFilter<Object, Object>>(3);
+				filteri.add(RowFilter.regexFilter("(?i)" + parts[0], 2));
+				filteri.add(RowFilter.regexFilter("(?i)" + parts[1], 1));
+				filteri.add(RowFilter.regexFilter("(?i)" + parts[2], 0));
+
+				
+				@SuppressWarnings("rawtypes")
+				RowFilter filter = RowFilter.andFilter(filteri);
+				
+				TableRowSorter<TableModel> rowSorter = new TableRowSorter<>(tableStudent.getModel());
+				tableStudent.setRowSorter(rowSorter);
+				rowSorter.setRowFilter(filter);
+
+			}
+		}
+		else {
+			
+			tableStudent.setRowSorter(null);
+
+		}
 	}
 }

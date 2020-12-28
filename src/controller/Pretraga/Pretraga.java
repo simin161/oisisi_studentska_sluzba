@@ -2,6 +2,7 @@ package controller.Pretraga;
 
 import view.tabbedPanes.PrikazPredmeta;
 import view.tabbedPanes.PrikazProfesora;
+import view.tabbedPanes.PrikazStudenta;
 
 public class Pretraga {
 	
@@ -9,8 +10,7 @@ public class Pretraga {
 		
 		if (tab == 0) {
 			//student
-			
-			
+			PrikazStudenta.getInstance().pretraziTabelu(kriterijum);			
 			
 		}
 		else if (tab == 1) {

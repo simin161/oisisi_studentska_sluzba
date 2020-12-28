@@ -78,7 +78,7 @@ public class GlavniProzor extends JFrame{
 		tabbedPane.add("Studenti", PrikazStudenta.getInstance());
 		tabbedPane.add("Profesori", PrikazProfesora.getInstance());
 		tabbedPane.add("Predmeti", PrikazPredmeta.getInstance());
-	
+
 		tabbedPane.addChangeListener(new ChangeListener() {
 			
 			public void stateChanged(ChangeEvent e) {
