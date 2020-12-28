@@ -39,6 +39,12 @@ public class PrikazPredmeta extends JPanel{
 	
 	private JTable tabelaPredmet;
 	
+	public JTable getTable() {
+		
+		return tabelaPredmet;
+		
+	}
+	
 	public PrikazPredmeta() {
 		
 		setLayout(new BorderLayout());
@@ -58,23 +64,6 @@ public class PrikazPredmeta extends JPanel{
 	public void prikaziTabelu() {
 		
 		tabelaPredmet= new PredmetTable();
-		TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(tabelaPredmet.getModel());
-		
-		tabelaPredmet.setRowSorter(sorter);
-		
-		List<RowSorter.SortKey> sortKeys = new ArrayList<>(10);
-		sortKeys.add(new RowSorter.SortKey(0, SortOrder.ASCENDING));
-		sortKeys.add(new RowSorter.SortKey(0, SortOrder.DESCENDING));
-		sortKeys.add(new RowSorter.SortKey(1, SortOrder.ASCENDING));
-		sortKeys.add(new RowSorter.SortKey(1, SortOrder.DESCENDING));
-		sortKeys.add(new RowSorter.SortKey(2, SortOrder.ASCENDING));
-		sortKeys.add(new RowSorter.SortKey(2, SortOrder.DESCENDING));
-		sortKeys.add(new RowSorter.SortKey(3, SortOrder.ASCENDING));
-		sortKeys.add(new RowSorter.SortKey(3, SortOrder.DESCENDING));
-		sortKeys.add(new RowSorter.SortKey(4, SortOrder.ASCENDING));
-		sortKeys.add(new RowSorter.SortKey(4, SortOrder.DESCENDING));
-		
-		sorter.setSortKeys(sortKeys);
 		
 		JScrollPane sPane = new JScrollPane(tabelaPredmet);
 
@@ -97,6 +86,7 @@ public class PrikazPredmeta extends JPanel{
 			TableRowSorter<TableModel> rowSorter = new TableRowSorter<>(tabelaPredmet.getModel());
 			rowSorter.setRowFilter(RowFilter.regexFilter(kriterijum, 1));
 			tabelaPredmet.setRowSorter(rowSorter);
+			
 		}
 		else
 		{

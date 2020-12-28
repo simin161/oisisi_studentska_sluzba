@@ -10,8 +10,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.RowFilter;
-import javax.swing.RowSorter;
-import javax.swing.SortOrder;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
@@ -38,6 +36,12 @@ public class PrikazProfesora extends JPanel{
 	
 	private JTable tabelaProfesora;
 	
+	public JTable getTable() {
+		
+		return this.tabelaProfesora;
+		
+	}
+	
 	public PrikazProfesora() {
 		
 		setLayout(new BorderLayout());
@@ -57,21 +61,6 @@ public class PrikazProfesora extends JPanel{
 	public void prikaziTabelu() {
 		
 		tabelaProfesora = new ProfesorTable();
-		TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(tabelaProfesora.getModel());
-		
-		tabelaProfesora.setRowSorter(sorter);
-		
-		List<RowSorter.SortKey> sortKeys = new ArrayList<>(8);
-		sortKeys.add(new RowSorter.SortKey(0, SortOrder.ASCENDING));
-		sortKeys.add(new RowSorter.SortKey(0, SortOrder.DESCENDING));
-		sortKeys.add(new RowSorter.SortKey(1, SortOrder.ASCENDING));
-		sortKeys.add(new RowSorter.SortKey(1, SortOrder.DESCENDING));
-		sortKeys.add(new RowSorter.SortKey(2, SortOrder.ASCENDING));
-		sortKeys.add(new RowSorter.SortKey(2, SortOrder.DESCENDING));
-		sortKeys.add(new RowSorter.SortKey(3, SortOrder.ASCENDING));
-		sortKeys.add(new RowSorter.SortKey(3, SortOrder.DESCENDING));
-		
-		sorter.setSortKeys(sortKeys);
 		
 		JScrollPane sPane = new JScrollPane(tabelaProfesora);
 		
