@@ -34,6 +34,8 @@ public class Toolbar extends JToolBar{
 		setRollover(true);
 		setFloatable(false);
 		
+		this.co = c;
+		
 		updateRbr(rbr);
 		
 		addSeparator();

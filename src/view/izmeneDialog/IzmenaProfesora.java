@@ -13,14 +13,12 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.border.LineBorder;
 
-import model.Profesor;
-
 public class IzmenaProfesora extends JDialog{
 	
 	private static final long serialVersionUID = -3036726273640345163L;
 	
 	
-	public IzmenaProfesora(Container c) {
+	public IzmenaProfesora(Container c, int selectedRow) {
 		
 		Toolkit kit = Toolkit.getDefaultToolkit();
 		Dimension screenSize = kit.getScreenSize();
@@ -42,7 +40,9 @@ public class IzmenaProfesora extends JDialog{
 		JTabbedPane tabbedPane = new JTabbedPane();
 		tabbedPane.setBorder(new LineBorder(new Color(0,0,0)));
 		
-		tabbedPane.add("Informacije", ProfesorInformacije.getInstance());
+		ProfesorInformacije pi = new ProfesorInformacije(selectedRow);
+		
+		tabbedPane.add("Informacije", pi);
 		
 		panelMain.add(tabbedPane, BorderLayout.CENTER);
 		add(panelMain);

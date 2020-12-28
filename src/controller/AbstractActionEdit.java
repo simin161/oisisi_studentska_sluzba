@@ -12,8 +12,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 
-import controller.student.StudentController;
-import model.Student;
 import view.izmeneDialog.IzmenaProfesora;
 import view.izmeneDialog.IzmenaStudent;
 import view.tabbedPanes.PrikazProfesora;
@@ -57,7 +55,7 @@ public class AbstractActionEdit extends AbstractAction {
 			
 			if(selectedRow >= 0) {
 				
-				IzmenaProfesora ip = new IzmenaProfesora(this.c);
+				IzmenaProfesora ip = new IzmenaProfesora(this.c, selectedRow);
 				ip.setVisible(true);
 				
 			}
