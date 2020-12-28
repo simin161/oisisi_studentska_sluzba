@@ -284,7 +284,6 @@ public class DialogDodavanjeProfesora extends JDialog{
 					JOptionPane.showMessageDialog(DialogDodavanjeProfesora.this, "Greška prilikom unosa imena.", 
 							"Greška: ", JOptionPane.ERROR_MESSAGE);
 					txtIme.setText("");
-					lblIme.setForeground(Color.red);
 					
 				}
 				

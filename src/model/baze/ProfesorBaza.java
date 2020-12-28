@@ -144,11 +144,11 @@ public class ProfesorBaza {
 	}
 	
 	
-	public void izmeniProfesora(Profesor p) {
+	public void izmeniProfesora(Profesor p, String staraLicna) {
 		
 		for(Profesor pr : profesori) {
 			
-			if(pr.getBrLicneKarte().equals(p.getBrLicneKarte())) {
+			if(pr.getBrLicneKarte().equals(staraLicna)) {
 				
 				pr.setIme(p.getIme());
 				pr.setPrezime(p.getPrezime());
@@ -158,6 +158,8 @@ public class ProfesorBaza {
 				pr.setEmail(p.getEmail());
 				pr.setAdresaKancelarije(p.getAdresaKancelarije());
 				pr.setBrLicneKarte(p.getBrLicneKarte());
+				pr.setTitula(p.getTitula());
+				pr.setZvanje(p.getZvanje());
 				
 			}
 			

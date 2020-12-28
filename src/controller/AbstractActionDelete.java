@@ -106,6 +106,11 @@ public class AbstractActionDelete extends AbstractAction {
 				}
 
 			}
+			else {
+				
+				JOptionPane.showMessageDialog(c, "Označite predmet za brisanje.", "Upozorenje", JOptionPane.WARNING_MESSAGE);
+				
+			}
 
 		} else {
 

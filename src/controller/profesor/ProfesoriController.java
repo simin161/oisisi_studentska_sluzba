@@ -6,7 +6,7 @@ import view.tabbedPanes.PrikazProfesora;
 
 public class ProfesoriController {
 
-	private Profesor profesor;
+	private Profesor profesor= null;
 	
 	private static ProfesoriController instance = null;
 	
@@ -20,10 +20,10 @@ public class ProfesoriController {
 	
 	public ProfesoriController() {}
 
-	public ProfesoriController(Profesor profesor) {
-
-		this.profesor = profesor;
-
+	public ProfesoriController(Profesor p) {
+		
+		this.profesor = p;
+		
 	}
 
 	public void dodajProfesora() {
@@ -51,16 +51,9 @@ public class ProfesoriController {
 
 	}
 
-public void izmeniProfesora(int rowSelectedIndex, Profesor prof) {
+	public void izmeniProfesora(Profesor p, String staraLicna) {
 		
-		if(rowSelectedIndex < 0) {
-			
-			return;
-			
-		}
-		
-		Profesor profesor = ProfesorBaza.getInstance().getRow(rowSelectedIndex);
-		ProfesorBaza.getInstance().izmeniProfesora(prof);
+		ProfesorBaza.getInstance().izmeniProfesora(p, staraLicna);
 		
 		PrikazProfesora.getInstance().updatePrikaz(null, -1);
 		

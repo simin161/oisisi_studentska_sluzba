@@ -59,6 +59,11 @@ public class AbstractActionEdit extends AbstractAction {
 				ip.setVisible(true);
 				
 			}
+			else {
+				
+				JOptionPane.showMessageDialog(c, "Označite profesora za izmenu.", "Upozorenje", JOptionPane.WARNING_MESSAGE);
+				
+			}
 
 		} else if (this.rbrTaba == 2) {
 

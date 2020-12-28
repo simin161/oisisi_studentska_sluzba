@@ -1,12 +1,16 @@
 package view.izmeneDialog;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -14,10 +18,22 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
+import controller.profesor.ProfesoriController;
+import controller.provere.ProveraAdrese;
+import controller.provere.ProveraDatuma;
+import controller.provere.ProveraEmaila;
+import controller.provere.ProveraGodine;
+import controller.provere.ProveraImena;
+import controller.provere.ProveraLk;
+import controller.provere.ProveraPrezimena;
+import controller.provere.ProveraTelefona;
 import model.Profesor;
 import model.baze.ProfesorBaza;
 import model.nabrojiviTipovi.Titula;
@@ -27,7 +43,9 @@ public class ProfesorInformacije extends JPanel {
 
 	private static final long serialVersionUID = 6158052650225024929L;
 
-	private Boolean []provera = new Boolean[7];
+	private Boolean []provera = {true, true, true, true, true, true, true, true};
+	
+	private String staraLicna="";
 	
 	public ProfesorInformacije(int selectedRow) {
 		
@@ -38,7 +56,7 @@ public class ProfesorInformacije extends JPanel {
 		setLayout(box);
 		
 		JPanel panelIme = new JPanel(new FlowLayout(FlowLayout.CENTER));
-		JLabel lblIme = new JLabel("Ime* ");
+		JLabel lblIme = new JLabel("Ime");
 		JTextField txtIme = new JTextField();
 		lblIme.setPreferredSize(dim);
 		txtIme.setPreferredSize(dim);
@@ -49,7 +67,7 @@ public class ProfesorInformacije extends JPanel {
 		add(panelIme);
 		
 		JPanel panelPrezime = new JPanel(new FlowLayout(FlowLayout.CENTER));
-		JLabel lblPrezime = new JLabel("Prezime*");
+		JLabel lblPrezime = new JLabel("Prezime");
 		JTextField txtPrezime = new JTextField();
 		lblPrezime.setPreferredSize(dim);
 		txtPrezime.setPreferredSize(dim);
@@ -60,7 +78,7 @@ public class ProfesorInformacije extends JPanel {
 		add(panelPrezime);
 		
 		JPanel panelDatum= new JPanel(new FlowLayout(FlowLayout.CENTER));
-		JLabel lblDatum = new JLabel("Datum rođenja* ");
+		JLabel lblDatum = new JLabel("Datum rođenja");
 		JFormattedTextField txtDatum = new JFormattedTextField();
 		lblDatum.setPreferredSize(dim);
 		txtDatum.setPreferredSize(dim);
@@ -72,7 +90,7 @@ public class ProfesorInformacije extends JPanel {
 		add(panelDatum);
 		
 		JPanel panelAdresa = new JPanel(new FlowLayout(FlowLayout.CENTER));
-		JLabel lblAdresa= new JLabel("Adresa stanovanja* ");
+		JLabel lblAdresa= new JLabel("Adresa stanovanja ");
 		JTextField txtAdresa = new JTextField();
 		lblAdresa.setPreferredSize(dim);
 		txtAdresa.setPreferredSize(dim);
@@ -83,7 +101,7 @@ public class ProfesorInformacije extends JPanel {
 		add(panelAdresa);
 		
 		JPanel panelTelefon = new JPanel(new FlowLayout(FlowLayout.CENTER));
-		JLabel lblTelefon = new JLabel("Kontakt telefon* ");
+		JLabel lblTelefon = new JLabel("Kontakt telefon ");
 		JTextField txtTelefon = new JTextField();
 		lblTelefon.setPreferredSize(dim);
 		txtTelefon.setPreferredSize(dim);
@@ -94,7 +112,7 @@ public class ProfesorInformacije extends JPanel {
 		add(panelTelefon);
 	
 		JPanel panelEmail = new JPanel(new FlowLayout(FlowLayout.CENTER));
-		JLabel lblEmail = new JLabel("E-mail adresa* ");
+		JLabel lblEmail = new JLabel("E-mail adresa ");
 		JTextField txtEmail = new JTextField();
 		lblEmail.setPreferredSize(dim);
 		txtEmail.setPreferredSize(dim);
@@ -105,7 +123,7 @@ public class ProfesorInformacije extends JPanel {
 		add(panelEmail);
 		
 		JPanel panelKancelarija = new JPanel(new FlowLayout(FlowLayout.CENTER));
-		JLabel lblKancelarija = new JLabel("Adresa kancelarije* ");
+		JLabel lblKancelarija = new JLabel("Adresa kancelarije ");
 		JTextField txtKancelarija = new JTextField();
 		lblKancelarija.setPreferredSize(dim);
 		txtKancelarija.setPreferredSize(dim);
@@ -116,7 +134,7 @@ public class ProfesorInformacije extends JPanel {
 		add(panelKancelarija);
 		
 		JPanel panelLk = new JPanel(new FlowLayout(FlowLayout.CENTER));
-		JLabel lblLk = new JLabel("Broj lične karte* ");
+		JLabel lblLk = new JLabel("Broj lične karte ");
 		JTextField txtLk = new JTextField();
 		lblLk.setPreferredSize(dim);
 		txtLk.setPreferredSize(dim);
@@ -127,7 +145,7 @@ public class ProfesorInformacije extends JPanel {
 		add(panelLk);
 		
 		JPanel panelTitula = new JPanel(new FlowLayout(FlowLayout.CENTER));
-		JLabel lblTitula = new JLabel("Titula* ");
+		JLabel lblTitula = new JLabel("Titula ");
 		Titula []titula = Titula.values();
 		String []titule= {"","","","",""};
 		
@@ -152,7 +170,7 @@ public class ProfesorInformacije extends JPanel {
 		add(panelTitula);
 		
 		JPanel panelZvanje = new JPanel(new FlowLayout(FlowLayout.CENTER));
-		JLabel lblZvanje = new JLabel("Zvanje* ");
+		JLabel lblZvanje = new JLabel("Zvanje ");
 		
 		Zvanje []zvanje = Zvanje.values();
 		String []zvanja= {"","","","","","","",""};
@@ -185,7 +203,7 @@ public class ProfesorInformacije extends JPanel {
 		BoxLayout btn = new BoxLayout(panelBtn, BoxLayout.X_AXIS);
 		panelBtn.setLayout(btn);
 		JButton btnPotvrdi = new JButton("Potvrdi");
-		btnPotvrdi.setEnabled(false);
+		btnPotvrdi.setEnabled(true);
 		JButton btnPonisti = new JButton("Poništi");
 		panelBtn.add(btnPotvrdi);
 		panelBtn.add(Box.createHorizontalStrut(35));
@@ -208,12 +226,78 @@ public class ProfesorInformacije extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+				
+				if(proveraProvere(provera) == true) {
+					
+					Date date = null;
+					
+					try {
+						
+						date = new SimpleDateFormat("dd/MM/yyyy").parse(txtDatum.getText());
+			
+					}catch(Exception e1) {
+						e1.printStackTrace();
+					}
+					
+					String []parts = txtPrezime.getText().split("-");
+					String []prezime = parts;
+					String novoP="";
+					int i=0;
+					
+					for(String s : parts) {
+						
+						String pocetno= s.substring(0,1).toUpperCase();
+						String ostatak= s.substring(1);
+						
+						prezime[i]= pocetno+ostatak;
+
+						i++;
+					}
+					
+					i=0;
+					while(i!=prezime.length) {
+						
+						if(i==0) {
+							
+							novoP= prezime[i];
+							
+						}
+						else {
+							novoP= novoP + '-' + prezime[i];
+						}
+						
+						i++;
+					}
+					txtPrezime.setText(novoP);
+					
+					String pocetno = txtIme.getText().substring(0,1).toUpperCase();
+					String ostatak = txtIme.getText().substring(1);
+					txtIme.setText(pocetno+ostatak);
+					
+					Profesor p = new Profesor();
+					p.setIme(txtIme.getText());
+					p.setPrezime(txtPrezime.getText());
+					p.setDatumRodjenja(date);
+					p.setAdresaStanovanja(txtAdresa.getText());
+					p.setTelefon(txtTelefon.getText());
+					p.setEmail(txtEmail.getText());
+					p.setAdresaKancelarije(txtKancelarija.getText());
+					p.setBrLicneKarte(txtLk.getText());
+					p.setTitula(titula[cboxTitula.getSelectedIndex()]);
+					p.setZvanje(zvanje[cboxZvanje.getSelectedIndex()]);
+					p.setPredmeti(null);
+					
+					System.out.println(p.getTitula());
+					System.out.println(p.getZvanje());
+					
+					ProfesoriController pc = new ProfesoriController();
+					pc.izmeniProfesora(p, staraLicna);
+					
+					JOptionPane.showMessageDialog(SwingUtilities.getWindowAncestor(ProfesorInformacije.this), "Selektovan profesor je uspešno izmenjen.");
+					SwingUtilities.getWindowAncestor(ProfesorInformacije.this).dispose();
+				}
 				
 			}
-			
-			
-			
 		});
 
 		Profesor profesor= ProfesorBaza.getInstance().getRow(selectedRow);
@@ -229,11 +313,625 @@ public class ProfesorInformacije extends JPanel {
 		txtEmail.setText(profesor.getEmail());
 		txtKancelarija.setText(profesor.getAdresaKancelarije());
 		txtLk.setText(profesor.getBrLicneKarte());
+		staraLicna = profesor.getBrLicneKarte();
 		cboxTitula.setSelectedItem(profesor.getTitula().toString());
 		cboxZvanje.setSelectedItem(profesor.getZvanje().toString());
 		
+		txtIme.getDocument().addDocumentListener(new DocumentListener() {
+
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				
+				provera();
+				
+			}
+
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				
+				provera();
+				
+			}
+
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				
+				provera();
+				
+			}
+			
+			private void provera() {
+				
+				Boolean enable = false;
+				
+				if(txtIme.getText().trim().length()==0) {
+					
+					provera[0]= false;
+					lblIme.setText("Ime*");
+				}
+				else {
+					
+					provera[0] = ProveraImena.proveriIme(txtIme.getText());
+					if(provera[0]==true)
+						lblIme.setText("Ime");
+					else
+						lblIme.setText("Ime*");
+					
+				}
+				
+				enable= proveraProvere(provera);
+				
+				btnPotvrdi.setEnabled(enable);
+				
+			}
+			
+		});
+		
+		txtIme.addFocusListener(new FocusListener() {
+
+			@Override
+			public void focusGained(FocusEvent e) {
+				
+			}
+
+			@Override
+			public void focusLost(FocusEvent e) {
+				
+				if(provera[0]==false && txtIme.getText().trim().length() != 0) {
+					
+					JOptionPane.showMessageDialog(SwingUtilities.getWindowAncestor(ProfesorInformacije.this), "Greška prilikom unosa imena. Proverite Vaše podatke i probajte ponovo.", 
+							"Greška: ", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
+		
+		txtPrezime.getDocument().addDocumentListener(new DocumentListener() {
+
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				enableBtn();
+				
+			}
+
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				enableBtn();
+				
+			}
+
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				enableBtn();
+				
+			}
+			
+			private void enableBtn() {
+				
+				Boolean enable = false;
+				
+				if(txtPrezime.getText().trim().length()==0) {
+					
+					provera[1]= false;
+					lblPrezime.setText("Prezime*");
+				
+				}
+				else {
+					
+					provera[1]= ProveraPrezimena.proveriPrezime(txtPrezime.getText());
+					
+					if(provera[1]==true)
+						lblPrezime.setText("Prezime");
+					else
+						lblPrezime.setText("Prezime*");
+					
+				}
+				
+				enable= proveraProvere(provera);
+				
+				btnPotvrdi.setEnabled(enable);
+			}
+			
+			
+		});
+		
+		txtPrezime.addFocusListener(new FocusListener() {
+
+			@Override
+			public void focusGained(FocusEvent e) {
+				
+			}
+
+			@Override
+			public void focusLost(FocusEvent e) {
+				
+					if(provera[1]==false && txtPrezime.getText().trim().length()!=0) {
+						
+						JOptionPane.showMessageDialog(SwingUtilities.getWindowAncestor(ProfesorInformacije.this), "Greška prilikom unosa prezimena. "
+								+ "Ukoliko imate dva ili više prezimena, unesite ih sa povlakom između.", "Greška: ", JOptionPane.ERROR_MESSAGE);
+					}
+				}
+		});
+		
+		txtDatum.getDocument().addDocumentListener(new DocumentListener() {
+
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				
+				enableBtn();
+				
+			}
+
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				
+				enableBtn();
+			}
+
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				
+				enableBtn();
+			}
+			
+			private void enableBtn() {
+				
+				Boolean enable = false;
+				if(txtDatum.getText().trim().length()==0) {
+					
+					provera[2]= false;
+					lblDatum.setText("Datum rođenja*");
+					
+				}
+				else {
+					
+					if(txtDatum.getText().length()==10) {
+						
+						provera[2]= ProveraDatuma.proveriDatum(txtDatum.getText());
+						if(provera[2]==true) {
+							
+							if(proveraProvere(provera)==true) {
+							
+								enable = ProveraGodine.proveri(txtDatum.getText(), 2);
+								
+							}
+							else
+								enable = false;
+							
+						}
+						else{
+
+							enable = false;
+							
+						}
+						
+					}
+					else {
+						
+						enable = false;
+						
+					}
+					
+				}
+				
+				
+				if(provera[2]== true && ProveraGodine.proveri(txtDatum.getText(), 2)==true) {
+					
+					lblDatum.setText("Datum rođenja");
+					
+				}
+				else {
+					
+					lblDatum.setText("Datum rođenja*");
+					
+				}
+				
+				if(provera[2]==true && ProveraGodine.proveri(txtDatum.getText(), 2)==false && txtDatum.getText().length() == 10) {
+					
+					txtDatum.setToolTipText("Profesor ne sme imati manje od 23 godine.");
+					lblDatum.setForeground(Color.red);
+					lblDatum.setToolTipText("Profesor ne sme imati manje od 23 godine.");
+					
+				}
+				else {
+					
+					txtDatum.setToolTipText(null);
+					lblDatum.setForeground(Color.black);
+					lblDatum.setToolTipText(null);
+				}
+				
+				btnPotvrdi.setEnabled(enable);
+			}
+		});
+		
+		
+		
+		txtDatum.addFocusListener(new FocusListener() {
+
+			@Override
+			public void focusGained(FocusEvent e) {
+				
+				if(txtDatum.getText().equals("")) {
+					
+					btnPotvrdi.setEnabled(false);
+					
+				}
+				
+			}
+			@Override
+			public void focusLost(FocusEvent e) {
+		
+				if(provera[2]==true && txtDatum.getText().length()== 10) {
+					
+					Boolean check = true;
+					check = ProveraGodine.proveri(txtDatum.getText(), 2);
+					provera[2]=check;
+					
+					if(check==false) {
+						
+						JOptionPane.showMessageDialog(SwingUtilities.getWindowAncestor(ProfesorInformacije.this), "Greška prilikom unosa datuma. "
+								+ "Proverite Vaše podatke i probajte ponovo.", "Greška: ", JOptionPane.ERROR_MESSAGE);
+						
+						
+					}
+					
+				}
+				if(provera[2]==false && txtDatum.getText().length()!=0 && txtDatum.getText().length()!= 10) {
+					
+					JOptionPane.showMessageDialog(SwingUtilities.getWindowAncestor(ProfesorInformacije.this), "Greška prilikom unosa datuma. "
+							+ "Datum uneti u sledećem formatu: DD/MM/YYYY", "Greška: ", JOptionPane.ERROR_MESSAGE);
+							
+					btnPotvrdi.setEnabled(false);
+				}	
+			}
+		});
+		
+		
+		txtAdresa.getDocument().addDocumentListener(new DocumentListener() {
+
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				
+				enableBtn();
+				
+			}
+
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+			
+				enableBtn();
+			}
+
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+			
+				enableBtn();
+			}
+			
+			private void enableBtn() {
+				
+				Boolean enable = false;
+				
+				if(txtAdresa.getText().trim().length()==0) {
+					
+					provera[3]= false;
+					lblAdresa.setText("Adresa stanovanja*");
+				}
+				else {
+					
+					provera[3]= ProveraAdrese.proveriAdresu(txtAdresa.getText());
+					if(provera[3]==false)
+						lblAdresa.setText("Adresa stanovanja*");
+					else
+						lblAdresa.setText("Adresa stanovanja");
+				}
+				
+				enable= proveraProvere(provera);
+				
+				btnPotvrdi.setEnabled(enable);
+			}
+			
+		});
+		
+		txtAdresa.addFocusListener(new FocusListener() {
+
+			@Override
+			public void focusGained(FocusEvent e) {
+				
+			}
+
+			@Override
+			public void focusLost(FocusEvent e) {
+			
+				if(provera[3]==false && txtAdresa.getText().trim().length()!=0) {
+					
+					JOptionPane.showMessageDialog(SwingUtilities.getWindowAncestor(ProfesorInformacije.this), "Greška prilikom unosa adrese. "
+							+ "Adresu je potrebno uneti u sledećem formatu: ULICA I BROJ, MESTO BORAVKA. ", "Greška: ", JOptionPane.ERROR_MESSAGE);
+					
+				}
+			}
+		});
+		
+		txtTelefon.getDocument().addDocumentListener(new DocumentListener() {
+
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				
+				enableBtn();
+				
+			}
+
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				
+				enableBtn();
+			}
+
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+			
+				enableBtn();
+			}
+			
+			private void enableBtn() {
+				
+				Boolean enable = false;
+				if(txtTelefon.getText().trim().length()==0) {
+					
+					provera[4]= false;
+					lblTelefon.setText("Kontakt telefon*");
+				
+				}
+				else {
+					
+					provera[4]= ProveraTelefona.proveriTelefon(txtTelefon.getText());
+					if(provera[4]==true) {
+						
+						lblTelefon.setText("Kontakt telefon");
+						
+					}
+					else {
+						
+						lblTelefon.setText("Kontakt telefon*");
+					}
+				}
+				
+				enable= proveraProvere(provera);
+				
+				btnPotvrdi.setEnabled(enable);
+			}
+			
+		});
+		
+		txtTelefon.addFocusListener(new FocusListener() {
+
+			@Override
+			public void focusGained(FocusEvent e) {
+				
+			}
+
+			@Override
+			public void focusLost(FocusEvent e) {
+				
+				if(provera[4]==false && txtTelefon.getText().trim().length()!=0) {
+					
+					JOptionPane.showMessageDialog(SwingUtilities.getWindowAncestor(ProfesorInformacije.this), "Greška prilikom unosa broja telefona. "
+							+ "Broj uneti u jednom od sledećih formata: 000 000 0000 | 000-000-0000", "Greška: ", JOptionPane.ERROR_MESSAGE);
+					
+				}
+			}
+		});
+		
+		txtEmail.getDocument().addDocumentListener(new DocumentListener() {
+
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				
+				enableBtn();
+				
+			}
+
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				
+				enableBtn();
+			}
+
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				
+				enableBtn();
+			}
+			
+			private void enableBtn() {
+				
+				Boolean enable = false;
+				
+				if(txtEmail.getText().trim().length()==0)
+				{
+					provera[5]= false;
+					lblEmail.setText("E-mail adresa*");
+				}
+				else
+				{
+					provera[5]= ProveraEmaila.proveriEmail(txtEmail.getText());
+					if(provera[5]== true) 
+						lblEmail.setText("E-mail adresa");
+					else
+						lblEmail.setText("E-mail adresa*");
+				}
+				
+				enable= proveraProvere(provera);
+				
+				btnPotvrdi.setEnabled(enable);
+			}
+			
+		});
+		
+		txtEmail.addFocusListener(new FocusListener() {
+
+			@Override
+			public void focusGained(FocusEvent e) {
+				
+			}
+
+			@Override
+			public void focusLost(FocusEvent e) {
+				
+				if(provera[5]==false && txtEmail.getText().trim().length()!=0) {
+					
+					JOptionPane.showMessageDialog(SwingUtilities.getWindowAncestor(ProfesorInformacije.this), "Greška prilikom unosa e-mail adrese. "
+							+ "Unesite validnu e-mail adresu poput: example@something.domain ", "Greška: ", JOptionPane.ERROR_MESSAGE);
+					
+					
+				}
+			}
+		});
+		
+		txtKancelarija.getDocument().addDocumentListener(new DocumentListener() {
+
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+			
+				enableBtn();
+				
+			}
+
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+			
+				enableBtn();
+			}
+
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				
+				enableBtn();
+			}
+			
+			private void enableBtn() {
+				
+				Boolean enable = false;
+				
+				if(txtKancelarija.getText().trim().length()==0) {
+					
+					provera[6]= false;
+					lblKancelarija.setText("Adresa kancelarije*");
+				
+				}
+				else {
+					
+					provera[6]= ProveraAdrese.proveriAdresu(txtKancelarija.getText());
+					
+					if(provera[6]==false)
+						lblKancelarija.setText("Adresa kancelarije*");
+					else
+						lblKancelarija.setText("Adresa kancelarije");
+				}
+				
+				enable= proveraProvere(provera);
+				
+				btnPotvrdi.setEnabled(enable);
+			}
+			
+		});
+		
+		txtKancelarija.addFocusListener(new FocusListener() {
+
+			@Override
+			public void focusGained(FocusEvent e) {
+	
+			}
+
+			@Override
+			public void focusLost(FocusEvent e) {
+			
+				if(provera[6]==false && txtKancelarija.getText().trim().length()!=0) {
+					
+					JOptionPane.showMessageDialog(SwingUtilities.getWindowAncestor(ProfesorInformacije.this), "Greška prilikom unosa adrese kancelarije. "
+							+ "Proverite Vaše podatke i probajte ponovo.", "Greška: ", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
+		
+		txtLk.getDocument().addDocumentListener(new DocumentListener() {
+
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+			
+				enableBtn();
+				
+			}
+
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				
+				enableBtn();
+			}
+
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				
+				enableBtn();
+			}
+			
+			private void enableBtn() {
+				
+				Boolean enable = false;
+				if(txtLk.getText().trim().length()==0) {
+					
+					provera[7]= false;
+					lblLk.setText("Broj lične karte*");
+					
+				}
+				else {
+					
+					provera[7]= ProveraLk.proveriBrLk(txtLk.getText());
+					
+					if(provera[7]== true) 
+						lblLk.setText("Broj lične karte");
+					else
+						lblLk.setText("Broj lične karte*");
+				}
+				
+				enable= proveraProvere(provera);
+				
+				btnPotvrdi.setEnabled(enable);
+			}
+			
+		});
+		
+		txtLk.addFocusListener(new FocusListener() {
+
+			@Override
+			public void focusGained(FocusEvent e) {
+				
+			}
+			@Override
+			public void focusLost(FocusEvent e) {
+				
+				if(provera[7]==false && txtLk.getText().trim().length()!=0) {
+					
+					JOptionPane.showMessageDialog(SwingUtilities.getWindowAncestor(ProfesorInformacije.this), "Greška prilikom unosa broja lične karte. "
+							+ "Broj mora imati devet cifara.", "Greška: ", JOptionPane.ERROR_MESSAGE);
+					
+				}
+			}
+		});
+		
 	}
 	
-	
-	
+	private Boolean proveraProvere(Boolean []provera) {
+		
+		Boolean check= false;
+		for(int i=0; i<8; i++) {
+			if(provera[i]==false) {
+				check = false;
+				break;
+			}
+			else {
+				check = true;
+			}
+		}
+		return check;
+	}
 }
