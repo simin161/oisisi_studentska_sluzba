@@ -28,8 +28,10 @@ public class OcenaBaza {
 	}
 
 	private void initializeOcena() {
-		this.ocena = StudentBaza.getInstance().getRow(PrikazStudenta.getInstance().getSelectedRow()).getPolozeno();
-		this.predmet = StudentBaza.getInstance().getRow(PrikazStudenta.getInstance().getSelectedRow()).getNepolozeno();
+		this.ocena = StudentBaza.getInstance().getRow(PrikazStudenta.getInstance().getTable()
+				.convertRowIndexToModel(PrikazStudenta.getInstance().getSelectedRow())).getPolozeno();
+		this.predmet = StudentBaza.getInstance().getRow(PrikazStudenta.getInstance().getTable()
+				.convertRowIndexToModel(PrikazStudenta.getInstance().getSelectedRow())).getNepolozeno();
 
 	}
 
@@ -101,7 +103,8 @@ public class OcenaBaza {
 			avg = sum / (double) i;
 		}
 
-		StudentBaza.getInstance().getRow(PrikazStudenta.getInstance().getSelectedRow()).setProsecnaOcena(avg);
+		StudentBaza.getInstance().getRow((PrikazStudenta.getInstance().getTable()
+				.convertRowIndexToModel(PrikazStudenta.getInstance().getSelectedRow()))).setProsecnaOcena(avg);
 		return avg;
 
 	}
@@ -131,8 +134,10 @@ public class OcenaBaza {
 			}
 		}
 
-		StudentBaza.getInstance().getRow(PrikazStudenta.getInstance().getSelectedRow()).setPolozeno(ocena);
-		StudentBaza.getInstance().getRow(PrikazStudenta.getInstance().getSelectedRow()).setNepolozeno(predmet);
+		StudentBaza.getInstance().getRow((PrikazStudenta.getInstance().getTable()
+				.convertRowIndexToModel(PrikazStudenta.getInstance().getSelectedRow()))).setPolozeno(ocena);
+		StudentBaza.getInstance().getRow((PrikazStudenta.getInstance().getTable()
+				.convertRowIndexToModel(PrikazStudenta.getInstance().getSelectedRow()))).setNepolozeno(predmet);
 
 	}
 }
