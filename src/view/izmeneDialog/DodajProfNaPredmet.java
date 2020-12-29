@@ -24,11 +24,11 @@ import javax.swing.event.ListSelectionListener;
 
 import controller.buttonAction.ButtonAction;
 import controller.predmet.PredmetController;
+import controller.profesor.ProfesoriController;
 import model.Predmet;
 import model.Profesor;
 import model.baze.PredmetBaza;
 import model.baze.ProfesorBaza;
-import view.tabbedPanes.PrikazPredmeta;
 
 //https://www.geeksforgeeks.org/java-swing-jlist-with-examples/
 //https://docs.oracle.com/javase/tutorial/uiswing/components/list.html
@@ -95,8 +95,20 @@ public class DodajProfNaPredmet extends JDialog {
 				if (selected != -1) {
 
 					Predmet p = PredmetBaza.getInstance().getRow(r);
+					
 					p.setProfesor(arr[selected]);
 					PredmetController.getInstance().izmeniPredmet(p, p.getSifra());
+					
+					List<Profesor> pr = ProfesorBaza.getInstance().getProfesore();
+					
+					for(Profesor p1 : pr) {
+						if(p1.getBrLicneKarte().equals(p.getProfesor().getBrLicneKarte())) {
+							p1.getPredmeti().add(p);
+							ProfesoriController.getInstance().izmeniProfesora(p1, p1.getBrLicneKarte());
+							break;
+						}
+					}
+					
 					IzmenaPredmeta.get().setText(strings[selected]);
 					JOptionPane.showMessageDialog(DodajProfNaPredmet.this.getContentPane(), "Profesor je uspešno dodat na predmet.");
 					dispose();
