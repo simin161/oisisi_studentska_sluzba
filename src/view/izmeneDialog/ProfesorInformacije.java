@@ -286,10 +286,7 @@ public class ProfesorInformacije extends JPanel {
 					p.setTitula(titula[cboxTitula.getSelectedIndex()]);
 					p.setZvanje(zvanje[cboxZvanje.getSelectedIndex()]);
 					p.setPredmeti(null);
-					
-					System.out.println(p.getTitula());
-					System.out.println(p.getZvanje());
-					
+				
 					ProfesoriController pc = new ProfesoriController();
 					pc.izmeniProfesora(p, staraLicna);
 					
