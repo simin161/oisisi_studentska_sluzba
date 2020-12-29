@@ -57,6 +57,7 @@ public class StudentInfo extends JPanel {
 	private int godRodj = -1;
 	private int godUpis = -1;
 	private boolean shown = false;
+	private boolean pressed = false;
 
 	public StudentInfo(int r) {
 
@@ -202,7 +203,7 @@ public class StudentInfo extends JPanel {
 		panelButton.add(Box.createHorizontalStrut(35));
 		panelButton.add(buttonPonisti);
 		add(panelButton);
-		
+
 		String[] datum = tfDatumR.getText().trim().split("/");
 		godRodj = Integer.parseInt(datum[2]);
 		godUpis = Integer.parseInt(tFGodU.getText().trim());
@@ -263,7 +264,9 @@ public class StudentInfo extends JPanel {
 				if (tFName.getText().trim().length() == 0) {
 					valid[0] = false;
 				}
-				changeLabel(valid[0], "Ime*", "Ime", labelName);
+				if (!pressed)
+					changeLabel(valid[0], "Ime*", "Ime", labelName);
+
 				buttonPotvrdi.setEnabled(checkValid(valid) && !shown);
 			}
 
@@ -319,7 +322,8 @@ public class StudentInfo extends JPanel {
 
 			private void check() {
 				valid[1] = ProveraPrezimena.proveriPrezime(tFPrezime.getText());
-				changeLabel(valid[1], "Prezime*", "Prezime", labelPrezime);
+				if (!pressed)
+					changeLabel(valid[1], "Prezime*", "Prezime", labelPrezime);
 				buttonPotvrdi.setEnabled(checkValid(valid) && !shown);
 			}
 
@@ -566,7 +570,7 @@ public class StudentInfo extends JPanel {
 
 				if (!valid[4] && !tFBr.getText().trim().equals("")) {
 					tFBr.setText("");
-					
+
 					JOptionPane.showMessageDialog(StudentInfo.this,
 							"Pogrešno unet broj telefona! (Primer: 123/123-123)", "Greška: ",
 							JOptionPane.ERROR_MESSAGE);
@@ -673,7 +677,7 @@ public class StudentInfo extends JPanel {
 
 			@Override
 			public void focusLost(FocusEvent e) {
-				
+
 				if (!tFBrI.getText().trim().equals("")) {
 					valid[6] = ProveraIndeksa.proveriIndeks(tFBrI.getText());
 				} else {
@@ -723,13 +727,13 @@ public class StudentInfo extends JPanel {
 				valid[6] = ProveraIndeksa.proveriIndeks(tFBrI.getText());
 
 				if (valid[6]) {
-					if (!tFBrI.getText().trim().toUpperCase().equals(StudentBaza.getInstance()
-							.getRow(r).getBrIndeksa()))
+					if (!tFBrI.getText().trim().toUpperCase()
+							.equals(StudentBaza.getInstance().getRow(r).getBrIndeksa()))
 						indExists = ProveraIndeksa.checkExists(StudentBaza.getInstance().getStudents(),
 								tFBrI.getText().trim().toUpperCase());
 				}
-
-				changeLabel(valid[6] && !indExists, "Broj indeksa*", "Broj indeksa", labelBrI);
+				if (!pressed)
+					changeLabel(valid[6] && !indExists, "Broj indeksa*", "Broj indeksa", labelBrI);
 				buttonPotvrdi.setEnabled(checkValid(valid) && !shown && !indExists);
 			}
 
@@ -866,8 +870,7 @@ public class StudentInfo extends JPanel {
 					}
 				}
 				changeLabel(valid[7], "Godina upisa*", "Godina upisa", labelGodU);
-				changeLabel(valid[2] && !tooYoung && !shown, "Datum rođenja*", "Datum rođenja*",
-						labelDatumR);
+				changeLabel(valid[2] && !tooYoung && !shown, "Datum rođenja*", "Datum rođenja*", labelDatumR);
 				buttonPotvrdi.setEnabled(checkValid(valid) && !invalidYear && !tooYoung && !shown);
 			}
 
@@ -889,33 +892,33 @@ public class StudentInfo extends JPanel {
 			}
 
 		});
-		
+
 		cBTGodS.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				buttonPotvrdi.setEnabled(checkValid(valid) && !shown);
-				
+
 			}
-			
+
 		});
-		
+
 		cBFin.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				buttonPotvrdi.setEnabled(checkValid(valid) && !shown);
-				
+
 			}
 		});
-		
+
 		buttonPonisti.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+
 				Window w = SwingUtilities.getWindowAncestor(StudentInfo.this);
 				w.dispose();
-			
+
 			}
 		});
 
@@ -923,6 +926,7 @@ public class StudentInfo extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				pressed = true;
 				tFName.setText(setString(tFName.getText()));
 				tFPrezime.setText(setString(tFPrezime.getText()));
 				tFBrI.setText(tFBrI.getText().toUpperCase());
