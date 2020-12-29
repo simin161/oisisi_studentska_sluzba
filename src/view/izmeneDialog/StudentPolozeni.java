@@ -23,9 +23,8 @@ public class StudentPolozeni extends JPanel {
 	private static final long serialVersionUID = 8835038055857711937L;
 
 	private PrikazOcene prikaz;
-	//private OcenaBaza o;
 
-	public StudentPolozeni(OcenaBaza o) {
+	public StudentPolozeni() {
 
 		BoxLayout b = new BoxLayout(this, BoxLayout.Y_AXIS);
 		setLayout(b);
