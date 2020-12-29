@@ -83,8 +83,7 @@ public class AbstractActionDelete extends AbstractAction {
 
 				if (i == 0) {
 
-					ProfesoriController.getInstance()
-							.izbrisiProfesora(PrikazProfesora.getInstance().getTable().convertRowIndexToModel(row));
+					ProfesoriController.getInstance().izbrisiProfesora(PrikazProfesora.getInstance().getTable().convertRowIndexToModel(row));
 
 				}
 
@@ -96,9 +95,7 @@ public class AbstractActionDelete extends AbstractAction {
 			}
 
 		} else if (this.rbrTaba == 2) {
-
-			// if() provera da li je selektovan red?
-
+			
 			int row = PrikazPredmeta.getInstance().getSelectedRow();
 
 			if (row != -1) {
