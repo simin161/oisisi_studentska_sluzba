@@ -127,7 +127,6 @@ public class Toolbar extends JToolBar{
 					if(rbrT == 0) {
 						
 						PrikazStudenta.getInstance().pretraziTabelu("");
-						
 					}
 					else if(rbrT == 1) {
 						

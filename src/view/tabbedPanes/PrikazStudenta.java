@@ -34,10 +34,13 @@ public class PrikazStudenta extends JPanel {
 	}
 
 	private JTable tableStudent;
-
+	private TableRowSorter<TableModel> rowSorter = null;
 	public PrikazStudenta() {
 		setLayout(new BorderLayout());
 		showTable();
+		rowSorter = new TableRowSorter<>(tableStudent.getModel());
+		tableStudent.setRowSorter(rowSorter);
+
 	}
 
 	public void update(String akcija, int r) {
@@ -49,12 +52,10 @@ public class PrikazStudenta extends JPanel {
 
 	}
 
-	private void showTable() {
+	public void showTable() {
 
 		tableStudent = new StudentTable();
 		JScrollPane sP = new JScrollPane(tableStudent);
-		//https://stackoverflow.com/questions/28823670/how-to-sort-jtable-in-shortest-way
-		tableStudent.setAutoCreateRowSorter(true);
 		add(sP, BorderLayout.CENTER);
 
 		update(null, -1);
@@ -81,7 +82,7 @@ public class PrikazStudenta extends JPanel {
 			
 			if(parts.length == 1) {
 				
-				TableRowSorter<TableModel> rowSorter = new TableRowSorter<>(tableStudent.getModel());
+				rowSorter = new TableRowSorter<>(tableStudent.getModel());
 				tableStudent.setRowSorter(rowSorter);
 				rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + parts[0], 2));
 			}
@@ -94,7 +95,7 @@ public class PrikazStudenta extends JPanel {
 				@SuppressWarnings("rawtypes")
 				RowFilter filter = RowFilter.andFilter(filteri);
 				
-				TableRowSorter<TableModel> rowSorter = new TableRowSorter<>(tableStudent.getModel());
+				rowSorter = new TableRowSorter<>(tableStudent.getModel());
 				tableStudent.setRowSorter(rowSorter);
 				rowSorter.setRowFilter(filter);
 
@@ -108,15 +109,15 @@ public class PrikazStudenta extends JPanel {
 				@SuppressWarnings("rawtypes")
 				RowFilter filter = RowFilter.andFilter(filteri);
 				
-				TableRowSorter<TableModel> rowSorter = new TableRowSorter<>(tableStudent.getModel());
+				rowSorter = new TableRowSorter<>(tableStudent.getModel());
 				tableStudent.setRowSorter(rowSorter);
 				rowSorter.setRowFilter(filter);
 
 			}
 		}
 		else {
-			
-			tableStudent.setRowSorter(null);
+			rowSorter.setRowFilter(null);
+			tableStudent.setRowSorter(rowSorter);
 
 		}
 	}
