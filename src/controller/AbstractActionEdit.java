@@ -74,8 +74,11 @@ public class AbstractActionEdit extends AbstractAction {
 
 		} else if (this.rbrTaba == 2) {
 
-			if (PrikazPredmeta.getInstance().getSelectedRow() != -1) {
-				IzmenaPredmeta izmenaP = new IzmenaPredmeta(this.c);
+			int selectedRow = PrikazPredmeta.getInstance().getSelectedRow();
+			
+			int selRow = PrikazPredmeta.getInstance().getTable().convertRowIndexToModel(selectedRow);
+			if (selectedRow  != -1) {
+				IzmenaPredmeta izmenaP = new IzmenaPredmeta(this.c, selRow);
 				izmenaP.setVisible(true);
 			} else {
 				JOptionPane.showMessageDialog(c, "Označite predmet za izmenu.", "Upozorenje", JOptionPane.WARNING_MESSAGE);

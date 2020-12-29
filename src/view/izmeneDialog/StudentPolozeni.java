@@ -12,7 +12,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import model.baze.OcenaBaza;
-import model.baze.StudentBaza;
 import view.tabbedPanes.PrikazOcene;
 import view.tabbedPanes.PrikazStudenta;
 

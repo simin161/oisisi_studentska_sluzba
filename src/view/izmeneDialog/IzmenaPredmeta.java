@@ -44,7 +44,7 @@ public class IzmenaPredmeta extends JDialog {
 	private boolean higher = false;
 	private boolean exists = false;
 
-	public IzmenaPredmeta(Container c) {
+	public IzmenaPredmeta(Container c, int r) {
 
 		Toolkit kit = Toolkit.getDefaultToolkit();
 		Dimension screenSize = kit.getScreenSize();
@@ -58,7 +58,7 @@ public class IzmenaPredmeta extends JDialog {
 		setResizable(false);
 		Dimension dim = new Dimension(155, 20);
 
-		Predmet p = PredmetBaza.getInstance().getRow(PrikazPredmeta.getInstance().getSelectedRow());
+		Predmet p = PredmetBaza.getInstance().getRow(r);
 		String oldId = p.getSifra();
 		boolean[] valid = { true, true, true };
 
@@ -398,7 +398,7 @@ public class IzmenaPredmeta extends JDialog {
 				txtNaziv.setText(setString(txtNaziv.getText()));
 				txtSifra.setText(txtSifra.getText().toUpperCase());
 
-				Predmet p = PredmetBaza.getInstance().getRow(PrikazPredmeta.getInstance().getSelectedRow());
+				Predmet p = PredmetBaza.getInstance().getRow(r);
 
 				String semestar = cbSem.getSelectedItem().toString();
 				Semestar sem = semestar.equals("Zimski") ? Semestar.Zimski : Semestar.Letnji;
