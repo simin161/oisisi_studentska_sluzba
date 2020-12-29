@@ -41,9 +41,10 @@ public class IzmenaProfesora extends JDialog{
 		tabbedPane.setBorder(new LineBorder(new Color(0,0,0)));
 		
 		ProfesorInformacije pi = new ProfesorInformacije(selectedRow);
+		ProfPredajePredmete ppp = new ProfPredajePredmete();
 		
 		tabbedPane.add("Informacije", pi);
-		
+		tabbedPane.add("Predmeti", ppp);
 		panelMain.add(tabbedPane, BorderLayout.CENTER);
 		add(panelMain);
 	}
