@@ -82,6 +82,8 @@ public class PrikazPredmeta extends JPanel{
 	
 	public void pretraziTabelu(String kriterijum) {
 		
+		kriterijum = kriterijum.toLowerCase();
+		
 		if(kriterijum.trim().length()!= 0) {
 			
 			rowSorter.setRowFilter(RowFilter.regexFilter(kriterijum, 1));

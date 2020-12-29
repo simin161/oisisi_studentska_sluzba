@@ -99,10 +99,12 @@ public class AbstractActionDelete extends AbstractAction {
 			// if() provera da li je selektovan red?
 
 			int row = PrikazPredmeta.getInstance().getSelectedRow();
-			int selRow = PrikazPredmeta.getInstance().getTable().convertRowIndexToModel(row);
+			
+			
+			if (row != -1) {
 
-			if (selRow != -1) {
-
+				int selRow = PrikazPredmeta.getInstance().getTable().convertRowIndexToModel(row);
+				
 				String[] opcije = new String[2];
 
 				opcije[0] = "Da"; // vrednost 0
