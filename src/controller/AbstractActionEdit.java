@@ -58,9 +58,9 @@ public class AbstractActionEdit extends AbstractAction {
 
 			int selectedRow = PrikazProfesora.getInstance().getSelectedRow();
 			
-			int selRow = PrikazProfesora.getInstance().getTable().convertRowIndexToModel(selectedRow);
-			
 			if(selectedRow >= 0) {
+				
+				int selRow = PrikazProfesora.getInstance().getTable().convertRowIndexToModel(selectedRow);
 				
 				IzmenaProfesora ip = new IzmenaProfesora(this.c, selRow);
 				ip.setVisible(true);

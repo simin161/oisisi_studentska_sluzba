@@ -845,10 +845,8 @@ public class DialogDodavanjeProfesora extends JDialog{
 				
 				if(txtLk.getText().length() == 9) {
 					
-					//povuci bazu podataka
 					brLk = ProveraLk.postojiLk(profesori, txtLk.getText());
-					
-					
+				
 				}
 				
 				if(brLk == true) {
