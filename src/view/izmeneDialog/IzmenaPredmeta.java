@@ -31,7 +31,6 @@ import controller.provere.ProveraSifrePredmeta;
 import model.Predmet;
 import model.baze.PredmetBaza;
 import model.nabrojiviTipovi.Semestar;
-import view.tabbedPanes.PrikazPredmeta;
 
 public class IzmenaPredmeta extends JDialog {
 
@@ -43,6 +42,7 @@ public class IzmenaPredmeta extends JDialog {
 	private boolean less = false;
 	private boolean higher = false;
 	private boolean exists = false;
+	private boolean pressed = false;
 
 	public IzmenaPredmeta(Container c, int r) {
 
@@ -51,7 +51,7 @@ public class IzmenaPredmeta extends JDialog {
 		int screenHeight = (int) (screenSize.height * 0.75 * 0.8);
 		int screenWidth = (int) (screenSize.width * 0.75 * 0.4);
 
-		setTitle("Dodavanje predmeta");
+		setTitle("Izmena predmeta");
 		setSize(screenWidth, screenHeight);
 		setLocationRelativeTo(c);
 		setModal(true);
@@ -147,13 +147,13 @@ public class IzmenaPredmeta extends JDialog {
 		txtProf.setPreferredSize(new Dimension(100, 20));
 		buttonAdd.setText("+");
 		buttonDelete.setText("-");
-		
-		if(p.getProfesor() != null) {
+
+		if (p.getProfesor() != null) {
 			txtProf.setText(p.getProfesor().getIme() + " " + p.getProfesor().getPrezime());
 			buttonAdd.setEnabled(false);
 		}
-		
-		//panelProf.add(Box.createHorizontalStrut(65));
+
+		// panelProf.add(Box.createHorizontalStrut(65));
 		panelProf.add(lbl);
 		panelProf.add(txtProf);
 		panelProf.add(buttonAdd);
@@ -225,7 +225,8 @@ public class IzmenaPredmeta extends JDialog {
 						valid[0] = false;
 					}
 				}
-				changeLabel(valid[0], "Šifra*", "Šifra", lblSifra);
+				if (!pressed)
+					changeLabel(valid[0], "Šifra*", "Šifra", lblSifra);
 				buttonPotvrdi.setEnabled(checkValid(valid));
 			}
 
@@ -279,7 +280,8 @@ public class IzmenaPredmeta extends JDialog {
 				if (txtNaziv.getText().trim().length() != 0) {
 					valid[1] = ProveraNazivaPredmeta.proveriNazivPredmeta(txtNaziv.getText());
 				}
-				changeLabel(valid[1], "Naziv*", "Naziv", lblNaziv);
+				if (!pressed)
+					changeLabel(valid[1], "Naziv*", "Naziv", lblNaziv);
 				buttonPotvrdi.setEnabled(checkValid(valid));
 			}
 
@@ -354,27 +356,28 @@ public class IzmenaPredmeta extends JDialog {
 						valid[2] = false;
 					}
 				}
-				changeLabel(valid[2], "Broj ESPB bodova*", "Broj ESPB bodova", lblEspb);
+				if (!pressed)
+					changeLabel(valid[2], "Broj ESPB bodova*", "Broj ESPB bodova", lblEspb);
 				buttonPotvrdi.setEnabled(checkValid(valid));
 			}
 
 		});
-		
+
 		cbGod.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				buttonPotvrdi.setEnabled(checkValid(valid));
-				
+
 			}
-			
+
 		});
-		
+
 		cbSem.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				buttonPotvrdi.setEnabled(checkValid(valid));
-				
+
 			}
 		});
 
@@ -394,6 +397,7 @@ public class IzmenaPredmeta extends JDialog {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				pressed = true;
 				txtEspb.setText(txtEspb.getText().trim());
 				txtNaziv.setText(setString(txtNaziv.getText()));
 				txtSifra.setText(txtSifra.getText().toUpperCase());
@@ -429,14 +433,14 @@ public class IzmenaPredmeta extends JDialog {
 				p.setNaziv(txtNaziv.getText());
 				p.setSemestar(sem);
 				p.setGodina(godina);
-				//p.setProfesor(profesor);
+				// p.setProfesor(profesor);
 				p.setEspb(Integer.parseInt(txtEspb.getText().trim()));
 
 				PredmetController.getInstance().izmeniPredmet(p, oldId);
 
 				JOptionPane.showMessageDialog(IzmenaPredmeta.this, "Izmena predmeta je uspešno izvršena!");
 				dispose();
-				
+
 			}
 
 		});

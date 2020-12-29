@@ -46,44 +46,47 @@ public class AbstractActionEdit extends AbstractAction {
 		if (this.rbrTaba == 0) {
 
 			int selectedRow = PrikazStudenta.getInstance().getSelectedRow();
-			
-			if (selectedRow  != -1) {
-				
+
+			if (selectedRow != -1) {
+
 				int selRow = PrikazStudenta.getInstance().getTable().convertRowIndexToModel(selectedRow);
 				IzmenaStudent izmenaS = new IzmenaStudent(this.c, selRow);
 				izmenaS.setVisible(true);
-			
+
 			} else {
-				JOptionPane.showMessageDialog(c, "Označite studenta za izmenu.", "Upozorenje", JOptionPane.WARNING_MESSAGE);
+				JOptionPane.showMessageDialog(c, "Označite studenta za izmenu.", "Upozorenje",
+						JOptionPane.WARNING_MESSAGE);
 			}
 		} else if (this.rbrTaba == 1) {
 
 			int selectedRow = PrikazProfesora.getInstance().getSelectedRow();
-			
-			if(selectedRow >= 0) {
-				
+
+			if (selectedRow >= 0) {
+
 				int selRow = PrikazProfesora.getInstance().getTable().convertRowIndexToModel(selectedRow);
-				
+
 				IzmenaProfesora ip = new IzmenaProfesora(this.c, selRow);
 				ip.setVisible(true);
-				
-			}
-			else {
-				
-				JOptionPane.showMessageDialog(c, "Označite profesora za izmenu.", "Upozorenje", JOptionPane.WARNING_MESSAGE);
-				
+
+			} else {
+
+				JOptionPane.showMessageDialog(c, "Označite profesora za izmenu.", "Upozorenje",
+						JOptionPane.WARNING_MESSAGE);
+
 			}
 
 		} else if (this.rbrTaba == 2) {
 
 			int selectedRow = PrikazPredmeta.getInstance().getSelectedRow();
-			
-			int selRow = PrikazPredmeta.getInstance().getTable().convertRowIndexToModel(selectedRow);
-			if (selectedRow  != -1) {
+
+			if (selectedRow != -1) {
+
+				int selRow = PrikazPredmeta.getInstance().getTable().convertRowIndexToModel(selectedRow);
 				IzmenaPredmeta izmenaP = new IzmenaPredmeta(this.c, selRow);
 				izmenaP.setVisible(true);
 			} else {
-				JOptionPane.showMessageDialog(c, "Označite predmet za izmenu.", "Upozorenje", JOptionPane.WARNING_MESSAGE);
+				JOptionPane.showMessageDialog(c, "Označite predmet za izmenu.", "Upozorenje",
+						JOptionPane.WARNING_MESSAGE);
 			}
 
 		} else {
