@@ -48,7 +48,6 @@ public class AbstractActionDelete extends AbstractAction {
 			int row = PrikazStudenta.getInstance().getSelectedRow();
 
 			if (row != -1) {
-				int selRow = PrikazStudenta.getInstance().getTable().convertRowIndexToModel(row);
 
 				String[] opcije = { "Da", "Ne" };
 
@@ -58,7 +57,8 @@ public class AbstractActionDelete extends AbstractAction {
 
 				if (i == 0) {
 
-					StudentController.getInstance().izbrisiStudenta(selRow);
+					StudentController.getInstance()
+							.izbrisiStudenta(PrikazStudenta.getInstance().getTable().convertRowIndexToModel(row));
 
 				}
 
@@ -99,12 +99,11 @@ public class AbstractActionDelete extends AbstractAction {
 			// if() provera da li je selektovan red?
 
 			int row = PrikazPredmeta.getInstance().getSelectedRow();
-			
-			
+
 			if (row != -1) {
 
 				int selRow = PrikazPredmeta.getInstance().getTable().convertRowIndexToModel(row);
-				
+
 				String[] opcije = new String[2];
 
 				opcije[0] = "Da"; // vrednost 0
