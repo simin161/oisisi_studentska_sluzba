@@ -47,10 +47,12 @@ public class AbstractActionEdit extends AbstractAction {
 
 			int selectedRow = PrikazStudenta.getInstance().getSelectedRow();
 			
-			int selRow = PrikazStudenta.getInstance().getTable().convertRowIndexToModel(selectedRow);
 			if (selectedRow  != -1) {
+				
+				int selRow = PrikazStudenta.getInstance().getTable().convertRowIndexToModel(selectedRow);
 				IzmenaStudent izmenaS = new IzmenaStudent(this.c, selRow);
 				izmenaS.setVisible(true);
+			
 			} else {
 				JOptionPane.showMessageDialog(c, "Označite studenta za izmenu.", "Upozorenje", JOptionPane.WARNING_MESSAGE);
 			}
