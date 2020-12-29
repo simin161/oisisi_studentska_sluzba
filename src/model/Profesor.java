@@ -8,6 +8,10 @@ import model.nabrojiviTipovi.Zvanje;
 
 public class Profesor {
 
+	@Override
+	public String toString() {
+		return prezime + " " + ime;
+	}
 	private String prezime;
 	private String ime;
 	private Date datumRodjenja;

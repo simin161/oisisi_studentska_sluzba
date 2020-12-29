@@ -7,6 +7,8 @@ import java.awt.FlowLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 
@@ -18,6 +20,7 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -43,6 +46,7 @@ public class IzmenaPredmeta extends JDialog {
 	private boolean higher = false;
 	private boolean exists = false;
 	private boolean pressed = false;
+	private static JTextArea txtProf;
 
 	public IzmenaPredmeta(Container c, int r) {
 
@@ -141,17 +145,62 @@ public class IzmenaPredmeta extends JDialog {
 		/*---TODO: uklanjanje/dodavanje profesora---*/
 		JPanel panelProf = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		JLabel lbl = new JLabel("TODO: uklanjanje/dodavanje profesora");
-		JTextField txtProf = new JTextField();
+		txtProf = new JTextArea();
+		// txtProf.setEditable(false);
 		JButton buttonAdd = new JButton();
 		JButton buttonDelete = new JButton();
 		txtProf.setPreferredSize(new Dimension(100, 20));
+		txtProf.setEditable(false);
 		buttonAdd.setText("+");
 		buttonDelete.setText("-");
-
+		
 		if (p.getProfesor() != null) {
 			txtProf.setText(p.getProfesor().getIme() + " " + p.getProfesor().getPrezime());
 			buttonAdd.setEnabled(false);
+			buttonDelete.setEnabled(true);
+		} else {
+			buttonAdd.setEnabled(true);
+			buttonDelete.setEnabled(false);
 		}
+		
+		txtProf.getDocument().addDocumentListener(new DocumentListener() {
+
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				check();
+				
+			}
+
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				check();
+				
+			}
+
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				check();
+				
+			}
+			
+			private void check() {
+				if(txtProf.getText().length() != 0) {
+					buttonAdd.setEnabled(false);
+					buttonDelete.setEnabled(true);
+				}
+			}
+			
+		});
+
+		buttonAdd.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				@SuppressWarnings("unused")
+				DodajProfNaPredmet d = new DodajProfNaPredmet(IzmenaPredmeta.this.getContentPane(), r);
+			}
+
+		});
 
 		// panelProf.add(Box.createHorizontalStrut(65));
 		panelProf.add(lbl);
@@ -451,6 +500,10 @@ public class IzmenaPredmeta extends JDialog {
 		panelMain.add(panelButton);
 
 		add(panelMain);
+	}
+
+	public static JTextArea get() {
+		return txtProf;
 	}
 
 	private String setString(String text) {
