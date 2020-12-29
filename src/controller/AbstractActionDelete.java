@@ -46,8 +46,9 @@ public class AbstractActionDelete extends AbstractAction {
 		if (this.rbrTaba == 0) {
 
 			int row = PrikazStudenta.getInstance().getSelectedRow();
+			int selRow = PrikazStudenta.getInstance().getTable().convertRowIndexToModel(row);
 
-			if (row != -1) {
+			if (selRow != -1) {
 
 				String[] opcije = {"Da", "Ne"};
 
@@ -57,7 +58,7 @@ public class AbstractActionDelete extends AbstractAction {
 
 				if (i == 0) {
 
-					StudentController.getInstance().izbrisiStudenta(row);
+					StudentController.getInstance().izbrisiStudenta(selRow);
 
 				}
 
