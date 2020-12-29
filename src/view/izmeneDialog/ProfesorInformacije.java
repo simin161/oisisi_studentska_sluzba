@@ -11,6 +11,7 @@ import java.awt.event.FocusListener;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -38,6 +39,7 @@ import model.Profesor;
 import model.baze.ProfesorBaza;
 import model.nabrojiviTipovi.Titula;
 import model.nabrojiviTipovi.Zvanje;
+import view.framesAndDialogs.DialogDodavanjeProfesora;
 
 public class ProfesorInformacije extends JPanel {
 
@@ -46,6 +48,8 @@ public class ProfesorInformacije extends JPanel {
 	private Boolean []provera = {true, true, true, true, true, true, true, true};
 	
 	private String staraLicna="";
+	private Boolean brLk = false;
+	private List<Profesor> profesori = ProfesorBaza.getInstance().getProfesore();
 	
 	public ProfesorInformacije(int selectedRow) {
 		
@@ -892,7 +896,23 @@ public class ProfesorInformacije extends JPanel {
 				
 				enable= proveraProvere(provera);
 				
-				btnPotvrdi.setEnabled(enable);
+				if(txtLk.getText().length() == 9) {
+					
+					brLk = ProveraLk.postojiLk(profesori, txtLk.getText());
+					
+				}
+				
+				if(brLk == true) {
+					
+					btnPotvrdi.setEnabled(false);
+					lblLk.setText("Broj lične karte*");
+				}
+				
+				else {
+				
+					btnPotvrdi.setEnabled(enable);
+					lblLk.setText("Broj lične karte");
+				}
 			}
 			
 		});
@@ -911,6 +931,13 @@ public class ProfesorInformacije extends JPanel {
 					JOptionPane.showMessageDialog(SwingUtilities.getWindowAncestor(ProfesorInformacije.this), "Greška prilikom unosa broja lične karte. "
 							+ "Broj mora imati devet cifara.", "Greška: ", JOptionPane.ERROR_MESSAGE);
 					
+				}
+				if(brLk == true) {
+					
+					JOptionPane.showMessageDialog(SwingUtilities.getWindowAncestor(ProfesorInformacije.this), "Greška prilikom unosa broja lične karte. "
+							+ "Broj lične karte je već registrovan u sistemu.", "Greška: ", JOptionPane.ERROR_MESSAGE);	
+					
+				
 				}
 			}
 		});
