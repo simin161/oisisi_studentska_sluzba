@@ -48,10 +48,9 @@ public class AbstractActionDelete extends AbstractAction {
 			int row = PrikazStudenta.getInstance().getSelectedRow();
 
 			if (row != -1) {
-				
 				int selRow = PrikazStudenta.getInstance().getTable().convertRowIndexToModel(row);
 
-				String[] opcije = {"Da", "Ne"};
+				String[] opcije = { "Da", "Ne" };
 
 				int i = JOptionPane.showOptionDialog(c, "Da li ste sigurni da želite da obrišete studenta?",
 						"Brisanje studenta", JOptionPane.YES_NO_OPTION, JOptionPane.DEFAULT_OPTION, null, opcije,
@@ -63,20 +62,19 @@ public class AbstractActionDelete extends AbstractAction {
 
 				}
 
-			}
-			else {
-				
-				JOptionPane.showMessageDialog(c, "Označite studenta za brisanje.", "Upozorenje", JOptionPane.WARNING_MESSAGE);
-				
+			} else {
+
+				JOptionPane.showMessageDialog(c, "Označite studenta za brisanje.", "Upozorenje",
+						JOptionPane.WARNING_MESSAGE);
+
 			}
 		} else if (this.rbrTaba == 1) {
 
 			int row = PrikazProfesora.getInstance().getSelectedRow();
-			int selRow = PrikazProfesora.getInstance().getTable().convertRowIndexToModel(row);
 
-			if (selRow != -1) {
+			if (row != -1) {
 
-				String[] opcije = {"Da", "Ne"};
+				String[] opcije = { "Da", "Ne" };
 
 				int i = JOptionPane.showOptionDialog(c, "Da li ste sigurni da želite da obrišete profesora?",
 						"Brisanje profesora", JOptionPane.YES_NO_OPTION, JOptionPane.DEFAULT_OPTION, null, opcije,
@@ -84,14 +82,16 @@ public class AbstractActionDelete extends AbstractAction {
 
 				if (i == 0) {
 
-					ProfesoriController.getInstance().izbrisiProfesora(selRow);
+					ProfesoriController.getInstance()
+							.izbrisiProfesora(PrikazProfesora.getInstance().getTable().convertRowIndexToModel(row));
 
 				}
 
-			}else {
-				
-				JOptionPane.showMessageDialog(c, "Označite profesora za brisanje.", "Upozorenje", JOptionPane.WARNING_MESSAGE);
-				
+			} else {
+
+				JOptionPane.showMessageDialog(c, "Označite profesora za brisanje.", "Upozorenje",
+						JOptionPane.WARNING_MESSAGE);
+
 			}
 
 		} else if (this.rbrTaba == 2) {
@@ -100,7 +100,7 @@ public class AbstractActionDelete extends AbstractAction {
 
 			int row = PrikazPredmeta.getInstance().getSelectedRow();
 			int selRow = PrikazPredmeta.getInstance().getTable().convertRowIndexToModel(row);
-			
+
 			if (selRow != -1) {
 
 				String[] opcije = new String[2];
@@ -118,11 +118,11 @@ public class AbstractActionDelete extends AbstractAction {
 
 				}
 
-			}
-			else {
-				
-				JOptionPane.showMessageDialog(c, "Označite predmet za brisanje.", "Upozorenje", JOptionPane.WARNING_MESSAGE);
-				
+			} else {
+
+				JOptionPane.showMessageDialog(c, "Označite predmet za brisanje.", "Upozorenje",
+						JOptionPane.WARNING_MESSAGE);
+
 			}
 
 		} else {
