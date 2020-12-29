@@ -12,6 +12,7 @@ import java.awt.event.FocusListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -37,6 +38,7 @@ import controller.provere.ProveraLk;
 import controller.provere.ProveraPrezimena;
 import controller.provere.ProveraTelefona;
 import model.Profesor;
+import model.baze.ProfesorBaza;
 import model.nabrojiviTipovi.Titula;
 import model.nabrojiviTipovi.Zvanje;
 
@@ -47,10 +49,12 @@ public class DialogDodavanjeProfesora extends JDialog{
 	
 	private Profesor profesor;
 	private Boolean []provera= {false, false, false, false, false, false, false, false};
-
+	private Boolean brLk = false;
 	
 	public DialogDodavanjeProfesora(Container c)
 	{
+		List<Profesor> profesori = ProfesorBaza.getInstance().getProfesore();
+		
 		Toolkit kit = Toolkit.getDefaultToolkit();
 		Dimension screenSize= kit.getScreenSize();
 		int screenHeight = (int) (screenSize.height * 0.75 * 0.8);
@@ -839,7 +843,24 @@ public class DialogDodavanjeProfesora extends JDialog{
 				
 				enable= proveraProvere(provera);
 				
-				btnPotvrdi.setEnabled(enable);
+				if(txtLk.getText().length() == 9) {
+					
+					//povuci bazu podataka
+					brLk = ProveraLk.postojiLk(profesori, txtLk.getText());
+					
+					
+				}
+				
+				if(brLk == true) {
+					
+					btnPotvrdi.setEnabled(false);
+					lblLk.setText("Broj lične karte*");
+				}
+				else
+				{	
+					btnPotvrdi.setEnabled(enable);
+					lblLk.setText("Broj lične karte");
+				}
 			}
 			
 		});
@@ -861,6 +882,13 @@ public class DialogDodavanjeProfesora extends JDialog{
 					JOptionPane.showMessageDialog(DialogDodavanjeProfesora.this, "Greška prilikom unosa broja lične karte. "
 							+ "Broj mora imati devet cifara.", "Greška: ", JOptionPane.ERROR_MESSAGE);
 					txtLk.setText("");	
+				}
+				else if(brLk == true) {
+					
+					JOptionPane.showMessageDialog(DialogDodavanjeProfesora.this, "Greška prilikom unosa broja lične karte. "
+							+ "Broj lične karte je već registrovan u sistemu.", "Greška: ", JOptionPane.ERROR_MESSAGE);
+					txtLk.setText("");
+					
 				}
 			}
 		});
