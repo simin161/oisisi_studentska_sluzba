@@ -22,6 +22,8 @@ public class PrikazProfesora extends JPanel{
 	
 	private static PrikazProfesora instance = null;
 	
+	private TableRowSorter<TableModel> rowSorter = null;
+	
 	public static PrikazProfesora getInstance() {
 		
 		if(instance == null) {
@@ -46,6 +48,9 @@ public class PrikazProfesora extends JPanel{
 		
 		setLayout(new BorderLayout());
 		prikaziTabelu();
+		
+		rowSorter = new TableRowSorter<>(tabelaProfesora.getModel());
+		tabelaProfesora.setRowSorter(rowSorter);
 		
 	}
 	
@@ -85,7 +90,7 @@ public class PrikazProfesora extends JPanel{
 			
 			if(parts.length == 1) {
 				
-				TableRowSorter<TableModel> rowSorter = new TableRowSorter<>(tabelaProfesora.getModel());
+				rowSorter = new TableRowSorter<>(tabelaProfesora.getModel());
 				tabelaProfesora.setRowSorter(rowSorter);
 				rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + parts[0], 1));
 				
@@ -99,14 +104,15 @@ public class PrikazProfesora extends JPanel{
 				@SuppressWarnings("rawtypes")
 				RowFilter filter = RowFilter.andFilter(filteri);
 				
-				TableRowSorter<TableModel> rowSorter = new TableRowSorter<>(tabelaProfesora.getModel());
+				rowSorter = new TableRowSorter<>(tabelaProfesora.getModel());
 				tabelaProfesora.setRowSorter(rowSorter);
 				rowSorter.setRowFilter(filter);
 			}
 		}
 		else {
 			
-			tabelaProfesora.setRowSorter(null);
+			rowSorter.setRowFilter(null);
+			tabelaProfesora.setRowSorter(rowSorter);
 			
 		}
 	}
