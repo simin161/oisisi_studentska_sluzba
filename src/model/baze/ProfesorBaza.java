@@ -129,6 +129,12 @@ public class ProfesorBaza {
 			String adresaK, String brLicneKarte, Titula titula,
 			Zvanje zvanje) {
 		
+		if(this.profesori == null) {
+			
+			this.profesori = new ArrayList<Profesor>();
+			
+		}
+		
 		this.profesori.add(new Profesor(ime, prezime, datum, adresaS,
 				telefon, email, adresaK, brLicneKarte, titula, zvanje, null));
 		
