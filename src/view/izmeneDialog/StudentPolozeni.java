@@ -23,9 +23,9 @@ public class StudentPolozeni extends JPanel {
 	private static final long serialVersionUID = 8835038055857711937L;
 
 	private PrikazOcene prikaz;
-	private OcenaBaza o;
+	//private OcenaBaza o;
 
-	public StudentPolozeni() {
+	public StudentPolozeni(OcenaBaza o) {
 
 		BoxLayout b = new BoxLayout(this, BoxLayout.Y_AXIS);
 		setLayout(b);
@@ -39,14 +39,13 @@ public class StudentPolozeni extends JPanel {
 
 		prikaz = new PrikazOcene();
 
-		o = new OcenaBaza();
-
+		OcenaBaza o1 = prikaz.getModel().getBaza();
 		JPanel panelPr = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-		JLabel lblPr = new JLabel("Prosek: " + o.izracunajProsek());
+		JLabel lblPr = new JLabel("Prosek: " + o1.izracunajProsek());
 		panelPr.add(lblPr);
 
 		JPanel panelEspb = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-		JLabel lblEspb = new JLabel("ESPB: " + o.izracunajEspb());
+		JLabel lblEspb = new JLabel("ESPB: " + o1.izracunajEspb());
 		panelEspb.add(lblEspb);
 
 		buttonPonisti.addActionListener(new ActionListener() {
@@ -61,11 +60,12 @@ public class StudentPolozeni extends JPanel {
 							"Da li ste sigurni da želite da poništite ocenu?", "Poništavanje ocene",
 							JOptionPane.YES_NO_OPTION, JOptionPane.DEFAULT_OPTION, null, opcije, opcije[0]);
 					if (i == 0) {
-						o.ponistiOcenu(o.getRow(prikaz.getSelectedRow()).getPredmet().getSifra());
-						lblPr.setText("Prosek: " + o.izracunajProsek());
-						lblEspb.setText("ESPB: " + o.izracunajEspb());
+						o1.ponistiOcenu(o1.getRow(prikaz.getSelectedRow()).getPredmet().getSifra());
+						lblPr.setText("Prosek: " + o1.izracunajProsek());
+						lblEspb.setText("ESPB: " + o1.izracunajEspb());
 						prikaz.update("UKLONJEN", -1);
 						PrikazStudenta.getInstance().update("", 0);
+				
 					}
 				} else {
 					JOptionPane.showMessageDialog(prikaz.getParent(), "Označite ocenu koju želite da poništite.",

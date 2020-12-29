@@ -26,10 +26,14 @@ public class PrikazOcene extends JPanel{
 	public void update(String akcija, int r) {
 
 		AbstractTableModelOcena model = (AbstractTableModelOcena) tabeleOcena.getModel();
-
+		
 		model.fireTableDataChanged();
 		validate();
 
+	}
+	
+	public AbstractTableModelOcena getModel() {
+		return (AbstractTableModelOcena) tabeleOcena.getModel();
 	}
 
 	private void showTable() {

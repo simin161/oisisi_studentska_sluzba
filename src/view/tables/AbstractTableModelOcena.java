@@ -14,6 +14,11 @@ public class AbstractTableModelOcena extends AbstractTableModel {
 
 	public AbstractTableModelOcena() {
 		b = new OcenaBaza();
+		b.initializeOcena();
+	}
+	
+	public OcenaBaza getBaza() {
+		return b;
 	}
 
 	@Override

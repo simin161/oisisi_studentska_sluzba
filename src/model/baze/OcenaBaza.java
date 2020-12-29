@@ -15,9 +15,12 @@ public class OcenaBaza {
 	private List<Predmet> predmet;
 	private List<String> header;
 
+	int r;
+
 	public OcenaBaza() {
 
 		initializeOcena();
+		this.r = PrikazStudenta.getInstance().getSelectedRow();
 
 		this.header = new ArrayList<String>();
 		this.header.add("Sifra predmeta");
@@ -27,11 +30,11 @@ public class OcenaBaza {
 		this.header.add("Datum");
 	}
 
-	private void initializeOcena() {
-		this.ocena = StudentBaza.getInstance().getRow(PrikazStudenta.getInstance().getTable()
-				.convertRowIndexToModel(PrikazStudenta.getInstance().getSelectedRow())).getPolozeno();
-		this.predmet = StudentBaza.getInstance().getRow(PrikazStudenta.getInstance().getTable()
-				.convertRowIndexToModel(PrikazStudenta.getInstance().getSelectedRow())).getNepolozeno();
+	public void initializeOcena() {
+		this.ocena = StudentBaza.getInstance().getRow(PrikazStudenta.getInstance().getTable().convertRowIndexToModel(r))
+				.getPolozeno();
+		this.predmet = StudentBaza.getInstance()
+				.getRow(PrikazStudenta.getInstance().getTable().convertRowIndexToModel(r)).getNepolozeno();
 
 	}
 
@@ -104,7 +107,7 @@ public class OcenaBaza {
 		}
 
 		StudentBaza.getInstance().getRow((PrikazStudenta.getInstance().getTable()
-				.convertRowIndexToModel(PrikazStudenta.getInstance().getSelectedRow()))).setProsecnaOcena(avg);
+				.convertRowIndexToModel(r))).setProsecnaOcena(avg);
 		return avg;
 
 	}
@@ -134,10 +137,10 @@ public class OcenaBaza {
 			}
 		}
 
-		StudentBaza.getInstance().getRow((PrikazStudenta.getInstance().getTable()
-				.convertRowIndexToModel(PrikazStudenta.getInstance().getSelectedRow()))).setPolozeno(ocena);
-		StudentBaza.getInstance().getRow((PrikazStudenta.getInstance().getTable()
-				.convertRowIndexToModel(PrikazStudenta.getInstance().getSelectedRow()))).setNepolozeno(predmet);
+		StudentBaza.getInstance().getRow((PrikazStudenta.getInstance().getTable().convertRowIndexToModel(r)))
+				.setPolozeno(ocena);
+		StudentBaza.getInstance().getRow((PrikazStudenta.getInstance().getTable().convertRowIndexToModel(r)))
+				.setNepolozeno(predmet);
 
 	}
 }

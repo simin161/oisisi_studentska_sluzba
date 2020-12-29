@@ -14,8 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.border.LineBorder;
 
-import model.baze.StudentBaza;
-import view.tabbedPanes.PrikazStudenta;
+import model.baze.OcenaBaza;
 
 public class IzmenaStudent extends JDialog {
 
@@ -45,7 +44,9 @@ public class IzmenaStudent extends JDialog {
 		JTabbedPane tabbedPane = new JTabbedPane();
 		tabbedPane.setBorder(new LineBorder(new Color(0, 0, 0)));
 		StudentInfo sInfo = new StudentInfo(r);
-		StudentPolozeni sPol = new StudentPolozeni();
+		OcenaBaza o = new OcenaBaza();
+		//o.initializeOcena(r);
+		StudentPolozeni sPol = new StudentPolozeni(o);
 		tabbedPane.add("Informacije", sInfo);
 		tabbedPane.add("Položeni", sPol);
 		tabbedPane.add("Nepoloženi", new JLabel("TODO: dodati prikaz nepolozenih"));
