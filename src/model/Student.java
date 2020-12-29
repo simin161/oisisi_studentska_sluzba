@@ -39,6 +39,8 @@ public class Student {
 		this.polozeno = polozeno;
 		this.nepolozeno = nepolozeno;
 	}
+	
+	public Student() {}
 
 	public String getPrezime() {
 		return prezime;

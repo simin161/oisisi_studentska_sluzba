@@ -58,7 +58,7 @@ public class StudentBaza {
 		Student s = new Student("Prezimic", "Imenko", date , "adresa stanovica 00", "123456789",
 				"email@email.com", "XX12345", 1099, 2, Status.B, 8.91, null, null);
 		Student s1 = new Student("Prezimic1", "Imenko1", date , "adresa stanovica 00, dfasdfa", "123/456-789",
-				"email@email.com", "XX12345", 1099, 3, Status.S, 8.91, null, null);
+				"email@email.com", "XX123", 1099, 3, Status.S, 8.91, null, null);
 		oc.add(new Ocena(s, new Predmet("sifra", "naziv", null, 9, null, 7, null, null), 9, date));
 		s.setPolozeno(oc);
 		oc.add(new Ocena(s, new Predmet("sifra1", "naziv1", null, 10, null, 9, null, null), 8, date));

@@ -75,8 +75,9 @@ public class StudentInfo extends JPanel {
 
 		buttonPotvrdi.setEnabled(false);
 		Student s = StudentBaza.getInstance().getRow(r);
-		
 		String oldId = s.getBrIndeksa();
+		System.out.println(oldId);
+
 		JPanel panelName = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		JLabel labelName = new JLabel("Ime* ");
 		JTextField tFName = new JTextField();
@@ -723,7 +724,7 @@ public class StudentInfo extends JPanel {
 
 				if (valid[6]) {
 					if (!tFBrI.getText().trim().toUpperCase().equals(StudentBaza.getInstance()
-							.getRow(PrikazStudenta.getInstance().getSelectedRow()).getBrIndeksa()))
+							.getRow(r).getBrIndeksa()))
 						indExists = ProveraIndeksa.checkExists(StudentBaza.getInstance().getStudents(),
 								tFBrI.getText().trim().toUpperCase());
 				}
@@ -926,7 +927,7 @@ public class StudentInfo extends JPanel {
 				tFPrezime.setText(setString(tFPrezime.getText()));
 				tFBrI.setText(tFBrI.getText().toUpperCase());
 
-				Student s = StudentBaza.getInstance().getRow(PrikazStudenta.getInstance().getSelectedRow());
+				Student s = new Student();
 
 				String status = cBFin.getSelectedItem().toString();
 				Status st = status.equals("Budžet") ? Status.B : Status.S;
@@ -977,7 +978,7 @@ public class StudentInfo extends JPanel {
 	}
 
 	private String setString(String text) {
-		if (text.contentEquals("")) {
+		if (text.equals("")) {
 			return text;
 		} else
 			return text.substring(0, 1).toUpperCase() + text.substring(1);
