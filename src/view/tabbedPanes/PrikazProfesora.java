@@ -86,6 +86,8 @@ public class PrikazProfesora extends JPanel{
 		
 		if(kriterijum.trim().length()!=0) {
 			
+			kriterijum = kriterijum.toLowerCase();
+			
 			String []parts = kriterijum.split(" ");
 			
 			if(parts.length == 1) {
