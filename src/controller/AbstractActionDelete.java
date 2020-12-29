@@ -19,6 +19,7 @@ import view.tabbedPanes.PrikazPredmeta;
 import view.tabbedPanes.PrikazProfesora;
 import view.tabbedPanes.PrikazStudenta;
 
+
 public class AbstractActionDelete extends AbstractAction {
 
 	private static final long serialVersionUID = 7464546556386918717L;

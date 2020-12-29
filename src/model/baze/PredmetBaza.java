@@ -1,14 +1,12 @@
 package model.baze;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import model.Predmet;
 import model.Profesor;
 import model.Student;
 import model.nabrojiviTipovi.Semestar;
-import model.nabrojiviTipovi.Status;
 
 public class PredmetBaza {
 
