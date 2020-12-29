@@ -53,7 +53,8 @@ public class PrikazStudenta extends JPanel {
 
 		tableStudent = new StudentTable();
 		JScrollPane sP = new JScrollPane(tableStudent);
-
+		//https://stackoverflow.com/questions/28823670/how-to-sort-jtable-in-shortest-way
+		tableStudent.setAutoCreateRowSorter(true);
 		add(sP, BorderLayout.CENTER);
 
 		update(null, -1);
