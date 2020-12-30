@@ -80,8 +80,10 @@ public class ProfPredBaza {
 		
 	}
 	
-	public void dodajPredmet() {
+	public void dodajPredmet(int selectedRow, Predmet p) {
 		
+		
+		ProfesorBaza.getInstance().dodajPredmet(selectedRow, p);
 		
 	}
 	

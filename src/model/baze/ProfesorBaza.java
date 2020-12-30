@@ -191,13 +191,20 @@ public class ProfesorBaza {
 	
 	public void dodajPredmet(int selectedRow, Predmet p) {
 		
-		//List<Predmet> predmet = new ArrayList<Predmet>();
+		int i=0;
 		
-		if(this.profesori.get(selectedRow).getPredmeti()==null) {
+		for(Profesor pr : this.profesori) {
 			
 			
-			
+			if(pr.getPredmeti().get(i).getSifra().equals(p.getSifra()))
+			{
+				return;
+			}
+				
+			i++;
 		}
+		
+		this.profesori.get(selectedRow).getPredmeti().add(p);
 		
 	}
 	

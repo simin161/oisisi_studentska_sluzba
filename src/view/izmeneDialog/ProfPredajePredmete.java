@@ -1,12 +1,16 @@
 package view.izmeneDialog;
 
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import model.Predmet;
+import model.baze.PredmetBaza;
 import model.baze.ProfPredBaza;
 import view.tabbedPanes.PrikazProfPredmeta;
 
@@ -36,6 +40,29 @@ public class ProfPredajePredmete extends JPanel {
 		ProfPredBaza ppb = prikaz.getModel().getBaza();
 		
 		add(prikaz);
+		
+		btnDodaj.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				int selectedRow = prikaz.getSelectedRow();
+				
+				if(selectedRow >= 0) {
+					
+					int selRow = prikaz.getTable().convertRowIndexToModel(selectedRow);
+					
+					Predmet p = PredmetBaza.getInstance().getRow(selRow);							
+					
+					ppb.dodajPredmet(selRow, p);
+					
+				}
+				
+			}
+			
+			
+			
+		});
 		
 	}
 	

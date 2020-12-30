@@ -1,23 +1,22 @@
 package view.izmeneDialog;
 
 import java.awt.FlowLayout;
-import java.util.ArrayList;
-import java.util.List;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import model.Predmet;
-import model.Student;
+import model.baze.NepolozeniBaza;
+import view.tabbedPanes.PrikazNepolozeni;
 
 public class StudentNepolozeni extends JPanel {
 	
 	private static final long serialVersionUID = 3806457541651770421L;
 
-	private List<Predmet> predmeti = new ArrayList<Predmet>();
-	private Student s= null;
+	private PrikazNepolozeni prikaz;
 	
 	public StudentNepolozeni() {
 		
@@ -38,12 +37,39 @@ public class StudentNepolozeni extends JPanel {
 		add(panelBtn);
 		add(Box.createVerticalStrut(10));
 		
-	}
-	
-	private void updateStudent(Student s) {
+		prikaz = new PrikazNepolozeni();
 		
-		this.s = s;
+		
+		btnDodaj.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				
+			}
+
+		});
+		
+		btnObrisi.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				
+				
+			}
+			
+		});
+		
+		btnPolaganje.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				
+				
+			}
+			
+		});
+		
+		
+		add(prikaz);
 		
 	}
-	
 }

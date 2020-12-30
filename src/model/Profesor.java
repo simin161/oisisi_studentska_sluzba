@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -39,7 +40,13 @@ public class Profesor {
 		this.brLicneKarte = brLicneKarte;
 		this.titula = titula;
 		this.zvanje = zvanje;
-		this.predmeti = predmeti;
+		if(predmeti==null) {
+			
+			this.predmeti = new ArrayList<Predmet>();
+			
+		}
+		else
+			this.predmeti = predmeti;
 	}
 	public Profesor() {
 		super();
