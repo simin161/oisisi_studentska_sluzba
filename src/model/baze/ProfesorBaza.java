@@ -208,5 +208,15 @@ public class ProfesorBaza {
 		
 	}
 	
+	public void ukloniPredmet(int selR, Predmet p) {
+		int i = 0;
+		
+		for(Profesor pr : this.profesori) {
+			if(pr.getPredmeti().get(i).getSifra().equals(p.getSifra())) {
+				this.profesori.get(selR).getPredmeti().remove(p);
+				break;
+			}
+		}
+	}
 	
 }
