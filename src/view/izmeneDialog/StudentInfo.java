@@ -41,7 +41,6 @@ import controller.student.StudentController;
 import model.Student;
 import model.baze.StudentBaza;
 import model.nabrojiviTipovi.Status;
-import view.tabbedPanes.PrikazStudenta;
 
 public class StudentInfo extends JPanel {
 
@@ -74,7 +73,7 @@ public class StudentInfo extends JPanel {
 		JButton buttonPotvrdi = new JButton("Potvrdi");
 		JButton buttonPonisti = new JButton("Poništi");
 
-		buttonPotvrdi.setEnabled(false);
+		buttonPotvrdi.setEnabled(true);
 		Student s = StudentBaza.getInstance().getRow(r);
 		String oldId = s.getBrIndeksa();
 		System.out.println(oldId);

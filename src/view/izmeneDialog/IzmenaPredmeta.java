@@ -7,8 +7,6 @@ import java.awt.FlowLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 
@@ -76,7 +74,7 @@ public class IzmenaPredmeta extends JDialog {
 		JButton buttonPotvrdi = new JButton("Potvrdi");
 		JButton buttonPonisti = new JButton("Poništi");
 		ButtonAction.cancelAction(buttonPonisti, this);
-		buttonPotvrdi.setEnabled(false);
+		buttonPotvrdi.setEnabled(true);
 
 		JPanel panelSifra = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		JLabel lblSifra = new JLabel("Šifra* ");
@@ -153,7 +151,7 @@ public class IzmenaPredmeta extends JDialog {
 		txtProf.setEditable(false);
 		buttonAdd.setText("+");
 		buttonDelete.setText("-");
-		
+
 		if (p.getProfesor() != null) {
 			txtProf.setText(p.getProfesor().getIme() + " " + p.getProfesor().getPrezime());
 			buttonAdd.setEnabled(false);
@@ -162,34 +160,34 @@ public class IzmenaPredmeta extends JDialog {
 			buttonAdd.setEnabled(true);
 			buttonDelete.setEnabled(false);
 		}
-		
+
 		txtProf.getDocument().addDocumentListener(new DocumentListener() {
 
 			@Override
 			public void insertUpdate(DocumentEvent e) {
 				check();
-				
+
 			}
 
 			@Override
 			public void removeUpdate(DocumentEvent e) {
 				check();
-				
+
 			}
 
 			@Override
 			public void changedUpdate(DocumentEvent e) {
 				check();
-				
+
 			}
-			
+
 			private void check() {
-				if(txtProf.getText().length() != 0) {
+				if (txtProf.getText().length() != 0) {
 					buttonAdd.setEnabled(false);
 					buttonDelete.setEnabled(true);
 				}
 			}
-			
+
 		});
 
 		buttonAdd.addActionListener(new ActionListener() {

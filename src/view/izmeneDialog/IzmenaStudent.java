@@ -9,12 +9,9 @@ import java.awt.Toolkit;
 
 import javax.swing.Box;
 import javax.swing.JDialog;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.border.LineBorder;
-
-import model.baze.OcenaBaza;
 
 public class IzmenaStudent extends JDialog {
 
@@ -22,7 +19,7 @@ public class IzmenaStudent extends JDialog {
 		 * 
 		 */
 	private static final long serialVersionUID = -5350992107196510274L;
-	
+
 	public IzmenaStudent(Container c, int r) {
 
 		Toolkit kit = Toolkit.getDefaultToolkit();
