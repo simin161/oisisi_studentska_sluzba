@@ -25,7 +25,7 @@ public class PrikazNepolozeni extends JPanel {
 	public void update(String akcija, int r) {
 		
 		AbstractTableModelNepolozeni model = (AbstractTableModelNepolozeni)tabelaNep.getModel();
-		
+		model.getBaza().updateSBaza();
 		model.fireTableDataChanged();
 		validate();
 		

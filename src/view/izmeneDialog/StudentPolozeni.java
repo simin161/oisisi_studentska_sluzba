@@ -64,7 +64,7 @@ public class StudentPolozeni extends JPanel {
 						lblEspb.setText("ESPB: " + o1.izracunajEspb());
 						prikaz.update("UKLONJEN", -1);
 						PrikazStudenta.getInstance().update("", 0);
-				
+						StudentNepolozeni.getPrikaz().update("", 0);
 					}
 				} else {
 					JOptionPane.showMessageDialog(prikaz.getParent(), "Označite ocenu koju želite da poništite.",
