@@ -62,7 +62,7 @@ public class ProfPredajePredmete extends JPanel {
 			}
 
 		});
-
+		
 		btnUkloni.addActionListener(new ActionListener() {
 
 			@Override
@@ -77,9 +77,10 @@ public class ProfPredajePredmete extends JPanel {
 							JOptionPane.YES_NO_OPTION, JOptionPane.DEFAULT_OPTION, null, opcije, opcije[0]);
 
 					if (i == 0) {
-						int r = prikaz.getTable().convertColumnIndexToModel(selectedRow);
-						Predmet p = ppb.getRow(r);
-						ppb.ukloniPredmet(r, p);
+						//int r = prikaz.getTable().convertColumnIndexToModel(selectedRow);
+
+						Predmet p = ppb.getRow(selectedRow);
+						ppb.ukloniPredmet(selectedRow, p);
 						prikaz.azuriraj("UKLONJEN", -1);
 					}
 
