@@ -91,4 +91,17 @@ public class NepolozeniBaza {
 		this.predmet = StudentBaza.getInstance()
 				.getRow(PrikazStudenta.getInstance().getTable().convertRowIndexToModel(r)).getNepolozeno();
 	}
+	
+	public void izbrisi(Predmet p) {
+		
+		for(Predmet p1 : predmet) {
+			if(p1.getSifra().equals(p.getSifra())) {
+				predmet.remove(p1);
+				StudentBaza.getInstance()
+				.getRow(PrikazStudenta.getInstance().getTable().convertRowIndexToModel(r)).setNepolozeno(predmet);;
+				break;
+			}
+		}
+		
+	}
 }

@@ -7,8 +7,11 @@ import java.awt.event.ActionListener;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import model.Predmet;
+import model.baze.NepolozeniBaza;
 import view.tabbedPanes.PrikazNepolozeni;
 
 public class StudentNepolozeni extends JPanel {
@@ -49,7 +52,26 @@ public class StudentNepolozeni extends JPanel {
 		btnObrisi.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
+				int r = prikaz.getSelectedRow();
+				if (r != -1) {
 
+					NepolozeniBaza n = prikaz.getModel().getBaza();
+					Predmet p = n.getRow(r);
+
+					String[] opcije = { "Da", "Ne" };
+
+					int i = JOptionPane.showOptionDialog(prikaz.getParent(),
+							"Da li ste sigurni da želite da uklonite predmet?", "Uklanjanje predmeta",
+							JOptionPane.YES_NO_OPTION, JOptionPane.DEFAULT_OPTION, null, opcije, opcije[0]);
+
+					if (i == 0) {
+						n.izbrisi(p);
+						prikaz.update("UKLONJEN", -1);
+					}
+				}else {
+					JOptionPane.showMessageDialog(prikaz.getParent(), "Označite predmet koji želite da uklonite.",
+							"Upozorenje", JOptionPane.WARNING_MESSAGE);
+				}
 			}
 
 		});

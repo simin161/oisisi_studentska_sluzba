@@ -54,13 +54,15 @@ public class StudentBaza {
 		}
 		List<Ocena> oc = new ArrayList<Ocena>();
 		List<Ocena> oc1 = new ArrayList<Ocena>();
-
+		List<Predmet> p = new ArrayList<Predmet>();
+		p.add(new Predmet("sifra11", "naziv11", null, 10, null, 9, null, null));
 		Student s = new Student("Prezimic", "Imenko", date , "adresa stanovica 00", "123456789",
 				"email@email.com", "XX12345", 1099, 2, Status.B, 8.91, null, null);
 		Student s1 = new Student("Prezimic1", "Imenko1", date , "adresa stanovica 00, dfasdfa", "123/456-789",
 				"email@email.com", "XX123", 1099, 3, Status.S, 8.91, null, null);
 		oc.add(new Ocena(s, new Predmet("sifra", "naziv", null, 9, null, 7, null, null), 9, date));
 		s.setPolozeno(oc);
+		s.setNepolozeno(p);
 		oc.add(new Ocena(s, new Predmet("sifra1", "naziv1", null, 10, null, 9, null, null), 8, date));
 		oc1.add(new Ocena(s, new Predmet("sifra1", "naziv1", null, 7, null, 6, null, null), 6, date));
 		s1.setPolozeno(oc1);
