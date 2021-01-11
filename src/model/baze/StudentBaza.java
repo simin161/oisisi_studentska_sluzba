@@ -49,16 +49,16 @@ public class StudentBaza {
 		try {
 			date = new SimpleDateFormat("dd/MM/yyyy").parse("10/12/1000");
 		} catch (ParseException e) {
-			
+
 			e.printStackTrace();
 		}
 		List<Ocena> oc = new ArrayList<Ocena>();
 		List<Ocena> oc1 = new ArrayList<Ocena>();
 		List<Predmet> p = new ArrayList<Predmet>();
 		p.add(new Predmet("sifra11", "naziv11", null, 10, null, 9, null, null));
-		Student s = new Student("Prezimic", "Imenko", date , "adresa stanovica 00", "123456789",
-				"email@email.com", "XX12345", 1099, 2, Status.B, 8.91, null, null);
-		Student s1 = new Student("Prezimic1", "Imenko1", date , "adresa stanovica 00, dfasdfa", "123/456-789",
+		Student s = new Student("Prezimic", "Imenko", date, "adresa stanovica 00", "123456789", "email@email.com",
+				"XX12345", 1099, 2, Status.B, 8.91, null, null);
+		Student s1 = new Student("Prezimic1", "Imenko1", date, "adresa stanovica 00, dfasdfa", "123/456-789",
 				"email@email.com", "XX123", 1099, 3, Status.S, 8.91, null, null);
 		oc.add(new Ocena(s, new Predmet("sifra", "naziv", null, 9, null, 7, null, null), 9, date));
 		s.setPolozeno(oc);
@@ -120,40 +120,101 @@ public class StudentBaza {
 		}
 
 	}
-	
+
 	public void dodajStudenta(String prezime, String ime, Date datumRodjenja, String adresaStanovanja, String telefon,
 			String email, String brIndeksa, int godinaUpisa, int trenutnaGodina, Status status, double prosecnaOcena,
 			List<Ocena> polozeno, List<Predmet> nepolozeno) {
-		
+
 		this.students.add(new Student(prezime, ime, datumRodjenja, adresaStanovanja, telefon, email, brIndeksa,
 				godinaUpisa, trenutnaGodina, status, prosecnaOcena, polozeno, nepolozeno));
-		
+
 	}
-	
+
 	public void izbrisiStudenta(String id) {
-		for(Student s : students) {
-			if(id.equals(s.getBrIndeksa())) {
+		for (Student s : students) {
+			if (id.equals(s.getBrIndeksa())) {
 				students.remove(s);
 				break;
 			}
 		}
 	}
-	
+
 	public void izmeniStudenta(String prezime, String ime, Date datumRodjenja, String adresaStanovanja, String telefon,
 			String email, String brIndeksa, int godinaUpisa, int trenutnaGodina, Status status, String oldId) {
-			for (Student s : students) {
-				if (oldId.equals(s.getBrIndeksa())) {
-					s.setIme(ime);
-					s.setPrezime(prezime);
-					s.setAdresaStanovanja(adresaStanovanja);
-					s.setDatumRodjenja(datumRodjenja);
-					s.setEmail(email);
-					s.setGodinaUpisa(godinaUpisa);
-					s.setStatus(status);
-					s.setTelefon(telefon);
-					s.setTrenutnaGodina(trenutnaGodina);
-					s.setBrIndeksa(brIndeksa);
-				}
+		for (Student s : students) {
+			if (oldId.equals(s.getBrIndeksa())) {
+				s.setIme(ime);
+				s.setPrezime(prezime);
+				s.setAdresaStanovanja(adresaStanovanja);
+				s.setDatumRodjenja(datumRodjenja);
+				s.setEmail(email);
+				s.setGodinaUpisa(godinaUpisa);
+				s.setStatus(status);
+				s.setTelefon(telefon);
+				s.setTrenutnaGodina(trenutnaGodina);
+				s.setBrIndeksa(brIndeksa);
 			}
 		}
+	}
+
+	
+	public List<Predmet> predmetiKojeNema(Student s) {
+		List<Predmet> retVal = new ArrayList<Predmet>();
+		List<Predmet> temp = new ArrayList<Predmet>();
+		List<Predmet> polPr = null;
+		List<Predmet> nep = s.getNepolozeno();
+		List<Ocena> pol = s.getPolozeno();
+		List<Predmet> pre = PredmetBaza.getInstance().getPredmete();
+		
+		if(pol != null) {
+			polPr = new ArrayList<Predmet>();
+			for(Ocena o : pol) {
+				polPr.add(o.getPredmet());
+			}
+		}
+
+		if (nep == null && pol != null) {
+			for (Predmet o : pre) {
+
+				if (!polPr.contains(o)) {
+					retVal.add(o);
+					temp.add(o);
+				}
+
+			}
+		} else if (nep != null && pol == null) {
+			for (Predmet o : pre) {
+
+				if (!nep.contains(o)) {
+					retVal.add(o);
+					temp.add(o);
+
+				}
+
+			}
+		} else if (nep == null && pol == null) {
+			for (Predmet o : pre) {
+				retVal.add(o);
+				temp.add(o);
+			}
+
+		} else {
+			for (Predmet o : pre) {
+
+				if (!nep.contains(o) && !polPr.contains(o)) {
+					retVal.add(o);
+					temp.add(o);
+
+				}
+
+			}
+		}
+		for (Predmet p : temp) {
+			if (p.getGodina() > s.getTrenutnaGodina()) {
+				retVal.remove(p);
+			}
+		}
+
+		return retVal;
+	}
 }

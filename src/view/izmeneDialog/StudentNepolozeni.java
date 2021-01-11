@@ -20,7 +20,7 @@ public class StudentNepolozeni extends JPanel {
 
 	private static PrikazNepolozeni prikaz;
 
-	public StudentNepolozeni() {
+	public StudentNepolozeni(int r) {
 
 		BoxLayout box = new BoxLayout(this, BoxLayout.Y_AXIS);
 		setLayout(box);
@@ -42,9 +42,11 @@ public class StudentNepolozeni extends JPanel {
 
 		btnDodaj.addActionListener(new ActionListener() {
 
+			@SuppressWarnings("unused")
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
+				DodajUNep d = new DodajUNep(StudentNepolozeni.this.getParent(), r);
+				prikaz.update("DODAT", 1);
 			}
 
 		});

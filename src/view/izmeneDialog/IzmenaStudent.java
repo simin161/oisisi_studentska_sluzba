@@ -43,7 +43,7 @@ public class IzmenaStudent extends JDialog {
 		StudentInfo sInfo = new StudentInfo(r);
 
 		StudentPolozeni sPol = new StudentPolozeni();
-		StudentNepolozeni sNep = new StudentNepolozeni();
+		StudentNepolozeni sNep = new StudentNepolozeni(r);
 
 		tabbedPane.add("Informacije", sInfo);
 		tabbedPane.add("Položeni", sPol);
