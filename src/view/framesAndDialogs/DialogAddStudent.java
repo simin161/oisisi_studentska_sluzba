@@ -53,7 +53,6 @@ public class DialogAddStudent extends JDialog {
 	 */
 	private static final long serialVersionUID = 4412711478828503212L;
 
-	private boolean enable = false;
 	private boolean indExists = false;
 	private boolean tooYoung = false;
 	private boolean tooYoung1 = false;
@@ -240,14 +239,12 @@ public class DialogAddStudent extends JDialog {
 				if (!valid[0] && !text[0].equals("")) {
 					tFName.setText("");
 					text[0] = "";
-					// enable = false;
 
 					JOptionPane.showMessageDialog(DialogAddStudent.this,
 							"Pogrešno uneto ime! (Primer ispravnog unosa: Petar)", "Greška: ",
 							JOptionPane.ERROR_MESSAGE);
 
 				}
-				tFName.setText(setString(tFName.getText()));
 
 			}
 
@@ -303,12 +300,9 @@ public class DialogAddStudent extends JDialog {
 					tFPrezime.setText("");
 				}
 
-				tFPrezime.setText(setString(tFPrezime.getText()));
-
 				if (!valid[1] && !text[1].equals("")) {
 					tFPrezime.setText("");
 					text[1] = "";
-					enable = false;
 					JOptionPane.showMessageDialog(DialogAddStudent.this,
 							"Pogrešno uneto prezime! (Primer ispravnog unosa: Petrović)", "Greška: ",
 							JOptionPane.ERROR_MESSAGE);
@@ -435,17 +429,12 @@ public class DialogAddStudent extends JDialog {
 					tfDatumR.setText("");
 					text[2] = "";
 					tooYoung = true;
-					enable = false;
 
 					JOptionPane.showMessageDialog(DialogAddStudent.this,
 							"Pogrešno unet datum! Ispravan unos : DD/MM/YYYY", "Greška: ", JOptionPane.ERROR_MESSAGE);
 
-				} else {
+				} 
 
-					setEnable(text, valid);
-				}
-
-				buttonPotvrdi.setEnabled(enable && !indExists && !tooYoung && !invalidYear);
 			}
 
 		});
@@ -542,7 +531,6 @@ public class DialogAddStudent extends JDialog {
 				if (!valid[3] && !text[3].equals("")) {
 					tFAdr.setText("");
 					text[3] = "";
-					enable = false;
 
 					JOptionPane.showMessageDialog(DialogAddStudent.this,
 							"Pogrešno uneta adresa! Ispravan unos: ulica i broj, mesto", "Greška: ",
@@ -605,7 +593,6 @@ public class DialogAddStudent extends JDialog {
 				if (!valid[4] && !text[4].equals("")) {
 					tFBr.setText("");
 					text[4] = "";
-					enable = false;
 
 					JOptionPane.showMessageDialog(DialogAddStudent.this,
 							"Pogrešno unet broj telefona! (Primer: 123/123-123)", "Greška: ",
@@ -668,7 +655,6 @@ public class DialogAddStudent extends JDialog {
 				if (!valid[5] && !text[5].equals("")) {
 					tFEmail.setText("");
 					text[5] = "";
-					enable = false;
 
 					JOptionPane.showMessageDialog(DialogAddStudent.this, "Pogrešno uneta e-mail adresa!", "Greška: ",
 							JOptionPane.ERROR_MESSAGE);
@@ -736,13 +722,11 @@ public class DialogAddStudent extends JDialog {
 				if (!valid[6] && !text[6].equals("")) {
 					tFBrI.setText("");
 					text[6] = "";
-					enable = false;
 					indExists = true;
 
 					JOptionPane.showMessageDialog(DialogAddStudent.this, "Pogrešno unet broj indeksa!", "Greška: ",
 							JOptionPane.ERROR_MESSAGE);
 				}
-				tFBrI.setText(tFBrI.getText().toUpperCase());
 			}
 
 		});
@@ -852,14 +836,10 @@ public class DialogAddStudent extends JDialog {
 					tFGodU.setText("");
 					text[7] = "";
 					godUpis = -1;
-					enable = false;
 					invalidYear = true;
 					JOptionPane.showMessageDialog(DialogAddStudent.this,
 							"Pogrešno uneta godina upisa! Ispravan unos: YYYY", "Greška: ", JOptionPane.ERROR_MESSAGE);
 
-				} else {
-
-					setEnable(text, valid);
 				}
 			}
 
@@ -947,6 +927,10 @@ public class DialogAddStudent extends JDialog {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (!indExists && !tooYoung && !invalidYear) {
+					tFName.setText(setString(tFName.getText()));
+					tFPrezime.setText(setString(tFPrezime.getText()));
+					tFBrI.setText(tFBrI.getText().toUpperCase());
+
 					String status = cBFin.getSelectedItem().toString();
 					Status s = status.equals("Budžet") ? Status.B : Status.S;
 					String trGod = cBTGodS.getSelectedItem().toString();
@@ -1007,16 +991,6 @@ public class DialogAddStudent extends JDialog {
 		} else {
 			lbl.setText(f);
 			lbl.setForeground(Color.red);
-		}
-	}
-
-	private void setEnable(String[] text, boolean[] valid) {
-		enable = true;
-		for (int i = 0; i < 8; ++i) {
-			if (text[i].equals("") || !valid[i]) {
-				enable = false;
-				break;
-			}
 		}
 	}
 
