@@ -1,10 +1,9 @@
 package controller.student;
 
-import java.util.Date;
-
 import model.Student;
+import model.baze.OcenaBaza;
+import model.baze.PredmetBaza;
 import model.baze.StudentBaza;
-import model.nabrojiviTipovi.Status;
 import view.tabbedPanes.PrikazStudenta;
 
 public class StudentController {
@@ -54,6 +53,10 @@ public class StudentController {
 		}
 
 		Student student = StudentBaza.getInstance().getRow(row);
+		OcenaBaza o = new OcenaBaza();
+		o.izbrisiOcenuZaStudenta();
+		PredmetBaza.getInstance().izbrisiStudentaIzPolozenih(student);
+		PredmetBaza.getInstance().izbrisiStudentaIzNepolozenih(student);
 		StudentBaza.getInstance().izbrisiStudenta(student.getBrIndeksa());
 		PrikazStudenta.getInstance().update("UKLONJEN", row);
 

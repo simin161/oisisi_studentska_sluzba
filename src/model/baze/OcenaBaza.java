@@ -7,6 +7,7 @@ import java.util.List;
 
 import model.Ocena;
 import model.Predmet;
+import model.Student;
 import view.tabbedPanes.PrikazStudenta;
 
 public class OcenaBaza {
@@ -142,5 +143,10 @@ public class OcenaBaza {
 		StudentBaza.getInstance().getRow((PrikazStudenta.getInstance().getTable().convertRowIndexToModel(r)))
 				.setNepolozeno(predmet);
 
+	}
+	
+	public void izbrisiOcenuZaStudenta() {
+		ocena.clear();
+		predmet.clear();
 	}
 }

@@ -152,5 +152,46 @@ public class PredmetBaza {
 			}
 		}
 	}
+	
+	public void izbrisiStudentaIzPolozenih(Student s) {
+		
+		for(Predmet p : predmeti) {
+			List<Student> polozili = p.getPolozili();
+			
+			if(polozili == null || polozili.isEmpty()) {
+				continue;
+			}else {
+				
+				for(Student sPol : polozili) {
+					if(sPol.getBrIndeksa().equals(s.getBrIndeksa())) {
+						polozili.remove(sPol);
+						break;
+					}
+				}
+				
+				p.setPolozili(polozili);
+			}	
+		}
+		
+	}
+	
+	public void izbrisiStudentaIzNepolozenih(Student s) {
+		
+		for(Predmet p : predmeti) {
+			List<Student> popadali = p.getNisuPolozili();
+			
+			if(popadali == null || popadali.isEmpty()) {
+				continue;
+			}else {
+				for(Student sPop : popadali) {
+					if(sPop.getBrIndeksa().equals(s.getBrIndeksa())) {
+						popadali.remove(sPop);
+						break;
+					}
+				}
+				p.setNisuPolozili(popadali);
+			}
+		}
+	}
 
 }
