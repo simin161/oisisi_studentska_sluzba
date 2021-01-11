@@ -114,5 +114,9 @@ public class Predmet {
 		}
 	}
 	
-	
+	public String toString() {
+		
+		return sifra + " - " + naziv;
+		
+	}
 }

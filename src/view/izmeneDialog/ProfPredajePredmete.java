@@ -21,7 +21,7 @@ public class ProfPredajePredmete extends JPanel {
 
 	private PrikazProfPredmeta prikaz;
 
-	public ProfPredajePredmete() {
+	public ProfPredajePredmete(int selProf) {
 
 		BoxLayout box = new BoxLayout(this, BoxLayout.Y_AXIS);
 		setLayout(box);

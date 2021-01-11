@@ -191,21 +191,22 @@ public class ProfesorBaza {
 	
 	public void dodajPredmet(int selectedRow, Predmet p) {
 		
-		int i=0;
+		int n = this.profesori.get(selectedRow).getPredmeti().size();
 		
-		for(Profesor pr : this.profesori) {
+		for(int i = 0; i < n; i++) {
 			
-			
-			if(pr.getPredmeti().get(i).getSifra().equals(p.getSifra()))
-			{
-				return;
-			}
+			String sifra = this.profesori.get(selectedRow).getPredmeti().get(i).getSifra();
+			if(sifra.equals(p.getSifra())) {
 				
-			i++;
+				return;
+				
+			}
+			else {
+				
+				this.profesori.get(selectedRow).getPredmeti().add(p);
+				
+			}
 		}
-		
-		this.profesori.get(selectedRow).getPredmeti().add(p);
-		
 	}
 	
 	public void ukloniPredmet(int selR, Predmet p) {

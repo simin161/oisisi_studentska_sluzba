@@ -1,5 +1,6 @@
 package controller.profesor;
 
+import model.Predmet;
 import model.Profesor;
 import model.baze.ProfesorBaza;
 import view.tabbedPanes.PrikazProfesora;
@@ -57,6 +58,12 @@ public class ProfesoriController {
 		
 		PrikazProfesora.getInstance().updatePrikaz(null, -1);
 		
+	}
+	
+	public void dodajPredmet(int selProf, Predmet p) {
+		
+		ProfesorBaza.getInstance().dodajPredmet(selProf, p);
+		PrikazProfesora.getInstance().updatePrikaz(null, -1);
 	}
 	
 }

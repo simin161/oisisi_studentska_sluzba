@@ -119,7 +119,20 @@ public class Profesor {
 		this.predmeti = predmeti;
 	}
 	
-	
-	
+	public void dodajPredmet(Predmet p) {
+		
+		if(this.predmeti == null) {
+			
+			this.predmeti = new ArrayList<Predmet>();
+			this.predmeti.add(p);
+			
+		}
+		else {
+			
+			this.predmeti.add(p);
+			
+		}
+		
+	}
 	
 }
