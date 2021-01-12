@@ -1,8 +1,6 @@
 //vezbe06
 package model.baze;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -45,29 +43,25 @@ public class StudentBaza {
 	private void initializeStudents() {
 		this.students = new ArrayList<Student>();
 		// test
-		/*Date date = null;
-		try {
-			date = new SimpleDateFormat("dd/MM/yyyy").parse("10/12/1000");
-		} catch (ParseException e) {
-
-			e.printStackTrace();
-		}
-		List<Ocena> oc = new ArrayList<Ocena>();
-		List<Ocena> oc1 = new ArrayList<Ocena>();
-		List<Predmet> p = new ArrayList<Predmet>();
-		p.add(new Predmet("sifra11", "naziv11", null, 10, null, 9, null, null));
-		Student s = new Student("Prezimic", "Imenko", date, "adresa stanovica 00", "123456789", "email@email.com",
-				"XX12345", 1099, 2, Status.B, 8.91, null, null);
-		Student s1 = new Student("Prezimic1", "Imenko1", date, "adresa stanovica 00, dfasdfa", "123/456-789",
-				"email@email.com", "XX123", 1099, 3, Status.S, 8.91, null, null);
-		oc.add(new Ocena(s, new Predmet("sifra", "naziv", null, 9, null, 7, null, null), 9, date));
-		s.setPolozeno(oc);
-		s.setNepolozeno(p);
-		oc.add(new Ocena(s, new Predmet("sifra1", "naziv1", null, 10, null, 9, null, null), 8, date));
-		oc1.add(new Ocena(s, new Predmet("sifra1", "naziv1", null, 7, null, 6, null, null), 6, date));
-		s1.setPolozeno(oc1);
-		students.add(s);
-		students.add(s1);*/
+		/*
+		 * Date date = null; try { date = new
+		 * SimpleDateFormat("dd/MM/yyyy").parse("10/12/1000"); } catch (ParseException
+		 * e) {
+		 * 
+		 * e.printStackTrace(); } List<Ocena> oc = new ArrayList<Ocena>(); List<Ocena>
+		 * oc1 = new ArrayList<Ocena>(); List<Predmet> p = new ArrayList<Predmet>();
+		 * p.add(new Predmet("sifra11", "naziv11", null, 10, null, 9, null, null));
+		 * Student s = new Student("Prezimic", "Imenko", date, "adresa stanovica 00",
+		 * "123456789", "email@email.com", "XX12345", 1099, 2, Status.B, 8.91, null,
+		 * null); Student s1 = new Student("Prezimic1", "Imenko1", date,
+		 * "adresa stanovica 00, dfasdfa", "123/456-789", "email@email.com", "XX123",
+		 * 1099, 3, Status.S, 8.91, null, null); oc.add(new Ocena(s, new
+		 * Predmet("sifra", "naziv", null, 9, null, 7, null, null), 9, date));
+		 * s.setPolozeno(oc); s.setNepolozeno(p); oc.add(new Ocena(s, new
+		 * Predmet("sifra1", "naziv1", null, 10, null, 9, null, null), 8, date));
+		 * oc1.add(new Ocena(s, new Predmet("sifra1", "naziv1", null, 7, null, 6, null,
+		 * null), 6, date)); s1.setPolozeno(oc1); students.add(s); students.add(s1);
+		 */
 	}
 
 	public List<Student> getStudents() {
@@ -164,15 +158,33 @@ public class StudentBaza {
 		List<Predmet> nep = s.getNepolozeno();
 		List<Ocena> pol = s.getPolozeno();
 		List<Predmet> pre = PredmetBaza.getInstance().getPredmete();
+		
+		for(Predmet p : nep) {
+			System.out.println(p.getNisuPolozili().isEmpty());
+		}
+		
+		/*for(Ocena p : pol) {
+			System.out.println(p.getPredmet());
+		}
 
-		if (pol != null) {
+		if (pol == null)
+			pol = new ArrayList<Ocena>();
+
+		if (nep == null)
+			nep = new ArrayList<Predmet>();
+
+		if (!pol.isEmpty()) {
 			polPr = new ArrayList<Predmet>();
+			System.out.println("PRVI IF POL NIJE EMPTY");
 			for (Ocena o : pol) {
 				polPr.add(o.getPredmet());
+				System.out.println(o.getPredmet());
 			}
 		}
 
-		if (nep == null && pol != null) {
+		if (nep.isEmpty() && !pol.isEmpty()) {
+			System.out.println("NEP EMPTY" + pol.toString());
+
 			for (Predmet o : pre) {
 
 				if (!polPr.contains(o)) {
@@ -181,7 +193,9 @@ public class StudentBaza {
 				}
 
 			}
-		} else if (nep != null && pol == null) {
+		} else if (!nep.isEmpty() && pol.isEmpty()) {
+			System.out.println("POL EMPTY:" + nep.toString());
+
 			for (Predmet o : pre) {
 
 				if (!nep.contains(o)) {
@@ -191,23 +205,53 @@ public class StudentBaza {
 				}
 
 			}
-		} else if (nep == null && pol == null) {
+		} else if (nep.isEmpty() && pol.isEmpty()) {
+			System.out.println("OBA EMPTY" + pre.toString());
+
 			for (Predmet o : pre) {
 				retVal.add(o);
 				temp.add(o);
 			}
 
 		} else {
+			System.out.println("ELSE " + pol.toString());
+
 			for (Predmet o : pre) {
 
 				if (!nep.contains(o) && !polPr.contains(o)) {
+					System.out.println(o);
 					retVal.add(o);
 					temp.add(o);
 
 				}
 
 			}
-		}
+		}*/
+		/*
+		 * if (pol != null) { polPr = new ArrayList<Predmet>(); for (Ocena o : pol) {
+		 * polPr.add(o.getPredmet()); } }
+		 * 
+		 * if (nep == null && pol != null) { for (Predmet o : pre) {
+		 * 
+		 * if (!polPr.contains(o)) { retVal.add(o); temp.add(o); }
+		 * 
+		 * } } else if (nep != null && pol == null) { for (Predmet o : pre) {
+		 * 
+		 * if (!nep.contains(o)) { retVal.add(o); temp.add(o);
+		 * 
+		 * }
+		 * 
+		 * } } else if (nep == null && pol == null) { for (Predmet o : pre) {
+		 * retVal.add(o); temp.add(o); }
+		 * 
+		 * } else { for (Predmet o : pre) {
+		 * 
+		 * if (!nep.contains(o) && !polPr.contains(o)) { retVal.add(o); temp.add(o);
+		 * 
+		 * }
+		 * 
+		 * } }
+		 */
 		for (Predmet p : temp) {
 			if (p.getGodina() > s.getTrenutnaGodina()) {
 				retVal.remove(p);

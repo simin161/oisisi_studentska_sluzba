@@ -7,6 +7,7 @@ import java.util.List;
 
 import model.Ocena;
 import model.Predmet;
+import model.Student;
 import view.tabbedPanes.PrikazStudenta;
 
 public class OcenaBaza {
@@ -106,8 +107,8 @@ public class OcenaBaza {
 			avg = sum / (double) i;
 		}
 
-		StudentBaza.getInstance().getRow((PrikazStudenta.getInstance().getTable()
-				.convertRowIndexToModel(r))).setProsecnaOcena(avg);
+		StudentBaza.getInstance().getRow((PrikazStudenta.getInstance().getTable().convertRowIndexToModel(r)))
+				.setProsecnaOcena(avg);
 		return avg;
 
 	}
@@ -142,8 +143,22 @@ public class OcenaBaza {
 		StudentBaza.getInstance().getRow((PrikazStudenta.getInstance().getTable().convertRowIndexToModel(r)))
 				.setNepolozeno(predmet);
 
+		List<Predmet> predmeti = PredmetBaza.getInstance().getPredmete();
+
+		for (Predmet p : predmeti) {
+			if (p.getSifra().equals(id)) {
+				//p.getPolozili().remove(StudentBaza.getInstance()
+					//	.getRow((PrikazStudenta.getInstance().getTable().convertRowIndexToModel(r)))); // bacace exc
+				if(p.getNisuPolozili() == null)
+					p.setNisuPolozili(new ArrayList<Student>());
+				p.getNisuPolozili().add(StudentBaza.getInstance()
+						.getRow((PrikazStudenta.getInstance().getTable().convertRowIndexToModel(r))));
+
+			}
+		}
+
 	}
-	
+
 	public void izbrisiOcenuZaStudenta() {
 		ocena = null;
 		predmet = null;
