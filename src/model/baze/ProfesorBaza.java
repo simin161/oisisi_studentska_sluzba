@@ -150,7 +150,7 @@ public class ProfesorBaza {
 		}
 		
 		this.profesori.add(new Profesor(ime, prezime, datum, adresaS,
-				telefon, email, adresaK, brLicneKarte, titula, zvanje, null));
+				telefon, email, adresaK, brLicneKarte, titula, zvanje, new ArrayList<Predmet>()));
 		
 	}
 	
@@ -199,7 +199,6 @@ public class ProfesorBaza {
 					if(p.getProfesor().getBrLicneKarte().equals(pr.getBrLicneKarte())) {
 						
 						pr.getPredmeti().remove(p);
-						System.out.println("RADIM NESTO OSTAVI ME NA MIRU");
 						break;
 						
 					}
