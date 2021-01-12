@@ -226,6 +226,8 @@ public class ProfesorInformacije extends JPanel {
 			}
 		});
 		
+		Profesor profesor= ProfesorBaza.getInstance().getRow(selectedRow);
+		
 		btnPotvrdi.addActionListener(new ActionListener() {
 
 			@Override
@@ -289,7 +291,7 @@ public class ProfesorInformacije extends JPanel {
 					p.setBrLicneKarte(txtLk.getText());
 					p.setTitula(titula[cboxTitula.getSelectedIndex()]);
 					p.setZvanje(zvanje[cboxZvanje.getSelectedIndex()]);
-					p.setPredmeti(null);
+					p.setPredmeti(profesor.getPredmeti());
 	
 					ProfesoriController.getInstance().izmeniProfesora(p, staraLicna);
 					
@@ -299,8 +301,6 @@ public class ProfesorInformacije extends JPanel {
 				
 			}
 		});
-
-		Profesor profesor= ProfesorBaza.getInstance().getRow(selectedRow);
 		
 		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 		String date = df.format(profesor.getDatumRodjenja());

@@ -48,29 +48,7 @@ public class ProfesorBaza {
 	private void initProfesore() {
 		
 		this.profesori= new ArrayList<Profesor>();
-		/*Date date = null;
-		try {
-			date = new SimpleDateFormat("dd/MM/yyyy").parse("10/12/1985");
-		} catch (ParseException e) {
-			
-			e.printStackTrace();
-		}
 		
-		//test primer, kasnije ce biti implementirano zapravo iz datoteke
-		List<Predmet> predmeti1 = new ArrayList<Predmet>();
-		Predmet p = new Predmet("E119", "Algebra", Semestar.Letnji,1, null, 5, null, null);
-		Predmet p1 = new Predmet("E120", "Verovatnoca i slucajni procesi", Semestar.Letnji,2, null, 5, null, null);
-		
-		predmeti1.add(p);
-		predmeti1.add(p1);
-
-		List<Predmet> predmeti2 = new ArrayList<Predmet>();
-		predmeti2.add(p1);
-		predmeti2.add(p);
-		
-		profesori.add(new Profesor("Petar", "Petrovic", date, "Negde daleko 10", "02144444", "jasmo@ja.com", "Negde blizu 10", "025161112", Titula.profesor_doktor, Zvanje.Docent, predmeti1));
-		profesori.add(new Profesor("Petar", "Markovic", date, "Negde daleko 10", "02144444", "jasmo@ja.com", "Negde blizu 10", "025161231", Titula.Doktor, Zvanje.Docent, predmeti2));
-		*/
 	}
 	
 	public List<Profesor> getProfesore(){
