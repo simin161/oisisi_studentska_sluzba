@@ -98,8 +98,14 @@ public class NepolozeniBaza {
 			if(p1.getSifra().equals(p.getSifra())) {
 				predmet.remove(p1);
 				StudentBaza.getInstance()
-				.getRow(PrikazStudenta.getInstance().getTable().convertRowIndexToModel(r)).setNepolozeno(predmet);;
+				.getRow(PrikazStudenta.getInstance().getTable().convertRowIndexToModel(r)).setNepolozeno(predmet);			
 				break;
+			}
+		}
+		
+		for(Predmet p1 : PredmetBaza.getInstance().getPredmete()) {
+			if(p1.getSifra().equals(p.getSifra())){
+				p1.getNisuPolozili().remove(p);
 			}
 		}
 		
