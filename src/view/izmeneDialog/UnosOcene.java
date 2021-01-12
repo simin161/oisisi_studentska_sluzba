@@ -27,8 +27,10 @@ import model.Ocena;
 import model.Predmet;
 import model.Student;
 import model.baze.NepolozeniBaza;
+import model.baze.PredmetBaza;
 import model.baze.StudentBaza;
 import view.tabbedPanes.PrikazNepolozeni;
+import view.tabbedPanes.PrikazStudenta;
 
 public class UnosOcene extends JDialog {
 
@@ -160,14 +162,36 @@ public class UnosOcene extends JDialog {
 					
 				}
 				s.getPolozeno().add(o);
-				
 				nb.izbrisi(p);
+				
+				for(Predmet pr : PredmetBaza.getInstance().getPredmete()) {
+					
+					if(pr.getSifra().equals(p.getSifra())) {
+						
+						pr.getPolozili().add(s);
+						
+					}
+					
+					
+					for(Student st : pr.getNisuPolozili()) {
+						
+						if(st.getBrIndeksa().equals(s.getBrIndeksa())) {
+							
+							pr.getNisuPolozili().remove(st);
+							break;
+						}
+						
+					}
+					
+				}
 				
 				StudentPolozeni.getPrikaz().update("", 0);
 				StudentNepolozeni.getPrikaz().update("",0);
 				
 				StudentPolozeni.getLabelProsek().setText("Prosek: " + StudentPolozeni.getPrikaz().getModel().getBaza().izracunajProsek());
 				StudentPolozeni.getLabelEspb().setText("ESPB: " + StudentPolozeni.getPrikaz().getModel().getBaza().izracunajEspb());
+				PrikazStudenta.getInstance().update(null, -1);
+				
 				dispose();
 				
 			}

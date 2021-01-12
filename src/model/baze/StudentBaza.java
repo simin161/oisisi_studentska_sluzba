@@ -160,8 +160,8 @@ public class StudentBaza {
 		List<Predmet> pre = PredmetBaza.getInstance().getPredmete();
 		
 		for(Predmet p : pre) {
-			System.out.println(p.getNisuPolozili().isEmpty());
-			System.out.println(p.getPolozili().isEmpty());
+			System.out.println(p.getNisuPolozili().toString());
+			System.out.println(p.getPolozili().toString());
 		}
 		
 		/*for(Ocena p : pol) {
