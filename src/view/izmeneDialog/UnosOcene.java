@@ -29,15 +29,12 @@ import model.Student;
 import model.baze.NepolozeniBaza;
 import model.baze.PredmetBaza;
 import model.baze.StudentBaza;
-import view.tabbedPanes.PrikazNepolozeni;
 import view.tabbedPanes.PrikazStudenta;
 
 public class UnosOcene extends JDialog {
 
 	private static final long serialVersionUID = -6800913610486865815L;
-	
-	private PrikazNepolozeni prikaz;
-	
+
 	public UnosOcene(Container c, int selRow, int selStud,NepolozeniBaza nb) {
 		
 		Predmet p = nb.getRow(selRow);

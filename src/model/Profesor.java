@@ -10,6 +10,10 @@ import model.nabrojiviTipovi.Zvanje;
 
 public class Profesor implements Serializable{
 
+
+	private static final long serialVersionUID = 4383987070480180555L;
+
+
 	@Override
 	public String toString() {
 		return prezime + " " + ime;

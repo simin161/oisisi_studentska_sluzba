@@ -7,6 +7,8 @@ import model.nabrojiviTipovi.Semestar;
 
 public class Predmet implements Serializable{
 
+	private static final long serialVersionUID = -3668190862091839887L;
+	
 	private String sifra;
 	private String naziv;
 	private Semestar semestar;
@@ -119,5 +121,23 @@ public class Predmet implements Serializable{
 		
 		return sifra + " - " + naziv;
 		
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Predmet other = (Predmet) obj;
+		if (sifra == null) {
+			if (other.sifra != null)
+				return false;
+		} else if (!sifra.equals(other.sifra))
+			return false;
+		return true;
 	}
 }
