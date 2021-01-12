@@ -11,6 +11,7 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -37,6 +38,7 @@ import controller.provere.ProveraImena;
 import controller.provere.ProveraLk;
 import controller.provere.ProveraPrezimena;
 import controller.provere.ProveraTelefona;
+import model.Predmet;
 import model.Profesor;
 import model.baze.ProfesorBaza;
 import model.nabrojiviTipovi.Titula;
@@ -953,7 +955,7 @@ public class DialogDodavanjeProfesora extends JDialog{
 					profesor.setBrLicneKarte(txtLk.getText());
 					profesor.setTitula(titula[cboxTitula.getSelectedIndex()]);
 					profesor.setZvanje(zvanje[cboxZvanje.getSelectedIndex()]);
-					profesor.setPredmeti(null);
+					profesor.setPredmeti(new ArrayList<Predmet>());
 					
 					ProfesoriController pc = new ProfesoriController(profesor);
 					pc.dodajProfesora();

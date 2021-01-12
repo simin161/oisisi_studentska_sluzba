@@ -13,7 +13,6 @@ import java.util.List;
 
 import javax.swing.Box;
 import javax.swing.DefaultListCellRenderer;
-import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;

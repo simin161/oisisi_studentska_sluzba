@@ -39,7 +39,6 @@ import model.Profesor;
 import model.baze.ProfesorBaza;
 import model.nabrojiviTipovi.Titula;
 import model.nabrojiviTipovi.Zvanje;
-import view.framesAndDialogs.DialogDodavanjeProfesora;
 
 public class ProfesorInformacije extends JPanel {
 
