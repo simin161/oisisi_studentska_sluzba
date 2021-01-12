@@ -49,10 +49,10 @@ public class ProfesoriController {
 		}
 
 		Profesor prof = ProfesorBaza.getInstance().getRow(row);
-		PredmetBaza.getInstance().izbrisiProfesoraSaPredmeta(prof);
-		ProfesorBaza.getInstance().izbrisiProfesora(prof.getBrLicneKarte());
 		ProfPredBaza p = new ProfPredBaza();
 		p.izbrisi();
+		PredmetBaza.getInstance().izbrisiProfesoraSaPredmeta(prof);
+		ProfesorBaza.getInstance().izbrisiProfesora(prof.getBrLicneKarte());
 		PrikazProfesora.getInstance().updatePrikaz("UKLONJEN", row);
 
 	}
