@@ -104,4 +104,9 @@ public class ProfPredBaza {
 		}
 
 	}
+	
+	public void izbrisi() {
+		predmeti = null;
+		profesor = null;
+	}
 }

@@ -2,6 +2,8 @@ package controller.profesor;
 
 import model.Predmet;
 import model.Profesor;
+import model.baze.PredmetBaza;
+import model.baze.ProfPredBaza;
 import model.baze.ProfesorBaza;
 import view.tabbedPanes.PrikazProfesora;
 
@@ -47,7 +49,10 @@ public class ProfesoriController {
 		}
 
 		Profesor prof = ProfesorBaza.getInstance().getRow(row);
+		PredmetBaza.getInstance().izbrisiProfesoraSaPredmeta(prof);
 		ProfesorBaza.getInstance().izbrisiProfesora(prof.getBrLicneKarte());
+		ProfPredBaza p = new ProfPredBaza();
+		p.izbrisi();
 		PrikazProfesora.getInstance().updatePrikaz("UKLONJEN", row);
 
 	}

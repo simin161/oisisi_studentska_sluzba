@@ -152,39 +152,51 @@ public class PredmetBaza {
 			}
 		}
 	}
-	
-	public void izbrisiStudentaIzPolozenih(Student s) {
-		
-		for(Predmet p : predmeti) {
-			List<Student> polozili = p.getPolozili();
-			
-			if(polozili == null || polozili.isEmpty()) {
+
+	public void izbrisiProfesoraSaPredmeta(Profesor p) {
+		for (Predmet predmet : predmeti) {
+			if (predmet.getProfesor() == null) {
 				continue;
-			}else {
-				
-				for(Student sPol : polozili) {
-					if(sPol.getBrIndeksa().equals(s.getBrIndeksa())) {
+			} else {
+				if (predmet.getProfesor().getBrLicneKarte().equals(p.getBrLicneKarte())) {
+					predmet.setProfesor(null);
+				}
+			}
+		}
+	}
+
+	public void izbrisiStudentaIzPolozenih(Student s) {
+
+		for (Predmet p : predmeti) {
+			List<Student> polozili = p.getPolozili();
+
+			if (polozili == null || polozili.isEmpty()) {
+				continue;
+			} else {
+
+				for (Student sPol : polozili) {
+					if (sPol.getBrIndeksa().equals(s.getBrIndeksa())) {
 						polozili.remove(sPol);
 						break;
 					}
 				}
-				
+
 				p.setPolozili(polozili);
-			}	
+			}
 		}
-		
+
 	}
-	
+
 	public void izbrisiStudentaIzNepolozenih(Student s) {
-		
-		for(Predmet p : predmeti) {
+
+		for (Predmet p : predmeti) {
 			List<Student> popadali = p.getNisuPolozili();
-			
-			if(popadali == null || popadali.isEmpty()) {
+
+			if (popadali == null || popadali.isEmpty()) {
 				continue;
-			}else {
-				for(Student sPop : popadali) {
-					if(sPop.getBrIndeksa().equals(s.getBrIndeksa())) {
+			} else {
+				for (Student sPop : popadali) {
+					if (sPop.getBrIndeksa().equals(s.getBrIndeksa())) {
 						popadali.remove(sPop);
 						break;
 					}
