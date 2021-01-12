@@ -48,7 +48,7 @@ public class ProfesorBaza {
 	private void initProfesore() {
 		
 		this.profesori= new ArrayList<Profesor>();
-		Date date = null;
+		/*Date date = null;
 		try {
 			date = new SimpleDateFormat("dd/MM/yyyy").parse("10/12/1985");
 		} catch (ParseException e) {
@@ -70,7 +70,7 @@ public class ProfesorBaza {
 		
 		profesori.add(new Profesor("Petar", "Petrovic", date, "Negde daleko 10", "02144444", "jasmo@ja.com", "Negde blizu 10", "025161112", Titula.profesor_doktor, Zvanje.Docent, predmeti1));
 		profesori.add(new Profesor("Petar", "Markovic", date, "Negde daleko 10", "02144444", "jasmo@ja.com", "Negde blizu 10", "025161231", Titula.Doktor, Zvanje.Docent, predmeti2));
-		
+		*/
 	}
 	
 	public List<Profesor> getProfesore(){

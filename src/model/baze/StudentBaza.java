@@ -45,7 +45,7 @@ public class StudentBaza {
 	private void initializeStudents() {
 		this.students = new ArrayList<Student>();
 		// test
-		Date date = null;
+		/*Date date = null;
 		try {
 			date = new SimpleDateFormat("dd/MM/yyyy").parse("10/12/1000");
 		} catch (ParseException e) {
@@ -67,7 +67,7 @@ public class StudentBaza {
 		oc1.add(new Ocena(s, new Predmet("sifra1", "naziv1", null, 7, null, 6, null, null), 6, date));
 		s1.setPolozeno(oc1);
 		students.add(s);
-		students.add(s1);
+		students.add(s1);*/
 	}
 
 	public List<Student> getStudents() {

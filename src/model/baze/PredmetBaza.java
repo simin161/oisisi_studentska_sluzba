@@ -45,8 +45,8 @@ public class PredmetBaza {
 		this.predmeti = new ArrayList<Predmet>();
 
 		// test primer
-		predmeti.add(new Predmet("E210", "Matematička analiza 1", Semestar.Zimski, 1, null, 9, null, null));
-		predmeti.add(new Predmet("E211", "Matematička analiza 2", Semestar.Zimski, 2, null, 9, null, null));
+		//predmeti.add(new Predmet("E210", "Matematička analiza 1", Semestar.Zimski, 1, null, 9, null, null));
+		//predmeti.add(new Predmet("E211", "Matematička analiza 2", Semestar.Zimski, 2, null, 9, null, null));
 
 	}
 

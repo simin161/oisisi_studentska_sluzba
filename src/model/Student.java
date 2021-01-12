@@ -1,12 +1,16 @@
 package model;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 import model.nabrojiviTipovi.Status;
 
-public class Student {
+public class Student implements Serializable{
 
+	
+	private static final long serialVersionUID = 1518027390654848009L;
+	
 	private String prezime;
 	private String ime;
 	private Date datumRodjenja;

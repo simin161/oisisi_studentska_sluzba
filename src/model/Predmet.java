@@ -1,10 +1,11 @@
 package model;
 
+import java.io.Serializable;
 import java.util.List;
 
 import model.nabrojiviTipovi.Semestar;
 
-public class Predmet {
+public class Predmet implements Serializable{
 
 	private String sifra;
 	private String naziv;

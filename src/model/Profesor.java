@@ -1,5 +1,6 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -7,7 +8,7 @@ import java.util.List;
 import model.nabrojiviTipovi.Titula;
 import model.nabrojiviTipovi.Zvanje;
 
-public class Profesor {
+public class Profesor implements Serializable{
 
 	@Override
 	public String toString() {

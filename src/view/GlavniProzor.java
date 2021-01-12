@@ -14,6 +14,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import controller.WindowListenerSsluzba;
 import view.tabbedPanes.PrikazPredmeta;
 import view.tabbedPanes.PrikazProfesora;
 import view.tabbedPanes.PrikazStudenta;
@@ -30,6 +31,8 @@ public class GlavniProzor extends JFrame{
 		Dimension screenSize= kit.getScreenSize();
 		int screenHeight = (int) (screenSize.height * 0.75);
 		int screenWidth = (int) (screenSize.width * 0.75);
+		
+		addWindowListener(new WindowListenerSsluzba());
 		
 		
 		setSize(screenWidth, screenHeight);
