@@ -1,4 +1,4 @@
-package serializacija;
+package controller.serijalizacijaDeserijalizacija;
 
 import java.io.BufferedOutputStream;
 import java.io.File;

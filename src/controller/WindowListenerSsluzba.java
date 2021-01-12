@@ -5,7 +5,7 @@ import java.awt.event.WindowListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import serializacija.Serijalizacija;
+import controller.serijalizacijaDeserijalizacija.Serijalizacija;
 
 public class WindowListenerSsluzba implements WindowListener {
 
