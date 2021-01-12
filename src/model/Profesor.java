@@ -8,11 +8,8 @@ import java.util.List;
 import model.nabrojiviTipovi.Titula;
 import model.nabrojiviTipovi.Zvanje;
 
+@SuppressWarnings("serial")
 public class Profesor implements Serializable{
-
-
-	private static final long serialVersionUID = 4383987070480180555L;
-
 
 	@Override
 	public String toString() {
