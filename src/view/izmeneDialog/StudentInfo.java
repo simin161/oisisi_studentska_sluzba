@@ -929,7 +929,7 @@ public class StudentInfo extends JPanel {
 				tFPrezime.setText(setString(tFPrezime.getText()));
 				tFBrI.setText(tFBrI.getText().toUpperCase());
 
-				Student s = new Student();
+				Student s1 = new Student();
 
 				String status = cBFin.getSelectedItem().toString();
 				Status st = status.equals("Budžet") ? Status.B : Status.S;
@@ -957,17 +957,19 @@ public class StudentInfo extends JPanel {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				s.setIme(tFName.getText());
-				s.setPrezime(tFPrezime.getText());
-				s.setDatumRodjenja(date1);
-				s.setAdresaStanovanja(tFAdr.getText());
-				s.setTelefon(tFBr.getText());
-				s.setEmail(tFEmail.getText());
-				s.setBrIndeksa(tFBrI.getText().toUpperCase());
-				s.setGodinaUpisa(Integer.parseInt((tFGodU.getText())));
-				s.setTrenutnaGodina(trenutnaGodina);
-				s.setStatus(st);
-				StudentController.getInstance().izmeniStudenta(s, oldId);
+				s1.setIme(tFName.getText());
+				s1.setPrezime(tFPrezime.getText());
+				s1.setDatumRodjenja(date1);
+				s1.setAdresaStanovanja(tFAdr.getText());
+				s1.setTelefon(tFBr.getText());
+				s1.setEmail(tFEmail.getText());
+				s1.setBrIndeksa(tFBrI.getText().toUpperCase());
+				s1.setGodinaUpisa(Integer.parseInt((tFGodU.getText())));
+				s1.setTrenutnaGodina(trenutnaGodina);
+				s1.setStatus(st);
+				s1.setPolozeno(s.getPolozeno());
+				s1.setNepolozeno(s.getNepolozeno());
+				StudentController.getInstance().izmeniStudenta(s1, oldId);
 
 				JOptionPane.showMessageDialog(StudentInfo.this, "Izmena studenta je uspešno izvršena!");
 				Window w = SwingUtilities.getWindowAncestor(StudentInfo.this);
