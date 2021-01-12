@@ -7,7 +7,6 @@ import java.util.List;
 
 import model.Ocena;
 import model.Predmet;
-import model.Student;
 import view.tabbedPanes.PrikazStudenta;
 
 public class OcenaBaza {
@@ -146,7 +145,7 @@ public class OcenaBaza {
 	}
 	
 	public void izbrisiOcenuZaStudenta() {
-		ocena.clear();
-		predmet.clear();
+		ocena = null;
+		predmet = null;
 	}
 }
