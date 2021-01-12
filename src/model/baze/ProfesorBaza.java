@@ -198,4 +198,39 @@ public class ProfesorBaza {
 			}
 		}
 	}
+	
+	public List<Predmet> predmetKojiNepredaje(Profesor p){
+		
+		List<Predmet> sviPredmeti = PredmetBaza.getInstance().getPredmete();
+		List<Predmet> profPredaje = p.getPredmeti();
+		List<Predmet> nepredaje = new ArrayList<Predmet>();
+		
+		if(sviPredmeti == null) {
+			
+			return null;
+			
+		}
+		else if(profPredaje == null) {
+			
+			nepredaje = sviPredmeti;
+			
+		}
+		else if(sviPredmeti != null && profPredaje != null) {
+			
+			for(Predmet pr : sviPredmeti) {
+				
+				if(!profPredaje.contains(pr)) {
+					
+					nepredaje.add(pr);
+					
+				}
+				
+			}
+			
+		}
+		
+		
+		return nepredaje;
+		
+	}
 }

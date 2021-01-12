@@ -44,9 +44,7 @@ public class DodajPredProf extends JDialog {
 	
 	private JList<String> list;
 	private Predmet[]arr;
-	private String []strings;
 	
-	@SuppressWarnings("unchecked")
 	DodajPredProf(Container c, int selProf, PrikazProfPredmeta ppp){
 		
 		setSize((int) (c.getWidth() * 0.8), (int) (c.getHeight() * 0.7));
@@ -72,52 +70,12 @@ public class DodajPredProf extends JDialog {
 		panelPrikaz.add(rigidArea, BorderLayout.SOUTH);
 
 		Profesor p = ProfesorBaza.getInstance().getRow(selProf);
-		List<Predmet> profesorPredaje = p.getPredmeti();
+		predm = ProfesorBaza.getInstance().predmetKojiNepredaje(p);
 		
-		List<Predmet> predmetiSvi = PredmetBaza.getInstance().getPredmete();
-		
-		if(profesorPredaje.size()==0 || profesorPredaje == null) {
-			
-			predm = predmetiSvi;
-		}
-		
-			predm = new ArrayList<Predmet>();
-			
-			for(Predmet pr1 : predmetiSvi) {
-				
-				for(Predmet pr2 : profesorPredaje) {
-					
-					if(!pr1.getSifra().equals(pr2.getSifra())) {
-						
-						predm.add(pr1);
-						break;
-						
-					}else {
-						
-						predm.remove(pr1);
-						break;
-						
-					}
-					
-				}
-				
-			}
-			
 		arr = predm.toArray(new Predmet[0]);
 		// https://stackoverflow.com/questions/1018750/how-to-convert-object-array-to-string-array-in-java
-		
-		list = new JList<String>();
-		
-		@SuppressWarnings("rawtypes")
-		DefaultListModel model = new DefaultListModel();
-		
-		for(Predmet pr1 : predm) {
-			
-			model.addElement(pr1);
-			
-		}
-		
-		list.setModel(model);
+		String[] strings = Arrays.stream(arr).map(Predmet::toString).toArray(String[]::new);
+		list = new JList<String>(strings);
 		
 		DefaultListCellRenderer renderer = (DefaultListCellRenderer) list.getCellRenderer();
 		renderer.setHorizontalAlignment(SwingConstants.LEFT);
@@ -166,28 +124,18 @@ public class DodajPredProf extends JDialog {
 						{
 							pred.setProfesor(p);
 							PredmetController.getInstance().izmeniPredmet(pred, pred.getSifra());
-							
-							
 							break;
 						}
 						
 					}
 					
 					ppp.azuriraj(null, -1);
-				
-					model.remove(selected);
-					
-					//System.out.println(predm.toString());
 					
 					JOptionPane.showMessageDialog(DodajPredProf.this.getContentPane(), "Predmet je uspešno dodeljen profesoru.");
 					dispose();
 					
-				}
-				
+				}		
 			}
-			
-			
-			
 		});
 	
 		add(btnPanel, BorderLayout.SOUTH);
