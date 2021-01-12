@@ -159,8 +159,9 @@ public class StudentBaza {
 		List<Ocena> pol = s.getPolozeno();
 		List<Predmet> pre = PredmetBaza.getInstance().getPredmete();
 		
-		for(Predmet p : nep) {
+		for(Predmet p : pre) {
 			System.out.println(p.getNisuPolozili().isEmpty());
+			System.out.println(p.getPolozili().isEmpty());
 		}
 		
 		/*for(Ocena p : pol) {
@@ -258,7 +259,7 @@ public class StudentBaza {
 			}
 		}
 
-		return retVal;
+		return pre;
 	}
 
 	public void izbrisiNepolozeniPredmet(Predmet p) {

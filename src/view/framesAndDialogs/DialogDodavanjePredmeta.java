@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.Box;
@@ -30,6 +31,7 @@ import controller.provere.ProveraEspb;
 import controller.provere.ProveraNazivaPredmeta;
 import controller.provere.ProveraSifrePredmeta;
 import model.Predmet;
+import model.Student;
 import model.baze.PredmetBaza;
 import model.nabrojiviTipovi.Semestar;
 
@@ -394,7 +396,7 @@ public class DialogDodavanjePredmeta extends JDialog {
 				int espb = Integer.parseInt(txtEspb.getText());
 
 				PredmetController pc = new PredmetController(new Predmet(txtSifra.getText().trim().toUpperCase(),
-						txtNaziv.getText(), sem, god, null, espb, null, null));
+						txtNaziv.getText(), sem, god, null, espb, new ArrayList<Student>(), new ArrayList<Student>()));
 				pc.dodajPredmet();
 
 				JOptionPane.showMessageDialog(null, "Unos novog predmeta je uspešno izvršen!");

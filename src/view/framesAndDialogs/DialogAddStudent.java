@@ -13,6 +13,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -40,6 +41,8 @@ import controller.provere.ProveraImena;
 import controller.provere.ProveraIndeksa;
 import controller.provere.ProveraPrezimena;
 import controller.student.StudentController;
+import model.Ocena;
+import model.Predmet;
 import model.Student;
 import model.baze.StudentBaza;
 import model.nabrojiviTipovi.Status;
@@ -960,7 +963,7 @@ public class DialogAddStudent extends JDialog {
 
 					Student st = new Student(tFPrezime.getText(), tFName.getText(), date1, tFAdr.getText(),
 							tFBr.getText(), tFEmail.getText(), tFBrI.getText().toUpperCase(), godUpis, trenutnaGodina,
-							s, 0, null, null);
+							s, 0, new ArrayList<Ocena>(), new ArrayList<Predmet>());
 					
 					StudentController sc = new StudentController(st);
 					sc.dodajStudenta();

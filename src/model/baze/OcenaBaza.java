@@ -147,8 +147,8 @@ public class OcenaBaza {
 
 		for (Predmet p : predmeti) {
 			if (p.getSifra().equals(id)) {
-				//p.getPolozili().remove(StudentBaza.getInstance()
-					//	.getRow((PrikazStudenta.getInstance().getTable().convertRowIndexToModel(r)))); // bacace exc
+				p.getPolozili().remove(StudentBaza.getInstance()
+					.getRow((PrikazStudenta.getInstance().getTable().convertRowIndexToModel(r)))); // bacace exc
 				if(p.getNisuPolozili() == null)
 					p.setNisuPolozili(new ArrayList<Student>());
 				p.getNisuPolozili().add(StudentBaza.getInstance()
