@@ -188,13 +188,22 @@ public class ProfesorBaza {
 		
 	}
 	
-	public void ukloniPredmet(int selR, Predmet p) {
-		int i = 0;
-		
+	public void ukloniPredmet(Predmet p) {
+	
 		for(Profesor pr : this.profesori) {
-			if(pr.getPredmeti().get(i).getSifra().equals(p.getSifra())) {
-				this.profesori.get(selR).getPredmeti().remove(p);
-				break;
+			
+			for(Predmet prr : pr.getPredmeti()) {
+				
+				if(prr.getSifra().equals(p.getSifra())) {
+					
+					if(p.getProfesor().getBrLicneKarte().equals(pr.getBrLicneKarte())) {
+						
+						pr.getPredmeti().remove(p);
+						System.out.println("RADIM NESTO OSTAVI ME NA MIRU");
+						break;
+						
+					}
+				}
 			}
 		}
 	}
@@ -210,16 +219,11 @@ public class ProfesorBaza {
 			return null;
 			
 		}
-		else if(profPredaje == null) {
-			
-			nepredaje = sviPredmeti;
-			
-		}
-		else if(sviPredmeti != null && profPredaje != null) {
+		else if(sviPredmeti != null) {
 			
 			for(Predmet pr : sviPredmeti) {
 				
-				if(!profPredaje.contains(pr)) {
+				if(pr.getProfesor()==null) {
 					
 					nepredaje.add(pr);
 					
@@ -229,8 +233,8 @@ public class ProfesorBaza {
 			
 		}
 		
-		
 		return nepredaje;
 		
 	}
+	
 }

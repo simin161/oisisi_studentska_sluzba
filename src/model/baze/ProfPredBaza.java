@@ -99,6 +99,23 @@ public class ProfPredBaza {
 
 	}
 	
+	public void removePredmet(Predmet p) {
+		
+		int i = 0;
+		
+		List<Profesor> profesori = ProfesorBaza.getInstance().getProfesore();
+		
+		for(Profesor pr : profesori) {
+			if(pr.getPredmeti().get(i).getSifra().equals(p.getSifra())) {
+				pr.getPredmeti().remove(p);
+				System.out.println("RADIM NESTO OSTAVI ME NA MIRU");
+				break;
+			}
+			i++;
+		}
+		
+	}
+	
 	public void izbrisi() {
 		predmeti = null;
 		profesor = null;

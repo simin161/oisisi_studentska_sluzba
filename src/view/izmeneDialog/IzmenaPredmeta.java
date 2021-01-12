@@ -31,6 +31,8 @@ import controller.provere.ProveraNazivaPredmeta;
 import controller.provere.ProveraSifrePredmeta;
 import model.Predmet;
 import model.baze.PredmetBaza;
+import model.baze.ProfPredBaza;
+import model.baze.ProfesorBaza;
 import model.nabrojiviTipovi.Semestar;
 
 public class IzmenaPredmeta extends JDialog {
@@ -160,6 +162,33 @@ public class IzmenaPredmeta extends JDialog {
 			buttonAdd.setEnabled(true);
 			buttonDelete.setEnabled(false);
 		}
+		
+		buttonDelete.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				txtProf.setText("");
+				//Predmet p = PredmetBaza.getInstance().getRow(r);
+				//String oldId = p.getSifra();
+				
+				p.setProfesor(null);
+				PredmetController.getInstance().izmeniPredmet(p, oldId);
+				
+				
+				ProfesorBaza.getInstance().ukloniPredmet(p);
+				
+				ProfPredBaza ppb = new ProfPredBaza();
+				
+				ppb.removePredmet(p);
+				
+				//ProfesoriController.getInstance().izmeniProfesora(p, staraLicna);
+				
+			}
+			
+			
+			
+		});
 
 		txtProf.getDocument().addDocumentListener(new DocumentListener() {
 
