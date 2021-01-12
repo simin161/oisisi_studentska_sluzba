@@ -10,7 +10,9 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import controller.predmet.PredmetController;
 import model.Predmet;
+import model.baze.PredmetBaza;
 import model.baze.ProfPredBaza;
 import view.tabbedPanes.PrikazProfPredmeta;
 
@@ -70,6 +72,7 @@ public class ProfPredajePredmete extends JPanel {
 						//int r = prikaz.getTable().convertColumnIndexToModel(selectedRow);
 
 						Predmet p = ppb.getRow(selectedRow);
+						p.setProfesor(null);
 						ppb.ukloniPredmet(selectedRow, p);
 						prikaz.azuriraj("UKLONJEN", -1);
 					}
