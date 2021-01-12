@@ -157,7 +157,6 @@ public class StudentBaza {
 		}
 	}
 
-	
 	public List<Predmet> predmetiKojeNema(Student s) {
 		List<Predmet> retVal = new ArrayList<Predmet>();
 		List<Predmet> temp = new ArrayList<Predmet>();
@@ -165,10 +164,10 @@ public class StudentBaza {
 		List<Predmet> nep = s.getNepolozeno();
 		List<Ocena> pol = s.getPolozeno();
 		List<Predmet> pre = PredmetBaza.getInstance().getPredmete();
-		
-		if(pol != null) {
+
+		if (pol != null) {
 			polPr = new ArrayList<Predmet>();
-			for(Ocena o : pol) {
+			for (Ocena o : pol) {
 				polPr.add(o.getPredmet());
 			}
 		}
@@ -217,4 +216,27 @@ public class StudentBaza {
 
 		return retVal;
 	}
+
+	public void izbrisiNepolozeniPredmet(Predmet p) {
+
+		for (Student s : students) {
+
+			if (s.getNepolozeno() == null) {
+				continue;
+			} else {
+				for (Predmet pr : s.getNepolozeno()) {
+
+					if (pr.getSifra().equals(p.getSifra())) {
+
+						s.getNepolozeno().remove(p);
+						break;
+					}
+
+				}
+
+			}
+		}
+
+	}
+
 }

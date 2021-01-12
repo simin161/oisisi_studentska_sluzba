@@ -2,6 +2,8 @@ package controller.predmet;
 
 import model.Predmet;
 import model.baze.PredmetBaza;
+import model.baze.ProfesorBaza;
+import model.baze.StudentBaza;
 import view.tabbedPanes.PrikazPredmeta;
 
 public class PredmetController {
@@ -51,6 +53,10 @@ public class PredmetController {
 
 		Predmet predmet = PredmetBaza.getInstance().getRow(rowSelectedIndex);
 		PredmetBaza.getInstance().izbrisiPredmet(predmet.getSifra());
+		
+		ProfesorBaza.getInstance().ukloniPredmet(predmet);
+		StudentBaza.getInstance().izbrisiNepolozeniPredmet(predmet);
+		
 		PrikazPredmeta.getInstance().updatePrikaz("UKLONJEN", rowSelectedIndex);
 
 	}
