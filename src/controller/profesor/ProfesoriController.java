@@ -65,10 +65,4 @@ public class ProfesoriController {
 		
 	}
 	
-	public void dodajPredmet(int selProf, Predmet p) {
-		
-		ProfesorBaza.getInstance().dodajPredmet(selProf, p);
-		PrikazProfesora.getInstance().updatePrikaz(null, -1);
-	}
-	
 }

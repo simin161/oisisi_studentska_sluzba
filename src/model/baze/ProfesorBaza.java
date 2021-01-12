@@ -55,18 +55,16 @@ public class ProfesorBaza {
 			
 			e.printStackTrace();
 		}
+		
 		//test primer, kasnije ce biti implementirano zapravo iz datoteke
 		List<Predmet> predmeti1 = new ArrayList<Predmet>();
-		Predmet p = new Predmet("E211", "Algebra", Semestar.Letnji,1, null, 5, null, null);
-		Predmet p1 = new Predmet("E212", "Verovatnoca i slucajni procesi", Semestar.Letnji,2, null, 5, null, null);
+		Predmet p = new Predmet("E119", "Algebra", Semestar.Letnji,1, null, 5, null, null);
+		Predmet p1 = new Predmet("E120", "Verovatnoca i slucajni procesi", Semestar.Letnji,2, null, 5, null, null);
 		
 		predmeti1.add(p);
 		predmeti1.add(p1);
-		predmeti1.add(p);
-		predmeti1.add(p1);
-		
+
 		List<Predmet> predmeti2 = new ArrayList<Predmet>();
-		predmeti2.add(p1);
 		predmeti2.add(p1);
 		predmeti2.add(p);
 		
@@ -182,31 +180,12 @@ public class ProfesorBaza {
 				pr.setBrLicneKarte(p.getBrLicneKarte());
 				pr.setTitula(p.getTitula());
 				pr.setZvanje(p.getZvanje());
+				pr.setPredmeti(p.getPredmeti());
 				
 			}
 			
 		}
 		
-	}
-	
-	public void dodajPredmet(int selectedRow, Predmet p) {
-		
-		int n = this.profesori.get(selectedRow).getPredmeti().size();
-		
-		for(int i = 0; i < n; i++) {
-			
-			String sifra = this.profesori.get(selectedRow).getPredmeti().get(i).getSifra();
-			if(sifra.equals(p.getSifra())) {
-				
-				return;
-				
-			}
-			else {
-				
-				this.profesori.get(selectedRow).getPredmeti().add(p);
-				
-			}
-		}
 	}
 	
 	public void ukloniPredmet(int selR, Predmet p) {
@@ -219,5 +198,4 @@ public class ProfesorBaza {
 			}
 		}
 	}
-	
 }

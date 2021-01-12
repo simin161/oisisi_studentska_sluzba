@@ -11,7 +11,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import model.Predmet;
-import model.baze.PredmetBaza;
 import model.baze.ProfPredBaza;
 import view.tabbedPanes.PrikazProfPredmeta;
 
@@ -47,17 +46,8 @@ public class ProfPredajePredmete extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				int selectedRow = prikaz.getSelectedRow();
-
-				if (selectedRow >= 0) {
-
-					int selRow = prikaz.getTable().convertRowIndexToModel(selectedRow);
-
-					Predmet p = PredmetBaza.getInstance().getRow(selRow);
-
-					ppb.dodajPredmet(selRow, p);
-
-				}
+				DodajPredProf dpp = new DodajPredProf(prikaz.getParent(), selProf, prikaz);
+				dpp.setVisible(true);
 
 			}
 

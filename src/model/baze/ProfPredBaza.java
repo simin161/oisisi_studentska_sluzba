@@ -87,12 +87,6 @@ public class ProfPredBaza {
 
 	}
 
-	public void dodajPredmet(int selectedRow, Predmet p) {
-
-		ProfesorBaza.getInstance().dodajPredmet(selectedRow, p);
-
-	}
-
 	public void ukloniPredmet(int r, Predmet p) {
 		for (Predmet p1 : predmeti) {
 			if (p1.getSifra().equals(p.getSifra())) {
