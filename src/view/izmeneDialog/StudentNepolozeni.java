@@ -82,8 +82,21 @@ public class StudentNepolozeni extends JPanel {
 
 			public void actionPerformed(ActionEvent e) {
 
+				int selectedRow = prikaz.getSelectedRow();
+				
+				if(selectedRow != -1) {
+					
+					UnosOcene unos = new UnosOcene(StudentNepolozeni.this.getParent(), selectedRow, r, prikaz.getModel().getBaza());
+					unos.setVisible(true);
+				
+				}
+				else {
+					
+					JOptionPane.showMessageDialog(prikaz.getParent(), "Označite predmet za upis ocene.",
+							"Upozorenje", JOptionPane.WARNING_MESSAGE);
+					
+				}
 			}
-
 		});
 
 		add(prikaz);

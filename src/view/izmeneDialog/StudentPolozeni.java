@@ -22,8 +22,10 @@ public class StudentPolozeni extends JPanel {
 	 */
 	private static final long serialVersionUID = 8835038055857711937L;
 
-	private PrikazOcene prikaz;
-
+	private static PrikazOcene prikaz;
+	private static JLabel lblPr;
+	private static JLabel lblEspb;
+	
 	public StudentPolozeni() {
 
 		BoxLayout b = new BoxLayout(this, BoxLayout.Y_AXIS);
@@ -40,11 +42,11 @@ public class StudentPolozeni extends JPanel {
 
 		OcenaBaza o1 = prikaz.getModel().getBaza();
 		JPanel panelPr = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-		JLabel lblPr = new JLabel("Prosek: " + o1.izracunajProsek());
+		lblPr = new JLabel("Prosek: " + o1.izracunajProsek());
 		panelPr.add(lblPr);
 
 		JPanel panelEspb = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-		JLabel lblEspb = new JLabel("ESPB: " + o1.izracunajEspb());
+		lblEspb = new JLabel("ESPB: " + o1.izracunajEspb());
 		panelEspb.add(lblEspb);
 
 		buttonPonisti.addActionListener(new ActionListener() {
@@ -77,6 +79,24 @@ public class StudentPolozeni extends JPanel {
 		add(prikaz);
 		add(panelPr);
 		add(panelEspb);
+	}
+	
+	public static PrikazOcene getPrikaz() {
+		
+		return prikaz;
+		
+	}
+	
+	public static JLabel getLabelProsek() {
+		
+		return lblPr;
+		
+	}
+	
+	public static JLabel getLabelEspb() {
+		
+		return lblEspb;
+		
 	}
 
 }
