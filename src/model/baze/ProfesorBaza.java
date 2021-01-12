@@ -211,7 +211,6 @@ public class ProfesorBaza {
 	public List<Predmet> predmetKojiNepredaje(Profesor p){
 		
 		List<Predmet> sviPredmeti = PredmetBaza.getInstance().getPredmete();
-		List<Predmet> profPredaje = p.getPredmeti();
 		List<Predmet> nepredaje = new ArrayList<Predmet>();
 		
 		if(sviPredmeti == null) {

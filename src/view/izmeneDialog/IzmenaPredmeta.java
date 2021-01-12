@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.util.List;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -30,8 +31,8 @@ import controller.provere.ProveraEspb;
 import controller.provere.ProveraNazivaPredmeta;
 import controller.provere.ProveraSifrePredmeta;
 import model.Predmet;
+import model.Profesor;
 import model.baze.PredmetBaza;
-import model.baze.ProfPredBaza;
 import model.baze.ProfesorBaza;
 import model.nabrojiviTipovi.Semestar;
 
@@ -144,7 +145,7 @@ public class IzmenaPredmeta extends JDialog {
 
 		/*---TODO: uklanjanje/dodavanje profesora---*/
 		JPanel panelProf = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		JLabel lbl = new JLabel("TODO: uklanjanje/dodavanje profesora");
+		JLabel lbl = new JLabel("Profesor");
 		txtProf = new JTextArea();
 		// txtProf.setEditable(false);
 		JButton buttonAdd = new JButton();
@@ -168,21 +169,42 @@ public class IzmenaPredmeta extends JDialog {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				txtProf.setText("");
-				//Predmet p = PredmetBaza.getInstance().getRow(r);
-				//String oldId = p.getSifra();
-				
-				p.setProfesor(null);
-				PredmetController.getInstance().izmeniPredmet(p, oldId);
-				
-				
-				ProfesorBaza.getInstance().ukloniPredmet(p);
-				
-				ProfPredBaza ppb = new ProfPredBaza();
-				
-				ppb.removePredmet(p);
-				
-				//ProfesoriController.getInstance().izmeniProfesora(p, staraLicna);
+				String[] opcije = { "Da", "Ne" };
+
+				int i = JOptionPane.showOptionDialog(IzmenaPredmeta.this.getParent(),
+						"Da li ste sigurni?", "Ukloni profesora",
+						JOptionPane.YES_NO_OPTION, JOptionPane.DEFAULT_OPTION, null, opcije, opcije[0]);
+
+				if(i == 0) {
+					
+					//Predmet p = PredmetBaza.getInstance().getRow(r);
+					//String oldId = p.getSifra();
+					
+					List<Profesor> profesori = ProfesorBaza.getInstance().getProfesore();
+					
+					for(Profesor pr : profesori) {
+						
+						if(pr.getBrLicneKarte().equals(p.getProfesor().getBrLicneKarte())) {
+							
+							for(Predmet prr : pr.getPredmeti()) {
+								
+								if(prr.getSifra().equals(p.getSifra())) {
+									
+									pr.getPredmeti().remove(prr);
+									break;
+								}
+								
+							}
+							
+						}
+						
+					}
+					
+					p.setProfesor(null);
+					txtProf.setText("");
+					buttonAdd.setEnabled(true);
+					buttonDelete.setEnabled(false);
+				}
 				
 			}
 			
