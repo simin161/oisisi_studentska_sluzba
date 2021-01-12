@@ -146,6 +146,7 @@ public class IzmenaPredmeta extends JDialog {
 		/*---TODO: uklanjanje/dodavanje profesora---*/
 		JPanel panelProf = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		JLabel lbl = new JLabel("Profesor");
+		
 		txtProf = new JTextArea();
 		// txtProf.setEditable(false);
 		JButton buttonAdd = new JButton();
@@ -154,6 +155,7 @@ public class IzmenaPredmeta extends JDialog {
 		txtProf.setEditable(false);
 		buttonAdd.setText("+");
 		buttonDelete.setText("-");
+		
 
 		if (p.getProfesor() != null) {
 			txtProf.setText(p.getProfesor().getIme() + " " + p.getProfesor().getPrezime());
@@ -251,8 +253,9 @@ public class IzmenaPredmeta extends JDialog {
 
 		});
 
-		// panelProf.add(Box.createHorizontalStrut(65));
+		panelProf.add(Box.createHorizontalStrut(65));
 		panelProf.add(lbl);
+		panelProf.add(Box.createHorizontalStrut(100));
 		panelProf.add(txtProf);
 		panelProf.add(buttonAdd);
 		panelProf.add(buttonDelete);
