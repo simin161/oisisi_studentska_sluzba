@@ -92,7 +92,7 @@ public class PrikazPredmeta extends JPanel{
 		
 		if(kriterijum.trim().length()!= 0) {
 			
-			rowSorter.setRowFilter(RowFilter.regexFilter(kriterijum, 1));
+			rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + kriterijum, 1));
 			tabelaPredmet.setRowSorter(rowSorter);
 			
 		}
