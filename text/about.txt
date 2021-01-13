@@ -1,0 +1,25 @@
+--Verzija aplikacije: 0.37
+
+--Aplikacija "Studentska služba" je namenjena referentima studenstke službe određenog fakulteta.
+Napisana je u programskom jeziku "Java". Prilikom pokretanja prikazuje se glavni prozor na sredini ekrana.
+Glavni prozor sadrži menu bar, toolbar i tabove. Svaka komponenta glavnog prozora, kao i sam njen sadržaj,
+bi trebalo da bude intuitivno jasan korisniku za šta služi, kako se bira data opcija i čemu služi.
+
+--Biografija autora:
+Autor 1 (student 1):
+Ime i prezime: Natalija Simin
+Datum rođenja: 30.09.1999.
+Datum smrti: (autor je još uvek živ)
+
+Završila OŠ "Sever Đurkić" u Bečeju 2014. godine. Iste godine, upisuje srednju školu "Gimnazija Bečej", opšti smer,
+koju završila 2018. godine. Iste godine upisuje Fakultet Tehničkih Nauka u Novom Sadu, smer Računarstvo i automatika,
+gde studira još uvek. Trenutno živi u Bečeju.
+
+Autor 2 (student 2):
+Ime i prezime: David Jandrić
+Datum rođenja:  16.01.2000.
+Datum smrti : (autor je još uvek živ)
+
+Završio OŠ "Petar Kočić" u Temerinu 2014. godine. Iste godine, upisuje srednju elektrotehničku školu "Mihajlo Pupin"
+u Novom Sadu,smer Elektrotehničar informacionih tehnologija - OGLED, koju je završio 2018. godine. Iste godine upisuje 
+Fakultet Tehničkih Nauka u Novom Sadu, smer Računarstvo i automatika, gde još uvek studira. Trenutno živi u Temerinu.
