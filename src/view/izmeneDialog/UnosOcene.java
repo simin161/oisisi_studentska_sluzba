@@ -6,6 +6,8 @@ import java.awt.FlowLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -16,6 +18,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
@@ -23,6 +26,7 @@ import javax.swing.event.DocumentListener;
 
 import controller.buttonAction.ButtonAction;
 import controller.provere.ProveraDatuma;
+import controller.provere.ProveraGodine;
 import model.Ocena;
 import model.Predmet;
 import model.Student;
@@ -35,6 +39,8 @@ public class UnosOcene extends JDialog {
 
 	private static final long serialVersionUID = -6800913610486865815L;
 
+	private boolean proveraPolja = false;
+	
 	public UnosOcene(Container c, int selRow, int selStud,NepolozeniBaza nb) {
 		
 		Predmet p = nb.getRow(selRow);
@@ -189,9 +195,35 @@ public class UnosOcene extends JDialog {
 				StudentPolozeni.getLabelEspb().setText("ESPB: " + StudentPolozeni.getPrikaz().getModel().getBaza().izracunajEspb());
 				PrikazStudenta.getInstance().update(null, -1);
 				
+				JOptionPane.showMessageDialog(UnosOcene.this, "Ocena je uspešno prosleđena!");
+				
 				dispose();
 				
 			}
+			
+		});
+		
+		txtDatum.addFocusListener(new FocusListener() {
+
+			@Override
+			public void focusGained(FocusEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void focusLost(FocusEvent e) {
+				
+				if(proveraPolja == false) {
+					
+					JOptionPane.showMessageDialog(UnosOcene.this, "Greška prilikom unosa datuma. Format unosa: dd/MM/yyyy.", 
+							"Greška: ", JOptionPane.ERROR_MESSAGE);
+					
+				}
+				
+			}
+			
+			
 			
 		});
 		
@@ -228,6 +260,7 @@ public class UnosOcene extends JDialog {
 					provera= false;
 					lblDatum.setText("Datum*");
 					enable = false;
+					proveraPolja = false;
 				}
 				else {
 					
@@ -237,74 +270,46 @@ public class UnosOcene extends JDialog {
 						
 						if(provera == true) {
 							
-							enable = true;
 							
+							boolean pr= false;
+							pr = ProveraGodine.proveri(txtDatum.getText(), -1);
+							
+							if(pr == true) {
+								
+								String []part = txtDatum.getText().split("/");
+								
+								int godPol = Integer.parseInt(part[2]);
+								
+								Student s = StudentBaza.getInstance().getRow(selStud);
+								
+								if(godPol < s.getGodinaUpisa()) {
+									
+									enable = false;
+									proveraPolja = false;
+								}
+								else
+								{	
+									enable = true;
+									proveraPolja = true;
+								}
+							}else {
+								
+								proveraPolja = false;
+								
+							}
+							
+						}else {
+							proveraPolja= false;
 						}
 						
+						
+					}else {
+						proveraPolja = false;
 					}
 					
 				}
 				
 				btnPotvrdi.setEnabled(enable);
-				
-				/*else {
-					
-					if(txtDatum.getText().length()==10) {
-						
-						provera[2]= ProveraDatuma.proveriDatum(txtDatum.getText());
-						if(provera[2]==true) {
-							
-							if(proveraProvere(provera)==true) {
-							
-								enable = ProveraGodine.proveri(txtDatum.getText(), 2);
-								
-							}
-							else
-								enable = false;
-							
-						}
-						else{
-
-							enable = false;
-							
-						}
-						
-					}
-					else {
-						
-						enable = false;
-						
-					}
-					
-				}
-				
-				
-				if(provera[2]== true && ProveraGodine.proveri(txtDatum.getText(), 2)==true) {
-					
-					lblDatum.setText("Datum rođenja");
-					
-				}
-				else {
-					
-					lblDatum.setText("Datum rođenja*");
-					
-				}
-				
-				if(provera[2]==true && ProveraGodine.proveri(txtDatum.getText(), 2)==false && txtDatum.getText().length() == 10) {
-					
-					txtDatum.setToolTipText("Profesor ne sme imati manje od 23 godine.");
-					lblDatum.setForeground(Color.red);
-					lblDatum.setToolTipText("Profesor ne sme imati manje od 23 godine.");
-					
-				}
-				else {
-					
-					txtDatum.setToolTipText(null);
-					lblDatum.setForeground(Color.black);
-					lblDatum.setToolTipText(null);
-				}
-				
-				btnPotvrdi.setEnabled(enable);*/
 			}
 		});
 		
