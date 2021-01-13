@@ -53,15 +53,15 @@ public class StudentPolozeni extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
-				if (prikaz.getSelectedRow() != -1) {
+				int r = prikaz.getSelectedRow();
+				if (r != -1) {
 					String[] opcije = { "Da", "Ne" };
 
 					int i = JOptionPane.showOptionDialog(prikaz.getParent(),
 							"Da li ste sigurni da želite da poništite ocenu?", "Poništavanje ocene",
 							JOptionPane.YES_NO_OPTION, JOptionPane.DEFAULT_OPTION, null, opcije, opcije[0]);
 					if (i == 0) {
-						o1.ponistiOcenu(o1.getRow(prikaz.getSelectedRow()).getPredmet().getSifra());
+						o1.ponistiOcenu(o1.getRow(r).getPredmet().getSifra());
 						lblPr.setText("Prosek: " + o1.izracunajProsek());
 						lblEspb.setText("ESPB: " + o1.izracunajEspb());
 						prikaz.update("UKLONJEN", -1);

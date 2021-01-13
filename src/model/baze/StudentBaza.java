@@ -134,7 +134,7 @@ public class StudentBaza {
 	}
 
 	public void izmeniStudenta(String prezime, String ime, Date datumRodjenja, String adresaStanovanja, String telefon,
-			String email, String brIndeksa, int godinaUpisa, int trenutnaGodina, Status status, String oldId) {
+			String email, String brIndeksa, int godinaUpisa, int trenutnaGodina, Status status, String oldId, List<Ocena> o, List<Predmet> p) {
 		for (Student s : students) {
 			if (oldId.equals(s.getBrIndeksa())) {
 				s.setIme(ime);
@@ -147,6 +147,8 @@ public class StudentBaza {
 				s.setTelefon(telefon);
 				s.setTrenutnaGodina(trenutnaGodina);
 				s.setBrIndeksa(brIndeksa);
+				s.setPolozeno(o);
+				s.setNepolozeno(p);
 			}
 		}
 	}
@@ -168,26 +170,22 @@ public class StudentBaza {
 			temp.add(p);
 		}
 		
-		int i = 0;
 		for(Predmet p : polPr) {
 		
-			if(retVal.get(i).getSifra().equals(p.getSifra())) {
-				retVal.remove(i);
-				temp.remove(i);
-
+			for(Predmet p1 : temp) {
+				if(p1.getSifra().equals(p.getSifra())) {
+					retVal.remove(p1);
+				}
 			}
-			++i;
 		}
-		
-		i = 0;
-		
+				
 		for(Predmet p : nep) {
-			if(retVal.get(i).getSifra().equals(p.getSifra())) {
-				retVal.remove(i);
-				temp.remove(i);
-
+			
+			for(Predmet p1 : temp) {
+				if(p1.getSifra().equals(p.getSifra())) {
+					retVal.remove(p1);
+				}
 			}
-			++i;
 		}
 		
 		

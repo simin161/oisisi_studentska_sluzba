@@ -73,7 +73,7 @@ public class StudentController {
 		
 		//Student s = StudentBaza.getInstance().getRow(rowSelectedIndex);
 		StudentBaza.getInstance().izmeniStudenta(s.getPrezime(), s.getIme(), s.getDatumRodjenja(), s.getAdresaStanovanja(), s.getTelefon(),
-			s.getEmail(), s.getBrIndeksa(), s.getGodinaUpisa(), s.getTrenutnaGodina(), s.getStatus(), oldId);
+			s.getEmail(), s.getBrIndeksa(), s.getGodinaUpisa(), s.getTrenutnaGodina(), s.getStatus(), oldId, s.getPolozeno(), s.getNepolozeno());
 		
 		PrikazStudenta.getInstance().update(null, -1);
 	}

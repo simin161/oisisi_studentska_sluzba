@@ -130,6 +130,8 @@ public class OcenaBaza {
 		if (predmet == null) {
 			predmet = new ArrayList<Predmet>();
 		}
+
+
 		for (Ocena o : ocena) {
 			if (o.getPredmet().getSifra().equals(id)) {
 				predmet.add(o.getPredmet());
@@ -148,8 +150,8 @@ public class OcenaBaza {
 		for (Predmet p : predmeti) {
 			if (p.getSifra().equals(id)) {
 				p.getPolozili().remove(StudentBaza.getInstance()
-					.getRow((PrikazStudenta.getInstance().getTable().convertRowIndexToModel(r)))); // bacace exc
-				if(p.getNisuPolozili() == null)
+						.getRow((PrikazStudenta.getInstance().getTable().convertRowIndexToModel(r)))); // bacace exc
+				if (p.getNisuPolozili() == null)
 					p.setNisuPolozili(new ArrayList<Student>());
 				p.getNisuPolozili().add(StudentBaza.getInstance()
 						.getRow((PrikazStudenta.getInstance().getTable().convertRowIndexToModel(r))));
