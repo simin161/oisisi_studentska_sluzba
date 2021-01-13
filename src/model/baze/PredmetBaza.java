@@ -78,7 +78,7 @@ public class PredmetBaza {
 
 	}
 
-	public String getValueAt(int row, int column) {
+	public Object getValueAt(int row, int column) {
 
 		Predmet predmet = this.predmeti.get(row);
 		switch (column) {
@@ -88,7 +88,7 @@ public class PredmetBaza {
 		case 1:
 			return predmet.getNaziv();
 		case 2:
-			return String.valueOf(predmet.getEspb());
+			return predmet.getEspb();
 		case 3: {
 
 			switch (predmet.getGodina()) {

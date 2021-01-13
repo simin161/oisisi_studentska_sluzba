@@ -39,5 +39,21 @@ public class AbstractTableModelPredmeti extends AbstractTableModel {
 		return PredmetBaza.getInstance().getValueAt(rowIndex, columnIndex);
 	
 	}
+	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public Class getColumnClass(int column) {
+		
+		if(column == 2) {
+			
+			return Integer.class;
+			
+		}
+		else{
+			
+			return String.class;
+			
+		}
+	
+	}
 
 }

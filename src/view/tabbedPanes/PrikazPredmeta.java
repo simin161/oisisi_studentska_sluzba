@@ -4,10 +4,12 @@ package view.tabbedPanes;
 
 import java.awt.BorderLayout;
 
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.RowFilter;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
@@ -66,6 +68,10 @@ public class PrikazPredmeta extends JPanel{
 		
 		tabelaPredmet= new PredmetTable();
 		
+        DefaultTableCellRenderer r=new DefaultTableCellRenderer();
+        r.setHorizontalAlignment(JLabel.LEFT);
+        tabelaPredmet.getColumnModel().getColumn(2).setCellRenderer(r);
+      
 		JScrollPane sPane = new JScrollPane(tabelaPredmet);
 
 		add(sPane, BorderLayout.CENTER);
