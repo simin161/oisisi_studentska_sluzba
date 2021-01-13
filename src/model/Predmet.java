@@ -110,8 +110,6 @@ public class Predmet implements Serializable{
 		case 2: return "II (druga)";
 		case 3: return "III (treća)";
 		case 4: return "IV (četvrta)";
-		case 5: return "V (peta/master)";
-		case 6: return "VI (šesta/master)";
 		default: return "";
 		}
 	}

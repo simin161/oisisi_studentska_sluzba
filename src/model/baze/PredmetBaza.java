@@ -43,11 +43,7 @@ public class PredmetBaza {
 	private void initPredmete() {
 
 		this.predmeti = new ArrayList<Predmet>();
-
-		// test primer
-		//predmeti.add(new Predmet("E210", "Matematička analiza 1", Semestar.Zimski, 1, null, 9, null, null));
-		//predmeti.add(new Predmet("E211", "Matematička analiza 2", Semestar.Zimski, 2, null, 9, null, null));
-
+		
 	}
 
 	public List<Predmet> getPredmete() {
@@ -101,10 +97,6 @@ public class PredmetBaza {
 				return "III (treća godina)";
 			case 4:
 				return "IV (četvrta godina)";
-			case 5:
-				return "V (peta godina/master studije)";
-			case 6:
-				return "VI (šesta godina/master studije)";
 			default:
 				return "";
 			}
