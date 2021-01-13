@@ -154,112 +154,50 @@ public class StudentBaza {
 	public List<Predmet> predmetiKojeNema(Student s) {
 		List<Predmet> retVal = new ArrayList<Predmet>();
 		List<Predmet> temp = new ArrayList<Predmet>();
-		List<Predmet> polPr = null;
-		List<Predmet> nep = s.getNepolozeno();
-		List<Ocena> pol = s.getPolozeno();
-		List<Predmet> pre = PredmetBaza.getInstance().getPredmete();
+		List<Predmet> polPr = new ArrayList<Predmet>(); //ok
+		List<Predmet> nep = s.getNepolozeno(); //ok
+		List<Ocena> pol = s.getPolozeno(); //ok
+		List<Predmet> svi = PredmetBaza.getInstance().getPredmete(); //ook
 		
-		for(Predmet p : pre) {
-			System.out.println(p.getNisuPolozili().toString());
-			System.out.println(p.getPolozili().toString());
+		for(Ocena o : pol) {
+			polPr.add(o.getPredmet());
 		}
 		
-		/*for(Ocena p : pol) {
-			System.out.println(p.getPredmet());
+		for(Predmet p : svi) {
+			retVal.add(p);
+			temp.add(p);
 		}
+		
+		int i = 0;
+		for(Predmet p : polPr) {
+		
+			if(retVal.get(i).getSifra().equals(p.getSifra())) {
+				retVal.remove(i);
+				temp.remove(i);
 
-		if (pol == null)
-			pol = new ArrayList<Ocena>();
-
-		if (nep == null)
-			nep = new ArrayList<Predmet>();
-
-		if (!pol.isEmpty()) {
-			polPr = new ArrayList<Predmet>();
-			System.out.println("PRVI IF POL NIJE EMPTY");
-			for (Ocena o : pol) {
-				polPr.add(o.getPredmet());
-				System.out.println(o.getPredmet());
 			}
+			++i;
 		}
-
-		if (nep.isEmpty() && !pol.isEmpty()) {
-			System.out.println("NEP EMPTY" + pol.toString());
-
-			for (Predmet o : pre) {
-
-				if (!polPr.contains(o)) {
-					retVal.add(o);
-					temp.add(o);
-				}
+		
+		i = 0;
+		
+		for(Predmet p : nep) {
+			if(retVal.get(i).getSifra().equals(p.getSifra())) {
+				retVal.remove(i);
+				temp.remove(i);
 
 			}
-		} else if (!nep.isEmpty() && pol.isEmpty()) {
-			System.out.println("POL EMPTY:" + nep.toString());
-
-			for (Predmet o : pre) {
-
-				if (!nep.contains(o)) {
-					retVal.add(o);
-					temp.add(o);
-
-				}
-
-			}
-		} else if (nep.isEmpty() && pol.isEmpty()) {
-			System.out.println("OBA EMPTY" + pre.toString());
-
-			for (Predmet o : pre) {
-				retVal.add(o);
-				temp.add(o);
-			}
-
-		} else {
-			System.out.println("ELSE " + pol.toString());
-
-			for (Predmet o : pre) {
-
-				if (!nep.contains(o) && !polPr.contains(o)) {
-					System.out.println(o);
-					retVal.add(o);
-					temp.add(o);
-
-				}
-
-			}
-		}*/
-		/*
-		 * if (pol != null) { polPr = new ArrayList<Predmet>(); for (Ocena o : pol) {
-		 * polPr.add(o.getPredmet()); } }
-		 * 
-		 * if (nep == null && pol != null) { for (Predmet o : pre) {
-		 * 
-		 * if (!polPr.contains(o)) { retVal.add(o); temp.add(o); }
-		 * 
-		 * } } else if (nep != null && pol == null) { for (Predmet o : pre) {
-		 * 
-		 * if (!nep.contains(o)) { retVal.add(o); temp.add(o);
-		 * 
-		 * }
-		 * 
-		 * } } else if (nep == null && pol == null) { for (Predmet o : pre) {
-		 * retVal.add(o); temp.add(o); }
-		 * 
-		 * } else { for (Predmet o : pre) {
-		 * 
-		 * if (!nep.contains(o) && !polPr.contains(o)) { retVal.add(o); temp.add(o);
-		 * 
-		 * }
-		 * 
-		 * } }
-		 */
+			++i;
+		}
+		
+		
 		for (Predmet p : temp) {
 			if (p.getGodina() > s.getTrenutnaGodina()) {
 				retVal.remove(p);
 			}
 		}
 
-		return pre;
+		return retVal;
 	}
 
 	public void izbrisiNepolozeniPredmet(Predmet p) {
