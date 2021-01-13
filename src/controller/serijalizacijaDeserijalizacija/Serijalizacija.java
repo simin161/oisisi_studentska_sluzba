@@ -26,8 +26,11 @@ public class Serijalizacija {
 		try {
 			
 			stream.writeObject(StudentBaza.getInstance().getStudents());
+			stream.flush();
 			stream2.writeObject(ProfesorBaza.getInstance().getProfesore());
+			stream2.flush();
 			stream3.writeObject(PredmetBaza.getInstance().getPredmete());
+			stream3.flush();
 			
 		}finally {
 			
