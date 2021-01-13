@@ -59,7 +59,12 @@ public class PredmetController {
 		StudentBaza.getInstance().izbrisiNepolozeniPredmet(predmet);
 		
 		PrikazPredmeta.getInstance().updatePrikaz("UKLONJEN", rowSelectedIndex);
-		StudentNepolozeni.getPrikaz().update(null, -1);
+		
+		if(!StudentBaza.getInstance().getStudents().isEmpty()) {
+			
+			StudentNepolozeni.getPrikaz().update(null, -1);
+		
+		}
 
 	}
 
