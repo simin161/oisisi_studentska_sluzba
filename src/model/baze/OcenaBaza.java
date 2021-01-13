@@ -106,8 +106,8 @@ public class OcenaBaza {
 			}
 			avg = sum / (double) i;
 		}
-		
-		avg = Math.round(avg*100.0)/100.0;
+
+		avg = Math.round(avg * 100.0) / 100.0;
 
 		StudentBaza.getInstance().getRow((PrikazStudenta.getInstance().getTable().convertRowIndexToModel(r)))
 				.setProsecnaOcena(avg);
@@ -132,11 +132,13 @@ public class OcenaBaza {
 		if (predmet == null) {
 			predmet = new ArrayList<Predmet>();
 		}
-
+		
 
 		for (Ocena o : ocena) {
 			if (o.getPredmet().getSifra().equals(id)) {
-				predmet.add(o.getPredmet());
+				if(proveriPostojanjePredmeta(id)) {
+					predmet.add(o.getPredmet());
+				}
 				ocena.remove(o);
 				break;
 			}
@@ -144,8 +146,11 @@ public class OcenaBaza {
 
 		StudentBaza.getInstance().getRow((PrikazStudenta.getInstance().getTable().convertRowIndexToModel(r)))
 				.setPolozeno(ocena);
-		StudentBaza.getInstance().getRow((PrikazStudenta.getInstance().getTable().convertRowIndexToModel(r)))
-				.setNepolozeno(predmet);
+
+		if (proveriPostojanjePredmeta(id)) {
+			StudentBaza.getInstance().getRow((PrikazStudenta.getInstance().getTable().convertRowIndexToModel(r)))
+					.setNepolozeno(predmet);
+		}
 
 		List<Predmet> predmeti = PredmetBaza.getInstance().getPredmete();
 
@@ -160,6 +165,18 @@ public class OcenaBaza {
 
 			}
 		}
+
+	}
+
+	private boolean proveriPostojanjePredmeta(String id) {
+
+		for (Predmet p : PredmetBaza.getInstance().getPredmete()) {
+			if (p.getSifra().equals(id)) {
+				return true;
+			}
+		}
+
+		return false;
 
 	}
 
