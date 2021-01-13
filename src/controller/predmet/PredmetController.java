@@ -4,6 +4,7 @@ import model.Predmet;
 import model.baze.PredmetBaza;
 import model.baze.ProfesorBaza;
 import model.baze.StudentBaza;
+import view.izmeneDialog.StudentNepolozeni;
 import view.tabbedPanes.PrikazPredmeta;
 
 public class PredmetController {
@@ -58,6 +59,7 @@ public class PredmetController {
 		StudentBaza.getInstance().izbrisiNepolozeniPredmet(predmet);
 		
 		PrikazPredmeta.getInstance().updatePrikaz("UKLONJEN", rowSelectedIndex);
+		StudentNepolozeni.getPrikaz().update(null, -1);
 
 	}
 

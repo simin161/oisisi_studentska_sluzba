@@ -223,8 +223,6 @@ public class UnosOcene extends JDialog {
 				
 			}
 			
-			
-			
 		});
 		
 		
