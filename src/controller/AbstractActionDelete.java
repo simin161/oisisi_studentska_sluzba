@@ -89,6 +89,7 @@ public class AbstractActionDelete extends AbstractAction {
 
 			} else {
 
+				
 				JOptionPane.showMessageDialog(c, "Označite profesora za brisanje.", "Upozorenje",
 						JOptionPane.WARNING_MESSAGE);
 
