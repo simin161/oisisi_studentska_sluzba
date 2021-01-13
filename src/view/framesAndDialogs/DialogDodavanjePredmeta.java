@@ -170,7 +170,6 @@ public class DialogDodavanjePredmeta extends JDialog {
 							JOptionPane.ERROR_MESSAGE);
 				}
 
-				txtSifra.setText(txtSifra.getText().toUpperCase());
 
 			}
 
@@ -232,8 +231,6 @@ public class DialogDodavanjePredmeta extends JDialog {
 					JOptionPane.showMessageDialog(DialogDodavanjePredmeta.this, "Pogrešno unet naziv predmeta!",
 							"Greška: ", JOptionPane.ERROR_MESSAGE);
 				}
-
-				txtNaziv.setText(setString(txtNaziv.getText()));
 
 			}
 
@@ -299,7 +296,6 @@ public class DialogDodavanjePredmeta extends JDialog {
 							"Broj ESPB bodova ne može biti veći od 60!", "Greška: ", JOptionPane.ERROR_MESSAGE);
 				}
 
-				txtEspb.setText(txtEspb.getText().trim());
 
 			}
 
@@ -363,6 +359,10 @@ public class DialogDodavanjePredmeta extends JDialog {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				int god = 0;
+				txtSifra.setText(txtSifra.getText().toUpperCase());
+				txtNaziv.setText(setString(txtNaziv.getText()));
+				txtEspb.setText(txtEspb.getText().trim());
+
 				switch (cbGod.getSelectedItem().toString()) {
 
 				case "I (prva)":
