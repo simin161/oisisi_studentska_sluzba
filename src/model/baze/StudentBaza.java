@@ -91,7 +91,7 @@ public class StudentBaza {
 		return this.students.get(rowIndex);
 	}
 
-	public String getValueAt(int row, int column) {
+	public Object getValueAt(int row, int column) {
 
 		Student student = this.students.get(row);
 		switch (column) {
@@ -107,7 +107,7 @@ public class StudentBaza {
 		case 4:
 			return student.getStatusAsString();
 		case 5:
-			return Double.toString(student.getProsecnaOcena());
+			return student.getProsecnaOcena();
 		default:
 			return null;
 

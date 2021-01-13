@@ -3,6 +3,7 @@ package view.izmeneDialog;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -42,7 +43,10 @@ public class StudentPolozeni extends JPanel {
 
 		OcenaBaza o1 = prikaz.getModel().getBaza();
 		JPanel panelPr = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-		lblPr = new JLabel("Prosek: " + o1.izracunajProsek());
+		DecimalFormat df = new DecimalFormat("#.00");
+		String s = String.valueOf(o1.izracunajProsek());
+		df.applyPattern(s);
+		lblPr = new JLabel("Prosek: " + s);
 		panelPr.add(lblPr);
 
 		JPanel panelEspb = new JPanel(new FlowLayout(FlowLayout.RIGHT));
@@ -62,7 +66,10 @@ public class StudentPolozeni extends JPanel {
 							JOptionPane.YES_NO_OPTION, JOptionPane.DEFAULT_OPTION, null, opcije, opcije[0]);
 					if (i == 0) {
 						o1.ponistiOcenu(o1.getRow(r).getPredmet().getSifra());
-						lblPr.setText("Prosek: " + o1.izracunajProsek());
+						DecimalFormat df = new DecimalFormat("#.00");
+						String s = String.valueOf(o1.izracunajProsek());
+						df.applyPattern(s);
+						lblPr.setText("Prosek: " + s);
 						lblEspb.setText("ESPB: " + o1.izracunajEspb());
 						prikaz.update("UKLONJEN", -1);
 						PrikazStudenta.getInstance().update("", 0);
