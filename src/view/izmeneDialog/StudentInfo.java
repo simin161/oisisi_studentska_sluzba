@@ -331,17 +331,6 @@ public class StudentInfo extends JPanel {
 
 			@Override
 			public void focusGained(FocusEvent e) {
-				if (shown) {
-					tfDatumR.setText("");
-					valid[2] = false;
-					shown = false;
-					godRodj = -1;
-
-					if (godUpis != -1) {
-						valid[7] = true;
-						invalidYear = false;
-					}
-				}
 
 			}
 
@@ -370,32 +359,13 @@ public class StudentInfo extends JPanel {
 						int trGod = Integer.parseInt(trenutnaGod);
 
 						tooYoung = false;
-						if (trGod - godRodj < 18) {
+						if (trGod < godRodj) {
 							tooYoung = true;
 							tfDatumR.setText("");
 							godRodj = -1;
 
 							JOptionPane.showMessageDialog(StudentInfo.this, "Osoba mora imati više od 18 godina!",
 									"Greška: ", JOptionPane.ERROR_MESSAGE);
-						} else if (godUpis != -1) {
-							if (godRodj >= godUpis) {
-								invalidYear = true;
-								shown = true;
-								JOptionPane.showMessageDialog(StudentInfo.this,
-										"Godina upisa ne može biti manja ili jednaka od godine rođenja!\nProverite godinu upisa ili godinu rođenja!!",
-										"Greška: ", JOptionPane.ERROR_MESSAGE);
-
-							} else if (godUpis - godRodj < 18) {
-
-								invalidYear = true;
-								shown = true;
-								int pom = godRodj + 18;
-								JOptionPane.showMessageDialog(StudentInfo.this,
-										"Godina upisa mora biti minimalno " + pom
-												+ "!\nProverite godinu upisa ili godinu rođenja!",
-										"Greška: ", JOptionPane.ERROR_MESSAGE);
-
-							}
 						}
 
 					} else {
@@ -459,28 +429,17 @@ public class StudentInfo extends JPanel {
 						String trenutnaGod = dtf.format(now);
 						int trGod = Integer.parseInt(trenutnaGod);
 
-						if (trGod - godRodj < 18) {
+						if (trGod < godRodj) {
 							tooYoung = true;
 							valid[2] = false;
 
-						} else if (godUpis != -1) {
-							if (godRodj >= godUpis) {
-								invalidYear = true;
-								valid[2] = false;
-							} else if (godUpis - godRodj < 18) {
-								invalidYear = true;
-								tooYoung1 = true;
-								valid[2] = false;
-							}
 						}
-
 					} else {
 						valid[2] = false;
 						tooYoung = true;
 					}
 				}
-				changeLabel(valid[7] && !invalidYear && !tooYoung1 && !shown, "Godina upisa*", "Godina upisa*",
-						labelGodU);
+
 				changeLabel(valid[2], "Datum rođenja*", "Datum rođenja", labelDatumR);
 				buttonPotvrdi.setEnabled(checkValid(valid) && !invalidYear && !tooYoung && !shown);
 
@@ -741,11 +700,6 @@ public class StudentInfo extends JPanel {
 
 			@Override
 			public void focusGained(FocusEvent e) {
-				if (shown) {
-					tFGodU.setText("");
-					shown = false;
-					godUpis = -1;
-				}
 
 			}
 
@@ -779,26 +733,7 @@ public class StudentInfo extends JPanel {
 								"Godina upisa ne može biti veća od trenutne godine!", "Greška: ",
 								JOptionPane.ERROR_MESSAGE);
 
-					} else if (godRodj != -1) {
-						if (godUpis <= godRodj) {
-
-							invalidYear = true;
-							shown = true;
-							JOptionPane.showMessageDialog(StudentInfo.this,
-									"Godina upisa ne može biti manja ili jednaka od godine rođenja!\nProverite godinu upisa ili godinu rođenja!",
-									"Greška: ", JOptionPane.ERROR_MESSAGE);
-
-						} else if (godUpis - godRodj < 18) {
-
-							invalidYear = true;
-							shown = true;
-							int pom = godRodj + 18;
-							JOptionPane.showMessageDialog(StudentInfo.this,
-									"Godina upisa mora biti minimalno " + pom + "!", "Greška: ",
-									JOptionPane.ERROR_MESSAGE);
-
-						}
-					}
+					} 
 
 				}
 
@@ -853,22 +788,9 @@ public class StudentInfo extends JPanel {
 						godUpis = -1;
 						valid[7] = false;
 
-					} else if (godRodj != -1) {
-						if (godUpis <= godRodj) {
-							valid[7] = false;
-							invalidYear = true;
-							tooYoung = true;
-
-						} else if (godUpis - godRodj < 18) {
-
-							valid[7] = false;
-							tooYoung = true;
-
-						}
-					}
+					} 
 				}
 				changeLabel(valid[7], "Godina upisa*", "Godina upisa", labelGodU);
-				changeLabel(valid[2] && !tooYoung && !shown, "Datum rođenja*", "Datum rođenja*", labelDatumR);
 				buttonPotvrdi.setEnabled(checkValid(valid) && !invalidYear && !tooYoung && !shown);
 			}
 

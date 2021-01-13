@@ -465,7 +465,7 @@ public class DialogAddStudent extends JDialog {
 			private void check() {
 				valid[2] = ProveraDatuma.proveriDatum(tfDatumR.getText());
 				text[2] = tfDatumR.getText().trim();
-			/*	validYearDR = false;
+				validYearDR = false;
 				tooYoung = false;
 				tooYoung1 = false;
 				invalidYear = false;
@@ -507,7 +507,7 @@ public class DialogAddStudent extends JDialog {
 				changeLabel(valid[7] && !invalidYear && !tooYoung1 && !shown, "Godina upisa*", "Godina upisa",
 						labelGodU);
 				buttonPotvrdi.setEnabled(checkValid(valid) && !invalidYear && !tooYoung && !shown);
-*/
+
 			}
 
 		});
