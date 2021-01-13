@@ -205,5 +205,47 @@ public class PredmetBaza {
 			}
 		}
 	}
+	
+	public void izmeniStudenta(Student s, String oldId) {
+		
+		for(Predmet p : predmeti) {
+			
+			for(Student s1 : p.getNisuPolozili()) {
+				if(s1.getBrIndeksa().equals(oldId)) {
+					s1.setIme(s.getIme());
+					s1.setPrezime(s.getPrezime());
+					s1.setAdresaStanovanja(s.getAdresaStanovanja());
+					s1.setDatumRodjenja(s.getDatumRodjenja());
+					s1.setEmail(s.getEmail());
+					s1.setGodinaUpisa(s.getGodinaUpisa());
+					s1.setStatus(s.getStatus());
+					s1.setTelefon(s.getTelefon());
+					s1.setTrenutnaGodina(s.getTrenutnaGodina());
+					s1.setBrIndeksa(s.getBrIndeksa());
+					s1.setPolozeno(s.getPolozeno());
+					s1.setNepolozeno(s.getNepolozeno());
+					break;
+				}
+			}
+			
+			for(Student s1 : p.getPolozili()) {
+				if(s1.getBrIndeksa().equals(oldId)) {
+					s1.setIme(s.getIme());
+					s1.setPrezime(s.getPrezime());
+					s1.setAdresaStanovanja(s.getAdresaStanovanja());
+					s1.setDatumRodjenja(s.getDatumRodjenja());
+					s1.setEmail(s.getEmail());
+					s1.setGodinaUpisa(s.getGodinaUpisa());
+					s1.setStatus(s.getStatus());
+					s1.setTelefon(s.getTelefon());
+					s1.setTrenutnaGodina(s.getTrenutnaGodina());
+					s1.setBrIndeksa(s.getBrIndeksa());
+					s1.setPolozeno(s.getPolozeno());
+					s1.setNepolozeno(s.getNepolozeno());
+					break;
+				}
+			}
+		}
+	}
 
 }
