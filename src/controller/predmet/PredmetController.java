@@ -69,7 +69,7 @@ public class PredmetController {
 		// Student s = StudentBaza.getInstance().getRow(rowSelectedIndex);
 		PredmetBaza.getInstance().izmeniPredmet(p.getSifra(), p.getNaziv(), p.getSemestar(), p.getGodina(),
 				p.getProfesor(), p.getEspb(), oldId);
-
+		StudentBaza.getInstance().izmeniPredmet(p, oldId);
 		PrikazPredmeta.getInstance().updatePrikaz(null, -1);
 	}
 

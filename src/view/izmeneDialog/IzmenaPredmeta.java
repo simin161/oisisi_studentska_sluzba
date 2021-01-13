@@ -32,8 +32,10 @@ import controller.provere.ProveraNazivaPredmeta;
 import controller.provere.ProveraSifrePredmeta;
 import model.Predmet;
 import model.Profesor;
+import model.Student;
 import model.baze.PredmetBaza;
 import model.baze.ProfesorBaza;
+import model.baze.StudentBaza;
 import model.nabrojiviTipovi.Semestar;
 
 public class IzmenaPredmeta extends JDialog {
@@ -538,6 +540,7 @@ public class IzmenaPredmeta extends JDialog {
 				p.setEspb(Integer.parseInt(txtEspb.getText().trim()));
 
 				PredmetController.getInstance().izmeniPredmet(p, oldId);
+
 
 				JOptionPane.showMessageDialog(IzmenaPredmeta.this, "Izmena predmeta je uspešno izvršena!");
 				dispose();

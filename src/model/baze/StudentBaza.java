@@ -219,5 +219,43 @@ public class StudentBaza {
 		}
 
 	}
+	
+	public void izmeniPredmet(Predmet p, String oldId) {
+		
+		for(Student s : students) {
+			
+			for(Predmet pr : s.getNepolozeno()) {
+				
+				if(pr.getSifra().equals(oldId)) {
+					pr.setEspb(p.getEspb());
+					pr.setGodina(p.getGodina());
+					pr.setNaziv(p.getNaziv());
+					pr.setProfesor(p.getProfesor());
+					pr.setSemestar(p.getSemestar());
+					pr.setSifra(p.getSifra());
+					pr.setNisuPolozili(p.getNisuPolozili());
+					pr.setPolozili(p.getPolozili());
+					
+					break;
+				}
+			}
+			
+			for(Ocena pr : s.getPolozeno()) {
+				
+				if(pr.getPredmet().getSifra().equals(oldId)) {
+					pr.getPredmet().setEspb(p.getEspb());
+					pr.getPredmet().setGodina(p.getGodina());
+					pr.getPredmet().setNaziv(p.getNaziv());
+					pr.getPredmet().setProfesor(p.getProfesor());
+					pr.getPredmet().setSemestar(p.getSemestar());
+					pr.getPredmet().setSifra(p.getSifra());
+					pr.getPredmet().setNisuPolozili(p.getNisuPolozili());
+					pr.getPredmet().setPolozili(p.getPolozili());
+					
+					break;
+				}
+			}
+		}
+	}
 
 }
