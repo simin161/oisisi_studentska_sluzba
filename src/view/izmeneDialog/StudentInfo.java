@@ -55,7 +55,6 @@ public class StudentInfo extends JPanel {
 	private boolean validYearDR = false;
 	private int godRodj = -1;
 	private int godUpis = -1;
-	private boolean shown = false;
 	private boolean pressed = false;
 
 	public StudentInfo(int r) {
@@ -265,7 +264,7 @@ public class StudentInfo extends JPanel {
 				if (!pressed)
 					changeLabel(valid[0], "Ime*", "Ime", labelName);
 
-				buttonPotvrdi.setEnabled(checkValid(valid) && !shown);
+				buttonPotvrdi.setEnabled(checkValid(valid));
 			}
 
 		});
@@ -322,7 +321,7 @@ public class StudentInfo extends JPanel {
 				valid[1] = ProveraPrezimena.proveriPrezime(tFPrezime.getText());
 				if (!pressed)
 					changeLabel(valid[1], "Prezime*", "Prezime", labelPrezime);
-				buttonPotvrdi.setEnabled(checkValid(valid) && !shown);
+				buttonPotvrdi.setEnabled(checkValid(valid));
 			}
 
 		});
@@ -416,7 +415,7 @@ public class StudentInfo extends JPanel {
 				validYearDR = false;
 				tooYoung = false;
 				invalidYear = false;
-				boolean tooYoung1 = false;
+				
 				if (valid[2]) {
 					validYearDR = ProveraGodine.proveri(tfDatumR.getText().trim(), 0);
 					if (validYearDR) {
@@ -441,7 +440,7 @@ public class StudentInfo extends JPanel {
 				}
 
 				changeLabel(valid[2], "Datum rođenja*", "Datum rođenja", labelDatumR);
-				buttonPotvrdi.setEnabled(checkValid(valid) && !invalidYear && !tooYoung && !shown);
+				buttonPotvrdi.setEnabled(checkValid(valid) && !invalidYear && !tooYoung);
 
 			}
 
@@ -500,7 +499,7 @@ public class StudentInfo extends JPanel {
 			private void check() {
 				valid[3] = ProveraAdrese.proveriAdresu(tFAdr.getText());
 				changeLabel(valid[3], "Adresa stanovanja*", "Adresa stanovanja", labelAdr);
-				buttonPotvrdi.setEnabled(checkValid(valid) && !shown);
+				buttonPotvrdi.setEnabled(checkValid(valid));
 			}
 
 		});
@@ -562,7 +561,7 @@ public class StudentInfo extends JPanel {
 				Matcher matcher = pattern.matcher(tFBr.getText());
 				valid[4] = matcher.matches();
 				changeLabel(valid[4], "Broj telefona*", "Broj telefona", labelBr);
-				buttonPotvrdi.setEnabled(checkValid(valid) && !shown);
+				buttonPotvrdi.setEnabled(checkValid(valid));
 			}
 
 		});
@@ -619,7 +618,7 @@ public class StudentInfo extends JPanel {
 			private void check() {
 				valid[5] = ProveraEmaila.proveriEmail(tFEmail.getText());
 				changeLabel(valid[5], "E-mail adresa*", "E-mail adresa", labelEmail);
-				buttonPotvrdi.setEnabled(checkValid(valid) && !shown);
+				buttonPotvrdi.setEnabled(checkValid(valid));
 			}
 
 		});
@@ -691,7 +690,7 @@ public class StudentInfo extends JPanel {
 				}
 				if (!pressed)
 					changeLabel(valid[6] && !indExists, "Broj indeksa*", "Broj indeksa", labelBrI);
-				buttonPotvrdi.setEnabled(checkValid(valid) && !shown && !indExists);
+				buttonPotvrdi.setEnabled(checkValid(valid) && !indExists);
 			}
 
 		});
@@ -733,7 +732,18 @@ public class StudentInfo extends JPanel {
 								"Godina upisa ne može biti veća od trenutne godine!", "Greška: ",
 								JOptionPane.ERROR_MESSAGE);
 
-					} 
+					} else if (godRodj != -1) {
+						if (godUpis <= godRodj) {
+							tFGodU.setText("");
+							godUpis = -1;
+							invalidYear = true;
+							
+							JOptionPane.showMessageDialog(StudentInfo.this,
+									"Godina upisa ne može biti manja ili jednaka od godine rođenja!\nProverite godinu upisa ili godinu rođenja!",
+									"Greška: ", JOptionPane.ERROR_MESSAGE);
+
+						}
+					}
 
 				}
 
@@ -788,10 +798,17 @@ public class StudentInfo extends JPanel {
 						godUpis = -1;
 						valid[7] = false;
 
-					} 
+					} else if (godRodj != -1) {
+						if (godUpis <= godRodj) {
+							valid[7] = false;
+							invalidYear = true;
+							tooYoung = true;
+
+						}
+					}
 				}
 				changeLabel(valid[7], "Godina upisa*", "Godina upisa", labelGodU);
-				buttonPotvrdi.setEnabled(checkValid(valid) && !invalidYear && !tooYoung && !shown);
+				buttonPotvrdi.setEnabled(checkValid(valid));
 			}
 
 		});
@@ -817,7 +834,7 @@ public class StudentInfo extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				buttonPotvrdi.setEnabled(checkValid(valid) && !shown);
+				buttonPotvrdi.setEnabled(checkValid(valid));
 
 			}
 
@@ -826,7 +843,7 @@ public class StudentInfo extends JPanel {
 		cBFin.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				buttonPotvrdi.setEnabled(checkValid(valid) && !shown);
+				buttonPotvrdi.setEnabled(checkValid(valid));
 
 			}
 		});
