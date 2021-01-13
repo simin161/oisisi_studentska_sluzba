@@ -133,7 +133,13 @@ public class DodajPredProf extends JDialog {
 					JOptionPane.showMessageDialog(DodajPredProf.this.getContentPane(), "Predmet je uspešno dodeljen profesoru.");
 					dispose();
 					
-				}		
+				}
+				else {
+					
+					JOptionPane.showMessageDialog(DodajPredProf.this, "Označite predmet koji želite da dodate.",
+							"Upozorenje", JOptionPane.WARNING_MESSAGE);
+					
+				}
 			}
 		});
 	

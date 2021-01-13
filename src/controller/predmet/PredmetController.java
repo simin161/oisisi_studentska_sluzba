@@ -60,11 +60,11 @@ public class PredmetController {
 		
 		PrikazPredmeta.getInstance().updatePrikaz("UKLONJEN", rowSelectedIndex);
 		
-		if(!StudentBaza.getInstance().getStudents().isEmpty()) {
+		/*if(!StudentBaza.getInstance().getStudents().isEmpty()) {
 			
 			StudentNepolozeni.getPrikaz().update(null, -1);
 		
-		}
+		}*/
 
 	}
 
