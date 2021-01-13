@@ -10,7 +10,7 @@ import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
 import javax.swing.KeyStroke;
 
-import controller.Pretraga.Pretraga;
+import controller.pretraga.Pretraga;
 
 public class AbstractActionPretraga extends AbstractAction{
 

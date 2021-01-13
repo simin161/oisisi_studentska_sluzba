@@ -1,4 +1,4 @@
-package controller.Pretraga;
+package controller.pretraga;
 
 import view.tabbedPanes.PrikazPredmeta;
 import view.tabbedPanes.PrikazProfesora;
