@@ -43,10 +43,7 @@ public class StudentPolozeni extends JPanel {
 
 		OcenaBaza o1 = prikaz.getModel().getBaza();
 		JPanel panelPr = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-		DecimalFormat df = new DecimalFormat("#.00");
-		String s = String.valueOf(o1.izracunajProsek());
-		df.applyPattern(s);
-		lblPr = new JLabel("Prosek: " + s);
+		lblPr = new JLabel("Prosek: " + o1.izracunajProsek());
 		panelPr.add(lblPr);
 
 		JPanel panelEspb = new JPanel(new FlowLayout(FlowLayout.RIGHT));

@@ -106,6 +106,8 @@ public class OcenaBaza {
 			}
 			avg = sum / (double) i;
 		}
+		
+		avg = Math.round(avg*100.0)/100.0;
 
 		StudentBaza.getInstance().getRow((PrikazStudenta.getInstance().getTable().convertRowIndexToModel(r)))
 				.setProsecnaOcena(avg);
