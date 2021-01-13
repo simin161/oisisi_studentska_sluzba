@@ -114,10 +114,9 @@ public class IzmenaPredmeta extends JDialog {
 		panelEspb.add(txtEspb);
 		panelMain.add(panelEspb);
 
-		String[] stringGod = { "I (prva)", "II (druga)", "III (treća)", "IV (četvrta)", "V (peta/master)",
-				"VI (šesta/master)" };
+		String[] stringGod = { "I (prva)", "II (druga)", "III (treća)", "IV (četvrta)" };
 		JPanel panelGod = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		JLabel lblGod = new JLabel("Trenutna godina studija ");
+		JLabel lblGod = new JLabel("Godina ");
 
 		@SuppressWarnings({ "rawtypes", "unchecked" })
 		JComboBox cbGod = new JComboBox(stringGod);
@@ -145,12 +144,10 @@ public class IzmenaPredmeta extends JDialog {
 		panelSem.add(cbSem);
 		panelMain.add(panelSem);
 
-		/*---TODO: uklanjanje/dodavanje profesora---*/
 		JPanel panelProf = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		JLabel lbl = new JLabel("Profesor");
 		
 		txtProf = new JTextArea();
-		// txtProf.setEditable(false);
 		JButton buttonAdd = new JButton();
 		JButton buttonDelete = new JButton();
 		txtProf.setPreferredSize(new Dimension(100, 20));
@@ -523,12 +520,6 @@ public class IzmenaPredmeta extends JDialog {
 					break;
 				case "IV (četvrta)":
 					godina = 4;
-					break;
-				case "V (peta/master)":
-					godina = 5;
-					break;
-				case "VI (šesta/master)":
-					godina = 6;
 					break;
 				}
 
